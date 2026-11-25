@@ -229,17 +229,41 @@ const f12=m=>{if(m==null)return'--';m=Math.round(m);const h=Math.floor(m/60)%24,
 /* ---------- હેડર ---------- */
 let SUN={rise:360,set:1080};
 function locOf(i){const d=S.days[i]||S.days[0];return GEO[key(d.night)]||GEO['ભુજ']}
+const lt=()=>{const d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000)};
+const TZ=(()=>{try{const z=Intl.DateTimeFormat().resolvedOptions().timeZone;if(/Calcutta|Kolkata/.test(z))return'IST';return(new Intl.DateTimeFormat('en',{timeZoneName:'short'}).formatToParts(new Date()).find(x=>x.type==='timeZoneName')||{}).value||''}catch(_){return'IST'}})();
+let ME=null,WX='';try{ME=JSON.parse(localStorage.getItem('me-loc')||'null')}catch(_){}
+const WMO=c=>c==0?'☀️ સ્વચ્છ':c<=2?'🌤 આંશિક વાદળ':c==3?'☁️ વાદળછાયું':c<=48?'🌫 ધુમ્મસ':c<=57?'🌦 ઝરમર':c<=67?'🌧 વરસાદ':c<=77?'❄️ હિમ':c<=82?'🌧 ઝાપટાં':c<=86?'❄️ હિમવર્ષા':'⛈ વીજળી-વરસાદ';
 function setLoc(){
-  const g=locOf(sel),n=istNow();
-  SUN=sunTimes(g[1],g[2],n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate());
-  $('sr').textContent=f12(SUN.rise);$('ss').textContent=f12(SUN.set);$('wn').textContent=g[0];
+  const g=ME?[ME.n,ME.lat,ME.lon]:locOf(sel),n=lt(),off=-new Date().getTimezoneOffset();
+  const S2=sunTimes(g[1],g[2],n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate()),cv=v=>v==null?null:((v-330+off)%1440+1440)%1440;
+  SUN={rise:cv(S2.rise),set:cv(S2.set)};
+  $('sr').textContent=f12(SUN.rise);$('ss').textContent=f12(SUN.set);$('wn').textContent=g[0]+(WX?' '+WX:'');
   $('wc').href='https://www.google.com/search?q='+encodeURIComponent('weather '+g[0]);
 }
+async function fetchWx(){
+  if(!ME)return;
+  try{const r=await fetch('https://api.open-meteo.com/v1/forecast?latitude='+ME.lat+'&longitude='+ME.lon+'&current=temperature_2m,weather_code&timezone=auto');
+    const j=await r.json(),c=j.current;if(c){WX='• '+Math.round(c.temperature_2m)+'°C '+WMO(c.weather_code);setLoc()}}catch(_){}
+}
+async function nameOf(lat,lon){
+  try{const r=await fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?latitude='+lat+'&longitude='+lon+'&localityLanguage=gu');
+    const j=await r.json();return j.locality||j.city||j.principalSubdivision||''}catch(_){return''}
+}
+async function setMe(lat,lon,nm){
+  const n=nm||await nameOf(lat,lon)||'તમારું સ્થળ';
+  ME={lat,lon,n};try{localStorage.setItem('me-loc',JSON.stringify(ME))}catch(_){}
+  setLoc();fetchWx();
+}
+function locate(){
+  const ip=async()=>{try{const j=await(await fetch('https://ipwho.is/')).json();if(j&&j.success!==false&&j.latitude)setMe(j.latitude,j.longitude,'')}catch(_){}};
+  if(navigator.geolocation)navigator.geolocation.getCurrentPosition(p=>setMe(+p.coords.latitude.toFixed(3),+p.coords.longitude.toFixed(3)),ip,{timeout:8000,maximumAge:36e5});
+  else ip();
+}
 function tick(){
-  const n=istNow(),h=n.getUTCHours(),m=n.getUTCMinutes(),s=n.getUTCSeconds(),p=n=>String(n).padStart(2,'0');
-  $('ck').textContent=p(h%12||12)+':'+p(m)+':'+p(s);$('ap').textContent=(h<12?'AM':'PM')+' • IST';
+  const n=lt(),h=n.getUTCHours(),m=n.getUTCMinutes(),s=n.getUTCSeconds(),p=n=>String(n).padStart(2,'0');
+  $('ck').textContent=p(h%12||12)+':'+p(m)+':'+p(s);$('ap').textContent=(h<12?'AM':'PM')+' • '+TZ;
   const mins=h*60+m;$('hd').classList.toggle('day',SUN.rise!=null&&mins>=SUN.rise&&mins<SUN.set);
-  const diff=startMs()-n.getTime();let t;
+  const diff=startMs()-istNow().getTime();let t;
   if(diff>0){const d=Math.floor(diff/864e5),hh=Math.floor(diff%864e5/36e5),mm=Math.floor(diff%36e5/6e4);t=`<b>${d}</b> દિવસ <b>${hh}</b> કલાક <b>${mm}</b> મિનિટ`}
   else{const ti=todayIdx();t=ti>=0?`યાત્રાનો <b>દિવસ ${gu(ti+1)}</b> / ${gu(nDays())} 🙏`:'યાત્રા પૂર્ણ 🙏'}
   $('cd').innerHTML=t;
@@ -395,7 +419,7 @@ let tx=null;$('t0').addEventListener('touchstart',e=>tx=e.touches[0].clientX,{pa
 $('t0').addEventListener('touchend',e=>{if(tx==null)return;const dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>60){sel=Math.max(0,Math.min(nDays()-1,sel+(dx<0?1:-1)));render()}});
 (function(){const e=$('spl');let shown=false;try{shown=sessionStorage.getItem('spl')==='1';sessionStorage.setItem('spl','1')}catch(_){}
   if(shown){e.remove();return}const h=()=>{e.classList.add('out');setTimeout(()=>e.remove(),600)};e.onclick=h;setTimeout(h,2400)})();
-document.title=S.name;init();
+document.title=S.name;init();locate();setInterval(fetchWx,9e5);setInterval(setLoc,6e4);
 (function(){
   if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
   const bar=$('inst'),msg=$('insm'),go=$('insg');let ev=null;
