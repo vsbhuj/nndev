@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0e2a">
+<title>નરનારાયણ દેવ યાત્રા 2027</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;500;600;700;800&family=Noto+Serif:wght@700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#190e14;--card:#22141f;--bd:#3a2441;--gold:#e9c46a;--or:#f08a3c;--mut:#a899ae;--bar:#351c2a;--mar:#6b2040}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;height:100%;background:var(--bg)}
+body{font-family:'Noto Sans Gujarati',system-ui,sans-serif;color:#f6eef2;display:flex;flex-direction:column;max-width:560px;margin:0 auto;height:100dvh;overflow:hidden;font-size:15px}
+button,input,select,textarea{font:inherit}
+/* ---- આકાશ હેડર ---- */
+header{position:relative;flex:none;overflow:hidden;padding:calc(env(safe-area-inset-top) + 8px) 14px 8px;background:linear-gradient(180deg,#070a24 0%,#10195a 55%,#27389a 100%);border-bottom:5px solid #d6ad55;transition:background .6s}
+header.day{background:linear-gradient(180deg,#2f6fb8 0%,#5a9bd8 55%,#9fcdf0 100%)}
+.fx{position:absolute;inset:0;pointer-events:none;z-index:0}
+.star{position:absolute;width:4px;height:4px;border-radius:50%;background:#fff;opacity:.9;animation:tw 3s ease-in-out infinite}
+header.day .star{opacity:0!important;animation:none}
+@keyframes tw{0%,100%{opacity:.25}50%{opacity:1}}
+.cloud{position:absolute;width:130px;height:34px;border-radius:30px;background:rgba(190,200,240,.45);animation:drift linear infinite}
+.cloud:before,.cloud:after{content:"";position:absolute;border-radius:50%;background:inherit}
+.cloud:before{width:54px;height:54px;left:24px;top:-24px}.cloud:after{width:42px;height:42px;left:68px;top:-14px}
+header.day .cloud{background:rgba(255,255,255,.75)}
+@keyframes drift{from{transform:translateX(-170px)}to{transform:translateX(620px)}}
+.arc{position:absolute;left:0;top:0;width:100%;height:100%}
+.moon{position:absolute;left:300px;top:40px;width:44px;height:44px;border-radius:50%;box-shadow:inset -10px 2px 0 0 #f7ebc3;transform:rotate(-8deg)}
+.sunb{position:absolute;left:62px;top:66px;width:46px;height:46px;border-radius:50%;background:#ffd45a;box-shadow:0 0 28px 10px rgba(255,212,90,.55);display:none}
+header.day .moon{display:none}header.day .sunb{display:block}
+.hin{position:relative;z-index:1}
+.clock{font-family:'Noto Serif',Georgia,serif;font-weight:800;font-size:36px;line-height:1;color:#f3d78f;letter-spacing:.5px;white-space:nowrap}
+.clock small{font-family:'Noto Sans Gujarati',sans-serif;font-weight:700;font-size:15px;color:#e8ebff;letter-spacing:0;margin-left:8px}
+.cd{margin-top:5px;font-weight:700;font-size:14px;color:#fff}.cd b{color:#f3d78f}
+.sr{display:flex;justify-content:space-between;margin-top:6px}
+.sr .s{display:flex;flex-direction:column}.sr .s:last-child{align-items:flex-start}
+.sr .l{font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}.sr .v{font-size:15px;font-weight:700;margin-top:1px}
+.wc{display:inline-flex;align-items:center;gap:8px;margin-top:7px;padding:3px 13px;border:2px solid rgba(255,255,255,.38);border-radius:99px;background:rgba(255,255,255,.08);font-size:13px;font-weight:600;color:#fff;text-decoration:none}
+/* ---- મુખ્ય ---- */
+main{flex:1;overflow-y:auto;padding:10px 12px 12px;-webkit-overflow-scrolling:touch}
+.tab{display:none}.tab.on{display:block}
+.bar{display:flex;align-items:center;gap:8px;background:var(--bar);border-radius:12px;padding:7px 12px;margin-bottom:9px;font-size:16px;font-weight:800;color:var(--gold)}
+.bar .cnt{margin-left:auto;font-size:13px;color:var(--gold);border:2px solid var(--bd);background:#1a0f17;border-radius:99px;padding:2px 12px}
+.bar .add{margin-left:auto;font-size:13px;border:2px solid var(--gold);background:none;color:var(--gold);border-radius:99px;padding:2px 12px;font-weight:700;cursor:pointer}
+.hero{text-align:center;background:linear-gradient(180deg,#3d2623,#1f1218);border:2px solid #8a5a3a;border-radius:18px;padding:10px 12px 12px;margin-bottom:10px}
+.pill{display:inline-block;background:#a893a3;color:#2a1a26;font-weight:800;font-size:12px;border-radius:99px;padding:4px 14px}
+.hero h1{margin:8px 0 4px;font-size:21px;line-height:1.3;font-weight:800;color:#fff}
+.hero .nt{color:var(--mut);font-size:13px}
+.row{display:flex;align-items:center;gap:12px;background:var(--card);border:2px solid var(--bd);border-radius:15px;padding:5px 6px 5px 12px;margin-bottom:7px;min-height:46px;gap:8px}
+.row .tm{flex:none;width:58px;color:var(--gold);font-weight:800;font-size:13px}
+.row .tx{flex:1;font-size:14.5px;line-height:1.3;font-weight:500}
+.ib{flex:none;width:34px;height:34px;border-radius:10px;border:0;background:#2e1b2b;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff}
+.ib.t{background:var(--mar)}
+.plus{display:flex;flex-direction:column;align-items:center;gap:6px;margin:14px 0 6px;color:var(--mut);font-size:12.5px;font-weight:600}.plus button{width:58px;height:58px;border-radius:50%;border:2.5px solid var(--gold);background:var(--bar);color:var(--gold);font-size:36px;line-height:1;font-weight:400;cursor:pointer;padding:0 0 4px;box-shadow:0 3px 12px rgba(0,0,0,.45)}
+.addrow{width:100%;border:2px dashed var(--bd);background:none;color:var(--gold);border-radius:15px;padding:8px;font-weight:700;font-size:13.5px;cursor:pointer}
+.grid3{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.cell{background:var(--card);border:2px solid var(--bd);border-radius:14px;padding:6px 2px 6px;text-align:center;cursor:pointer;color:inherit;min-height:0}
+.cell.cur{border-color:#8a2a52}
+.cell b{display:block;font-size:19px;font-weight:800;color:var(--gold);line-height:1.1}
+.cell i{display:block;font-style:normal;font-weight:700;font-size:11.5px;margin-top:1px}
+.cell span{display:block;font-size:11px;color:var(--mut);margin-top:1px;padding:0 2px;line-height:1.25}
+.pi{display:flex;align-items:center;gap:10px;background:var(--card);border:2px solid var(--bd);border-radius:14px;padding:5px 12px 5px 6px;margin-bottom:6px;cursor:pointer;width:100%;text-align:left;color:inherit}
+.pi .ci{flex:none;width:36px;height:36px;border-radius:50%;background:var(--mar);display:flex;align-items:center;justify-content:center;font-size:18px}
+.pi:nth-child(3n+2) .ci{background:#7b2547}
+.pi .nm{font-size:15px;font-weight:800;line-height:1.25}.pi .sb{font-size:11.5px;color:var(--mut)}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:6px}.pg .pi{margin:0;padding:4px 6px 4px 5px;gap:7px;min-width:0}.pg .ci{width:30px!important;height:30px!important;font-size:15px!important}.pg .nm{font-size:13px!important}.pg .sb{font-size:10.5px!important}.pg .ch{display:none}.pi .ch{margin-left:auto;font-size:20px;color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:7px;align-items:center}
+.chp{border:2px solid var(--bd);background:#1c1019;color:#f6eef2;border-radius:99px;padding:3px 12px;font-weight:700;font-size:13px;cursor:pointer}
+.chp.on{background:var(--mar);border-color:var(--mar)}
+.chp.g{border-color:var(--gold)}.chp.g.on{background:var(--gold);color:#2a1a10}
+.lbl{color:var(--mut);font-size:13.5px;font-weight:600}
+.yr{display:flex;align-items:center;gap:8px;background:var(--card);border:2px solid var(--bd);border-radius:14px;padding:5px 6px 5px 8px;margin-bottom:6px}
+.yr .no{flex:none;width:24px;text-align:center;font-size:17px;font-weight:700}
+.yr .gb{flex:none;width:3px;align-self:stretch;background:var(--gold);border-radius:2px}
+.yr .in{flex:1;min-width:0}.yr .n{font-size:15px;font-weight:800;line-height:1.25}.yr .m{font-size:12px;color:var(--mut)}
+.yr.x{opacity:.55}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tile{background:var(--card);border:2px solid var(--bd);border-radius:16px;padding:12px 4px 10px;text-align:center;font-weight:800;font-size:12.5px;line-height:1.3;cursor:pointer;color:inherit;min-height:0;display:flex;flex-direction:column;align-items:center;gap:6px}
+.tile em{font-style:normal;font-size:30px;line-height:1}
+.back{border:0;background:none;color:var(--gold);font-weight:800;font-size:16px;margin-bottom:12px;cursor:pointer;padding:0}
+.li{display:flex;align-items:center;gap:8px;background:var(--card);border:2px solid var(--bd);border-radius:13px;padding:4px 6px 4px 12px;margin-bottom:6px;font-size:14.5px}
+.li input[type=checkbox]{width:22px;height:22px;accent-color:var(--or)}
+.li .tx{flex:1}.li.dn .tx{text-decoration:line-through;opacity:.55}
+.tot{background:var(--bar);border-radius:12px;padding:8px 12px;margin-bottom:8px;font-size:15px;font-weight:800;color:var(--gold);display:flex;justify-content:space-between}
+.emp{text-align:center;color:var(--mut);padding:26px 10px;font-size:14.5px;line-height:1.6}
+/* ---- નીચેનો નેવ ---- */
+nav{flex:none;display:flex;background:#1d111a;border-top:2px solid #3a2540;padding:0 0 env(safe-area-inset-bottom)}
+nav button{position:relative;flex:1;border:0;background:none;color:var(--mut);font-size:12.5px;font-weight:700;padding:6px 0 4px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer}
+nav button .ic{height:28px;display:flex;align-items:center;justify-content:center;font-size:24px;line-height:1}
+nav button.on{color:var(--or)}nav button.on:before{content:"";position:absolute;left:0;right:0;top:-2px;height:3px;background:var(--or)}
+.dt{width:28px;height:28px;border-radius:6px;background:#fff;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.dt i{font-style:normal;background:#e0463c;color:#fff;font-size:8px;font-weight:800;text-align:center;line-height:10px;height:10px}
+.dt b{flex:1;color:#222;font-size:14px;font-weight:800;text-align:center;line-height:18px}
+/* ---- મોડલ ---- */
+.ov{position:fixed;inset:0;background:rgba(5,2,8,.7);z-index:50;display:flex;align-items:flex-end;justify-content:center}
+.sheet{width:100%;max-width:560px;max-height:88dvh;overflow-y:auto;background:#251522;border:2px solid var(--bd);border-radius:26px 26px 0 0;padding:20px 18px calc(env(safe-area-inset-bottom) + 18px)}
+.sheet h3{margin:0 0 12px;font-size:20px;color:var(--gold)}
+.sheet label{display:block;font-size:13px;color:var(--mut);font-weight:700;margin:10px 0 4px}
+.sheet input,.sheet select,.sheet textarea{width:100%;background:#170c14;border:2px solid var(--bd);color:#fff;border-radius:14px;padding:11px 13px;font-size:16px}
+.sheet .inf{color:#d9cbd3;font-size:14px;line-height:1.6;margin-bottom:4px}
+.btns{display:flex;gap:10px;margin-top:18px}
+.btns button{flex:1;border:0;border-radius:14px;padding:13px;font-weight:800;font-size:16px;cursor:pointer}
+.b1{background:var(--or);color:#2a1206}.b2{background:#3a2540;color:#fff}.b3{flex:none!important;width:54px;background:#5b1a2a;color:#fff}
+.pv{background:rgba(5,2,8,.78)}
+.sh2{width:100%;max-width:560px;max-height:90dvh;overflow-y:auto;background:#170b12;border-top:3px solid #d6ad55;border-radius:26px 26px 0 0;padding:12px 14px calc(env(safe-area-inset-bottom) + 14px)}
+.sh2h{display:flex;align-items:center;gap:10px;margin-bottom:10px}.sh2h .t{flex:1;font-size:20px;font-weight:800;color:var(--gold);line-height:1.3}
+.sh2h .x{flex:none;width:42px;height:42px;border-radius:12px;border:0;background:#321b2a;color:#fff;font-size:20px;cursor:pointer}
+.gl{background:#321b2a;border-radius:16px;border-left:6px solid #e9a94f;padding:11px 14px;font-size:14.5px;line-height:1.65}
+.gl small{display:block;color:var(--mut);font-size:12px;margin-top:6px}
+.chs{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.cc{border:2px solid var(--bd);background:#1c1019;color:#f6eef2;border-radius:14px;padding:6px 12px;font-size:13px;font-weight:700;cursor:pointer}
+.bt2{display:flex;gap:10px;margin-bottom:10px}
+.bm,.bo{flex:1;display:block;text-align:center;text-decoration:none;font-weight:800;font-size:15px;border-radius:16px;padding:11px 8px;cursor:pointer}
+.bm{background:#7a2548;color:#fff;border:2px solid #7a2548}.bo{border:2px solid var(--gold);color:var(--gold);background:none}
+.bo.w{width:100%;margin-bottom:10px}
+.phs{display:flex;gap:8px;overflow-x:auto;margin-bottom:10px}
+.phs div{position:relative;flex:none}.phs img{display:block;height:84px;border-radius:12px}
+.phs button{position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:50%;border:0;background:rgba(0,0,0,.65);color:#fff;font-size:12px}
+.ft{color:var(--mut);font-size:12.5px;line-height:1.5}
+.lnk{border:0;background:none;color:var(--gold);font-weight:700;font-size:13px;padding:6px 0;cursor:pointer}
+.toast{position:fixed;left:50%;bottom:70px;transform:translateX(-50%);background:#f6eef2;color:#2a1a26;font-weight:700;padding:10px 18px;border-radius:99px;z-index:60;font-size:14px;box-shadow:0 4px 18px rgba(0,0,0,.5)}
+</style>
+</head>
+<body>
+<header id="hd">
+  <div class="fx" id="fx"></div>
+  <svg class="arc fx" viewBox="0 0 421 130" preserveAspectRatio="none"><path d="M150 24 C240 -6 330 12 356 62" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="2.2" stroke-dasharray="3 8" stroke-linecap="round"/><circle cx="356" cy="62" r="3.5" fill="#fff"/><circle cx="250" cy="14" r="3" fill="#fff" opacity=".8"/></svg>
+  <div class="moon"></div><div class="sunb"></div>
+  <div class="hin">
+    <div class="clock"><span id="ck">--:--:--</span><small id="ap">PM • IST</small></div>
+    <div class="cd" id="cd"></div>
+    <div class="sr"><div class="s"><div class="l">🌅 સૂર્યોદય</div><div class="v" id="sr">--</div></div><div class="s"><div class="l">🌇 સૂર્યાસ્ત</div><div class="v" id="ss">--</div></div></div>
+    <a class="wc" id="wc" target="_blank" rel="noopener">🌦 <span id="wn">--</span> • લાઈવ હવામાન આંકડા</a>
+  </div>
+</header>
+<main id="main">
+  <section class="tab on" id="t0"></section>
+  <section class="tab" id="t1"></section>
+  <section class="tab" id="t2"></section>
+  <section class="tab" id="t3"></section>
+  <section class="tab" id="t4"></section>
+</main>
+<nav id="nav">
+  <button class="on" data-t="0"><span class="ic"><span class="dt"><i id="dtm">નવે</i><b id="dtd">૨૫</b></span></span>દિવસ</button>
+  <button data-t="1"><span class="ic">📆</span>બધા દિવસ</button>
+  <button data-t="2"><span class="ic">🛕</span>સ્થળો</button>
+  <button data-t="3"><span class="ic">👥</span>યાત્રિકો</button>
+  <button data-t="4"><span class="ic">☰</span>વધુ</button>
+</nav>
+<script>
+const $=id=>document.getElementById(id);
+const gu=n=>String(n).replace(/\d/g,d=>'૦૧૨૩૪૫૬૭૮૯'[d]);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const MON=['જાન્યુ','ફેબ્રુ','માર્ચ','એપ્રિલ','મે','જૂન','જુલાઈ','ઑગ','સપ્ટે','ઑક્ટો','નવે','ડિસે'];
+const WD=['રવિ','સોમ','મંગળ','બુધ','ગુરુ','શુક્ર','શનિ'];
+/* ---------- ડેટા: ચાર ધામ રૂટ (હાથે લખેલો) ---------- */
+const DEF=[
+ [['ભુજ','ખાણ ગામ'],'ખાણ ગામ'],[['પુષ્કર','જયપુર'],'જયપુર'],[['શુક્રતાલ','હરિદ્વાર'],'હરિદ્વાર'],[['હરિદ્વારની યાત્રા'],'હરિદ્વાર'],
+ [['લાખામંડળ','યમુનોત્રી'],'યમુનોત્રી'],[['યમુનોત્રી','ગરતગંગા?'],'ગરતગંગા?'],[['ગંગોત્રી','ઉત્તરકાશી'],'ઉત્તરકાશી'],[['ઉત્તરકાશી','કેદારનાથ'],'કેદારનાથ'],
+ [['કેદારનાથ','ત્રિયુગીનારાયણ'],'ત્રિયુગીનારાયણ'],[['કેદારનાથ','ઓખીમઠ','આદિ બદ્રી'],'આદિ બદ્રી'],[['બદ્રીનારાયણ'],'બદ્રીનારાયણ'],
+ [['બદ્રીનારાયણ','વસુધારા','ચરણપાદુકા'],'બદ્રીનારાયણ'],[['હરિદ્વાર'],'હરિદ્વાર'],[['ચક્રતીર્થ'],'ચક્રતીર્થ'],[['છપૈયા'],'છપૈયા'],
+ [['પોખરા (નેપાળ)'],'પોખરા (નેપાળ)'],[['જોમસોમ (નેપાળ)','મુક્તિનાથ'],'જોમસોમ (નેપાળ)'],[['પોખરા (નેપાળ)','બુટવલપુર','ગોપાલયોગીનો આશ્રમ'],'ગોપાલયોગીનો આશ્રમ'],
+ [['અયોધ્યા (જેમને જવું હોય તેમના માટે)'],'અયોધ્યા'],[['કાશી વિશ્વનાથ'],'કાશી વિશ્વનાથ'],[['ગોકુળ','વૃન્દાવન','મથુરા'],'મથુરા']
+];
+const LBL=['સવારે','બપોરે','પછી','પછી'];
+const key=n=>String(n).replace(/\?/g,'').replace(/\s*\(.*?\)/g,'').trim();
+function buildDays(){return DEF.map(([st,nt])=>({items:[...st.map((s,i)=>({t:LBL[i]||'પછી',x:s.replace('?',''),pl:key(s)})),{t:'રાત્રે',x:key(nt)+'માં રાત્રિ રોકાણ',n:1}],night:nt}))}
+// [અંગ્રેજી નામ, અક્ષાંશ, રેખાંશ]
+const GEO={'ભુજ':['Bhuj',23.25,69.67],'ખાણ ગામ':['Rapar',23.57,70.64],'પુષ્કર':['Pushkar',26.49,74.55],'જયપુર':['Jaipur',26.91,75.79],'શુક્રતાલ':['Shukratal',29.45,77.98],'હરિદ્વાર':['Haridwar',29.95,78.16],'લાખામંડળ':['Lakhamandal',30.73,77.9],'યમુનોત્રી':['Yamunotri',31.01,78.45],'ગરતગંગા':['Harsil',31.04,78.75],'ગંગોત્રી':['Gangotri',30.99,78.94],'ઉત્તરકાશી':['Uttarkashi',30.73,78.44],'કેદારનાથ':['Kedarnath',30.73,79.07],'ત્રિયુગીનારાયણ':['Triyuginarayan',30.65,79.1],'ઓખીમઠ':['Ukhimath',30.52,79.09],'આદિ બદ્રી':['Adi Badri',30.06,79.25],'બદ્રીનારાયણ':['Badrinath',30.74,79.49],'વસુધારા':['Vasudhara',30.79,79.45],'ચરણપાદુકા':['Badrinath',30.74,79.49],'ચક્રતીર્થ':['Naimisharanya',27.35,80.49],'છપૈયા':['Chhapaiya',26.79,82.13],'પોખરા':['Pokhara',28.21,83.99],'જોમસોમ':['Jomsom',28.78,83.72],'મુક્તિનાથ':['Muktinath',28.82,83.87],'બુટવલપુર':['Butwal',27.7,83.45],'ગોપાલયોગીનો આશ્રમ':['Modibeni',28.36,83.63],'અયોધ્યા':['Ayodhya',26.8,82.2],'કાશી વિશ્વનાથ':['Varanasi',25.31,83.01],'ગોકુળ':['Gokul',27.42,77.72],'વૃન્દાવન':['Vrindavan',27.58,77.7],'મથુરા':['Mathura',27.49,77.67]};
+const GLORY={'ભુજ':'કચ્છનું મુખ્ય નગર; યાત્રાનું પ્રસ્થાન સ્થાન.','પુષ્કર':'બ્રહ્માજીનું દુર્લભ મંદિર અને પવિત્ર પુષ્કર સરોવર. આઠ સ્વયંવ્યક્ત ક્ષેત્રમાંનું એક ગણાય છે.','જયપુર':'રાજસ્થાનની ગુલાબી નગરી; દર્શન માટે ગોવિંદદેવજીનું મંદિર પ્રસિદ્ધ.','શુક્રતાલ':'ગંગાકિનારે શુકદેવજીએ રાજા પરીક્ષિતને શ્રીમદ્ ભાગવત કથા સંભળાવી તે સ્થાન. અક્ષયવટ અને શુકદેવ મંદિર અહીં છે.','હરિદ્વાર':'ગંગાજીનું તીર્થદ્વાર; હર કી પૌડી પર ગંગાસ્નાન અને સાંજની ગંગા આરતી.','લાખામંડળ':'યમુના કિનારે પ્રાચીન શિવ મંદિર સમૂહ, ગ્રેફાઇટનું શિવલિંગ. લોકમાન્યતા મુજબ પાંડવોના લાક્ષાગૃહ પ્રસંગ સાથે જોડાયેલું સ્થાન.','યમુનોત્રી':'યમુનાજીનું ઉદ્ગમ સ્થાન; ચાર ધામમાંનું એક. ગરમ કુંડમાં સ્નાન અને યમુના મંદિર દર્શન.','ગરતગંગા':'અક્ષર સ્પષ્ટ નથી, નામ નક્કી કરવાનું બાકી. ગંગોત્રી માર્ગે ગરતાંગ ગલી (લાકડાનો ૧૩૬ મીટરનો પુલ) હોઈ શકે.','ગંગોત્રી':'ગંગાજીનું ઉદ્ગમ તીર્થ; ચાર ધામમાંનું એક. ભાગીરથી કિનારે ગંગા મંદિર.','ઉત્તરકાશી':'ભાગીરથી કિનારે કાશી વિશ્વનાથ મંદિર; ઉત્તરની કાશી તરીકે ઓળખાય છે.','કેદારનાથ':'બાર જ્યોતિર્લિંગમાંનું એક, હિમાલયમાં; ચાર ધામમાંનું એક.','ત્રિયુગીનારાયણ':'માન્યતા મુજબ શિવ-પાર્વતીના વિવાહનું સ્થાન; અખંડ ધૂણી પ્રગટે છે.','ઓખીમઠ':'શિયાળામાં કેદારનાથજીની ડોલી અહીં બિરાજે છે (ઉખીમઠ).','આદિ બદ્રી':'પ્રાચીન મંદિર સમૂહ; પંચ બદ્રીમાંનું એક.','બદ્રીનારાયણ':'ભગવાન નરનારાયણનું ધામ; ચાર ધામ અને આઠ સ્વયંવ્યક્ત ક્ષેત્રમાંનું એક. તપ્ત કુંડમાં સ્નાન પછી દર્શન.','વસુધારા':'બદ્રીનાથ પાસે લગભગ ૪૦૦ ફૂટ ઊંચો પવિત્ર ધોધ, માણા ગામથી ચાલીને જવાય છે.','ચરણપાદુકા':'બદ્રીનાથથી લગભગ ૩ કિમી; શિલા પર ભગવાન વિષ્ણુના ચરણચિહ્ન મનાય છે.','ચક્રતીર્થ':'સ્થાન ચકાસવાનું બાકી (નૈમિષારણ્યનું ચક્રતીર્થ કે અન્ય).','છપૈયા':'ભગવાન સ્વામિનારાયણનું પ્રાગટ્ય સ્થાન.','પોખરા':'નેપાળનું શહેર, મુક્તિનાથ જવાનું પ્રવેશદ્વાર; અહીંથી જોમસોમ તરફ જવાય છે.','જોમસોમ':'કાલી ગંડકી ખીણમાં, મુક્તિનાથ તરફનું મુખ્ય મથક.','મુક્તિનાથ':'૧૦૮ દિવ્ય દેશમાંનું એક અને ભારત બહારનું એકમાત્ર; ૧૦૮ મુક્તિધારા. નીલકંઠ વર્ણીએ અહીં મહિનાઓ સુધી તપ કર્યું હતું.','બુટવલપુર':'નીલકંઠ વર્ણી અહીં મહાદત્ત સેનના દરબારમાં રોકાયા અને ગોપાલ યોગીની વાત સાંભળી.','ગોપાલયોગીનો આશ્રમ':'નીલકંઠ વર્ણી ગોપાલ યોગી પાસે લગભગ એક વર્ષ રહ્યા અને અષ્ટાંગ યોગ શીખ્યા; આશ્રમ મોદીબેની પાસે મનાય છે.','અયોધ્યા':'શ્રી રામ જન્મભૂમિ; સરયુ નદી, રામ મંદિર અને હનુમાન ગઢી.','કાશી વિશ્વનાથ':'બાર જ્યોતિર્લિંગમાંનું એક, ગંગા કિનારે વારાણસીમાં.','ગોકુળ':'શ્રીકૃષ્ણની બાળલીલા ભૂમિ.','વૃન્દાવન':'શ્રીકૃષ્ણની રાસલીલા ભૂમિ.','મથુરા':'શ્રીકૃષ્ણ જન્મભૂમિ.'};
+const QRY={'ભુજ':'Bhuj Gujarat','ખાણ ગામ':'Rapar Kutch Gujarat','પુષ્કર':'Brahma Temple Pushkar','જયપુર':'Govind Dev Ji Temple Jaipur','શુક્રતાલ':'Shukratal Muzaffarnagar','હરિદ્વાર':'Har Ki Pauri Haridwar','લાખામંડળ':'Lakhamandal Temple Uttarakhand','યમુનોત્રી':'Yamunotri Temple','ગરતગંગા':'Gartang Gali Uttarkashi','ગંગોત્રી':'Gangotri Temple','ઉત્તરકાશી':'Kashi Vishwanath Temple Uttarkashi','કેદારનાથ':'Kedarnath Temple','ત્રિયુગીનારાયણ':'Triyuginarayan Temple','ઓખીમઠ':'Omkareshwar Temple Ukhimath','આદિ બદ્રી':'Adi Badri Temple Chamoli','બદ્રીનારાયણ':'Badrinath Temple','વસુધારા':'Vasudhara Falls Badrinath','ચરણપાદુકા':'Charan Paduka Badrinath','ચક્રતીર્થ':'Chakratirth Naimisharanya','છપૈયા':'Swaminarayan Janmasthan Chhapaiya','પોખરા':'Pokhara Nepal','જોમસોમ':'Jomsom Nepal','મુક્તિનાથ':'Muktinath Temple Nepal','બુટવલપુર':'Butwal Nepal','ગોપાલયોગીનો આશ્રમ':'Gopal Yogi Ashram Modibeni Nepal','અયોધ્યા':'Ram Mandir Ayodhya','કાશી વિશ્વનાથ':'Kashi Vishwanath Temple Varanasi','ગોકુળ':'Gokul Mathura','વૃન્દાવન':'Banke Bihari Temple Vrindavan','મથુરા':'Krishna Janmabhoomi Mathura'};
+const PACK=['ઓળખપત્ર (આધાર)','દવાઓ','ગરમ કપડાં / રેઇનકોટ','ચંપલ / શૂઝ','પાણીની બોટલ','ટોર્ચ','ચાર્જર / પાવર બેંક','પૂજાની સામગ્રી','નેપાળ માટે ઓળખપત્ર'];
+const RULES=['સમયસર બસમાં બેસવું','મંદિરમાં શાંતિ જાળવવી','કિંમતી વસ્તુઓ સાચવવી','ગ્રુપ સાથે જ રહેવું'];
+/* ---------- સ્ટેટ ---------- */
+const ST='tirth-sys-v1';let S={};try{S=JSON.parse(localStorage.getItem(ST)||'{}')}catch(e){}
+S.name=(!S.name||S.name==='તીર્થ યાત્રા')?'નરનારાયણ દેવ યાત્રા 2027':S.name;S.start=S.start||'2027-09-21';S.days=S.days||buildDays();S.yat=S.yat||[];S.exp=S.exp||[];
+S.pack=S.pack||PACK.map(t=>({t,d:0}));S.rules=S.rules||RULES.slice();S.glory=S.glory||{};S.pin=S.pin||{};S.cp=S.cp||[];S.dt=S.dt||{};S.ph=S.ph||{};S.edit=!!S.edit;S.test=!!S.test;
+const save=()=>{try{localStorage.setItem(ST,JSON.stringify(S))}catch(e){}};
+let sel=0,tab=0,sub=null,yf='all',ys='';
+/* ---------- તારીખ ---------- */
+const istNow=()=>new Date(Date.now()+19800000);
+function startMs(){if(S.test){const n=istNow();return Date.UTC(n.getUTCFullYear(),n.getUTCMonth(),n.getUTCDate()+1)}const[a,b,c]=S.start.split('-').map(Number);return Date.UTC(a,b-1,c)}
+const nDays=()=>S.test?Math.min(5,S.days.length):S.days.length;
+const dayDate=i=>new Date(startMs()+i*864e5);
+const dShort=i=>{const d=dayDate(i);return gu(d.getUTCDate())+' '+MON[d.getUTCMonth()]};
+const dFull=i=>{const d=dayDate(i);return gu(d.getUTCDate())+' '+MON[d.getUTCMonth()]+' '+gu(d.getUTCFullYear())+', '+WD[d.getUTCDay()]};
+function todayIdx(){const n=istNow(),t=Date.UTC(n.getUTCFullYear(),n.getUTCMonth(),n.getUTCDate());const i=Math.round((t-startMs())/864e5);return i>=0&&i<nDays()?i:-1}
+/* ---------- સૂર્યોદય/સૂર્યાસ્ત (NOAA) ---------- */
+function sunTimes(lat,lon,y,m,d){
+  const r=Math.PI/180,N=Math.floor(275*m/9)-Math.floor((m+9)/12)*(1+Math.floor((y-4*Math.floor(y/4)+2)/3))+d-30,lng=lon/15;
+  const f=up=>{const t=N+((up?6:18)-lng)/24,M=0.9856*t-3.289;
+    let L=M+1.916*Math.sin(M*r)+0.02*Math.sin(2*M*r)+282.634;L=(L%360+360)%360;
+    let RA=Math.atan(0.91764*Math.tan(L*r))/r;RA=(RA%360+360)%360;RA+=Math.floor(L/90)*90-Math.floor(RA/90)*90;RA/=15;
+    const sd=0.39782*Math.sin(L*r),cd=Math.cos(Math.asin(sd)),cH=(Math.cos(90.833*r)-sd*Math.sin(lat*r))/(cd*Math.cos(lat*r));
+    if(cH>1||cH<-1)return null;let H=up?360-Math.acos(cH)/r:Math.acos(cH)/r;H/=15;
+    const T=H+RA-0.06571*t-6.622;return(((T-lng)%24+24)%24+5.5)%24*60};
+  return{rise:f(true),set:f(false)};
+}
+const f12=m=>{if(m==null)return'--';m=Math.round(m);const h=Math.floor(m/60)%24,mm=m%60;return(h%12||12)+':'+String(mm).padStart(2,'0')+' '+(h<12?'AM':'PM')};
+/* ---------- હેડર ---------- */
+let SUN={rise:360,set:1080};
+function locOf(i){const d=S.days[i]||S.days[0];return GEO[key(d.night)]||GEO['ભુજ']}
+function setLoc(){
+  const g=locOf(sel),n=istNow();
+  SUN=sunTimes(g[1],g[2],n.getUTCFullYear(),n.getUTCMonth()+1,n.getUTCDate());
+  $('sr').textContent=f12(SUN.rise);$('ss').textContent=f12(SUN.set);$('wn').textContent=g[0];
+  $('wc').href='https://www.google.com/search?q='+encodeURIComponent('weather '+g[0]);
+}
+function tick(){
+  const n=istNow(),h=n.getUTCHours(),m=n.getUTCMinutes(),s=n.getUTCSeconds(),p=n=>String(n).padStart(2,'0');
+  $('ck').textContent=p(h%12||12)+':'+p(m)+':'+p(s);$('ap').textContent=(h<12?'AM':'PM')+' • IST';
+  const mins=h*60+m;$('hd').classList.toggle('day',SUN.rise!=null&&mins>=SUN.rise&&mins<SUN.set);
+  const diff=startMs()-n.getTime();let t;
+  if(diff>0){const d=Math.floor(diff/864e5),hh=Math.floor(diff%864e5/36e5),mm=Math.floor(diff%36e5/6e4);t=`<b>${d}</b> દિવસ <b>${hh}</b> કલાક <b>${mm}</b> મિનિટ`}
+  else{const ti=todayIdx();t=ti>=0?`યાત્રાનો <b>દિવસ ${gu(ti+1)}</b> / ${gu(nDays())} 🙏`:'યાત્રા પૂર્ણ 🙏'}
+  $('cd').innerHTML=t;
+  $('dtm').textContent=MON[n.getUTCMonth()];$('dtd').textContent=gu(n.getUTCDate());
+}
+(function fx(){const f=$('fx');let h='';
+  [[12,8],[70,22],[130,14],[205,34],[300,12],[340,40],[385,20],[250,84],[28,100],[170,104],[395,90],[330,110],[100,112]].forEach((p,i)=>h+=`<i class="star" style="left:${p[0]}px;top:${p[1]}px;animation-delay:${(i*.37)%3}s"></i>`);
+  [[70,6,38],[140,70,52],[0,34,64]].forEach((c,i)=>h+=`<i class="cloud" style="top:${c[1]}px;animation-duration:${c[2]}s;animation-delay:-${c[0]/2+i*9}s"></i>`);
+  f.innerHTML=h})();
+/* ---------- ડે ટેબ ---------- */
+function stopTitle(d){const st=d.items.filter(x=>!x.n).map(x=>x.x);return st.length?st.join(' → '):key(d.night)}
+function renderDay(){
+  const d=S.days[sel];
+  $('t0').innerHTML=`<div class="hero"><span class="pill">દિવસ ${gu(sel+1)} • ${dFull(sel)}</span><h1>${esc(stopTitle(d))}</h1><div class="nt">🛏 રાત્રિ રોકાણ: ${esc(key(d.night))}</div></div>
+  ${d.items.map((r,i)=>`<div class="row"><div class="tm">${esc(r.t)}</div><div class="tx">${esc(r.x)}</div>${r.pl&&isPl(r.pl)?`<button class="ib t" data-pl="${esc(r.pl)}" aria-label="સ્થળ">🛕</button>`:''}<button class="ib" data-ed="${i}" aria-label="ફેરફાર">✏️</button></div>`).join('')}
+  <div class="plus"><button id="addit" aria-label="કાર્યક્રમ ઉમેરો">+</button><span>બીજું ઉમેરો</span></div>`;
+}
+function editItem(i){
+  const d=S.days[sel],isNew=i<0,r=isNew?{t:'',x:''}:d.items[i];
+  const f=r.n?[{k:'t',l:'સમય',v:r.t},{k:'p',l:'રાત્રિ રોકાણ સ્થળ',v:key(d.night)}]:[{k:'t',l:'સમય',v:r.t},{k:'x',l:'કાર્યક્રમ / સ્થળ',v:r.x},{k:'g',l:'મહિમા (વૈકલ્પિક)',t:'area',v:isNew?'':(S.glory[r.pl]!=null?S.glory[r.pl]:(GLORY[r.pl]||''))}];
+  modal({title:isNew?'કાર્યક્રમ ઉમેરો':'ફેરફાર',fields:f,save:v=>{
+    if(r.n){r.t=v.t;d.night=v.p;r.x=key(v.p)+'માં રાત્રિ રોકાણ'}
+    else{r.t=v.t||'પછી';r.x=v.x;r.pl=key(v.x);if(v.g&&v.g.trim())S.glory[r.pl]=v.g.trim();if(isNew)d.items.splice(d.items.length-(d.items[d.items.length-1].n?1:0),0,r)}
+    save();render()},del:(!isNew&&!r.n)?()=>{d.items.splice(i,1);save();render()}:null});
+}
+/* ---------- બધા દિવસ ---------- */
+function renderAll(){
+  $('t1').innerHTML=`<div class="bar"><span>📆</span>${gu(nDays())} દિવસ</div><div class="grid3">${S.days.slice(0,nDays()).map((d,i)=>`<button class="cell ${i==sel?'cur':''}" data-day="${i}"><b>${gu(i+1)}</b><i>${dShort(i)}</i><span>${esc(key(d.night))}${String(d.night).includes('?')?' ❓':''}</span></button>`).join('')}</div>`;
+}
+/* ---------- સ્થળો ---------- */
+const isPl=n=>GEO[n]||S.glory[n]||S.cp.some(c=>c.n==n);
+function places(){const o=[],seen={};S.days.forEach((d,di)=>d.items.forEach(r=>{if(r.pl&&isPl(r.pl)){if(!seen[r.pl]){seen[r.pl]={n:r.pl,days:[]};o.push(seen[r.pl])}if(!seen[r.pl].days.includes(di))seen[r.pl].days.push(di)}}));S.cp.forEach(c=>{if(!seen[c.n]){seen[c.n]={n:c.n,days:[]};o.push(seen[c.n])}});return o}
+function renderPlaces(){
+  const P=places();
+  $('t2').innerHTML=`<div class="bar"><span>🛕</span>સ્થળો અને મહિમા<span class="cnt">${gu(P.length)}</span><button class="add" id="padd" style="margin-left:0">➕</button></div><div class="pg">${P.map(p=>`<button class="pi" data-pn="${esc(p.n)}"><span class="ci">🛕</span><span><div class="nm">${esc(p.n)}</div><div class="sb">${p.days.length?'દિવસ '+p.days.map(x=>gu(x+1)).join(', '):'મારું સ્થળ'}</div></span><span class="ch">›</span></button>`).join('')}</div>`;
+}
+function placeSheet(n){
+  const p=places().find(x=>x.n==n),g=GEO[n]||[n,0,0],q=encodeURIComponent(QRY[n]||g[0]||n),cust=S.cp.some(c=>c.n==n);
+  const ov=document.createElement('div');ov.className='ov pv';
+  const draw=()=>{
+    const gl=S.glory[n]!=null?S.glory[n]:(GLORY[n]||''),ph=S.ph[n]||[];
+    ov.innerHTML=`<div class="sh2"><div class="sh2h"><span class="t">🛕 ${esc(n)}</span><button class="x" data-x aria-label="બંધ">✕</button></div>
+    <div class="gl">${gl?esc(gl):'મહિમા ઉમેરવાનો બાકી.'}<small>${p&&p.days.length?'દિવસ '+p.days.map(x=>gu(x+1)+' ('+dShort(x)+')').join(', '):''}</small></div>
+    <div class="chs"><button class="cc" data-pin>📌 પિન કોડ: ${S.pin[n]?esc(S.pin[n]):'ઉમેરવો'}</button><button class="cc" data-dt>🕒 દર્શન સમય: ${S.dt[n]?esc(S.dt[n]):'ઉમેરવો'}</button></div>
+    <div class="bt2"><a class="bm" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${q}">📍 Google Maps</a><a class="bo" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=${q}">🧭 માર્ગ</a></div>
+    <a class="bo w" target="_blank" rel="noopener" href="https://www.google.com/search?q=${encodeURIComponent('weather '+g[0])}">🌦 હવામાન</a>
+    ${ph.length?`<div class="phs">${ph.map((u,i)=>`<div><img src="${u}" alt=""><button data-rp="${i}">✕</button></div>`).join('')}</div>`:''}
+    <label class="bo w" style="display:block">📷 ફોટો ઉમેરો<input type="file" accept="image/*" multiple hidden data-file></label>
+    <button class="lnk" data-gl>✏️ મહિમા ફેરફાર</button>${cust?'<button class="lnk" data-dp style="margin-left:14px;color:#ff9aa8">🗑 સ્થળ કાઢો</button>':''}
+    <div class="ft">પિન કોડ અને સમય યાત્રા પહેલાં ચકાસી લેવા. ❓ વાળાં નામ નક્કી કરવાનાં બાકી છે.</div></div>`;
+  };
+  draw();document.body.appendChild(ov);
+  const edit=(title,k,store,type)=>modal({title,fields:[{k:'v',l:title,t:type,v:store[n]!=null?store[n]:(k=='g'?(GLORY[n]||''):'')}],save:v=>{store[n]=v.v;save();draw()}});
+  ov.onclick=e=>{const t=e.target;
+    if(t==ov||t.closest('[data-x]'))ov.remove();
+    else if(t.closest('[data-pin]'))edit('પિન કોડ','p',S.pin,'text');
+    else if(t.closest('[data-dt]'))edit('દર્શન સમય','d',S.dt,'text');
+    else if(t.closest('[data-gl]'))edit('મહિમા','g',S.glory,'area');
+    else if(t.closest('[data-dp]')){S.cp=S.cp.filter(c=>c.n!=n);delete S.glory[n];save();ov.remove();renderPlaces();renderDay()}
+    else if(t.closest('[data-rp]')){S.ph[n].splice(+t.closest('[data-rp]').dataset.rp,1);save();draw()}};
+  ov.onchange=e=>{if(!e.target.matches('[data-file]'))return;
+    [...e.target.files].slice(0,3).forEach(f=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{
+      const c=document.createElement('canvas'),k=Math.min(1,520/Math.max(im.width,im.height));c.width=im.width*k;c.height=im.height*k;
+      c.getContext('2d').drawImage(im,0,0,c.width,c.height);
+      try{(S.ph[n]=S.ph[n]||[]).push(c.toDataURL('image/jpeg',.6));localStorage.setItem(ST,JSON.stringify(S));draw()}catch(_){S.ph[n].pop();toast('ફોટો સાચવી શકાયો નહીં')}};im.src=r.result};r.readAsDataURL(f)})};
+}
+function addPlace(){
+  modal({title:'સ્થળ ઉમેરો',fields:[{k:'n',l:'સ્થળનું નામ',v:''},{k:'g',l:'મહિમા',t:'area',v:''},{k:'p',l:'પિન કોડ (વૈકલ્પિક)',v:''},{k:'d',l:'દર્શન સમય (વૈકલ્પિક)',v:''}],save:v=>{
+    const n=v.n.trim();if(!n)return;if(!S.cp.some(c=>c.n==n)&&!GEO[n])S.cp.push({n});
+    if(v.g.trim())S.glory[n]=v.g.trim();if(v.p.trim())S.pin[n]=v.p.trim();if(v.d.trim())S.dt[n]=v.d.trim();
+    save();renderPlaces();renderDay();toast('સ્થળ ઉમેર્યું')}});
+}
+/* ---------- યાત્રિકો ---------- */
+function renderYat(){
+  const all=S.yat,act=all.filter(y=>y.s!='રદ').length,can=all.length-act;
+  let l=all.map((y,i)=>({...y,i}));
+  l=yf=='all'?l:yf=='રદ'?l.filter(y=>y.s=='રદ'):l.filter(y=>y.g==yf);
+  if(ys=='n')l.sort((a,b)=>a.n.localeCompare(b.n,'gu'));if(ys=='a')l.sort((a,b)=>(+a.a||0)-(+b.a||0));
+  $('t3').innerHTML=`<div class="bar"><span>👥</span>યાત્રિકો<button class="add" id="yadd">➕ ઉમેરો</button></div>
+  <div class="chips"><span class="chp">કુલ ${gu(all.length)}</span><span class="chp">ચાલુ ${gu(act)}</span><span class="chp">રદ ${gu(can)}</span></div>
+  <div class="chips">${[['all','બધા'],['હરિભક્ત','હરિભક્તો'],['સંત','સંતો'],['રદ','રદ']].map(([k,t])=>`<button class="chp ${yf==k?'on':''}" data-yf="${k}">${t}</button>`).join('')}</div>
+  <div class="chips"><span class="lbl">ક્રમ:</span><button class="chp g ${ys=='n'?'on':''}" data-ys="n">ક ખ ગ</button><button class="chp g ${ys=='a'?'on':''}" data-ys="a">ઉંમર ↑</button></div>
+  ${l.length?l.map((y,k)=>`<div class="yr ${y.s=='રદ'?'x':''}"><div class="no">${k+1}</div><div class="gb"></div><div class="in"><div class="n">${esc(y.n)}</div><div class="m">${y.a?'ઉંમર '+gu(y.a)+' • ':''}${y.p?'📞 '+esc(y.p):esc(y.g)}</div></div><button class="ib" data-yc="${y.i}">📋</button><button class="ib" data-ye="${y.i}">✏️</button></div>`).join(''):'<div class="emp">હજી કોઈ યાત્રિક નથી.<br>ઉપર ➕ ઉમેરો થી યાત્રિક ઉમેરો.</div>'}`;
+}
+function editYat(i){
+  const y=i<0?{n:'',a:'',p:'',g:'હરિભક્ત',s:'ચાલુ'}:S.yat[i];
+  modal({title:i<0?'યાત્રિક ઉમેરો':'યાત્રિક ફેરફાર',fields:[{k:'n',l:'નામ',v:y.n},{k:'a',l:'ઉંમર',t:'number',v:y.a},{k:'p',l:'મોબાઇલ',t:'tel',v:y.p},{k:'g',l:'પ્રકાર',t:'select',o:['હરિભક્ત','સંત'],v:y.g},{k:'s',l:'સ્થિતિ',t:'select',o:['ચાલુ','રદ'],v:y.s}],
+    save:v=>{if(!v.n.trim())return;if(i<0)S.yat.push(v);else S.yat[i]=v;save();renderYat()},del:i<0?null:()=>{S.yat.splice(i,1);save();renderYat()}});
+}
+/* ---------- વધુ ---------- */
+function renderMore(){
+  const h=$('t4');
+  if(!sub){h.innerHTML=`<div class="bar"><span>☰</span>વધુ</div><div class="tiles">
+  <button class="tile" data-m="pack"><em>🎒</em>શું લેવું</button><button class="tile" data-m="rules"><em>📜</em>નિયમો</button>
+  <button class="tile" data-m="acc"><em>💰</em>હિસાબ</button><button class="tile" data-m="set"><em>⚙️</em>તારીખ અને નામ</button>
+  <button class="tile" data-m="today"><em>📍</em>આજના દિવસે જાઓ</button><button class="tile" data-m="edit"><em>✏️</em>${S.edit?'ફેરફાર બંધ કરો':'ફેરફાર ચાલુ કરો'}</button>
+  <button class="tile" data-m="test"><em>🧪</em>${S.test?'ટેસ્ટ બંધ કરો':'ટેસ્ટ ચાલુ (૫ દિવસ, કાલથી)'}</button></div>`;return}
+  const back='<button class="back" data-m="back">← પાછા</button>';
+  if(sub=='pack')h.innerHTML=back+`<div class="bar"><span>🎒</span>શું લેવું<button class="add" data-add="pack">➕</button></div>${S.pack.map((p,i)=>`<label class="li ${p.d?'dn':''}"><input type="checkbox" data-pk="${i}" ${p.d?'checked':''}><span class="tx">${esc(p.t)}</span><button class="ib" data-ei="pack:${i}">✏️</button></label>`).join('')}`;
+  if(sub=='rules')h.innerHTML=back+`<div class="bar"><span>📜</span>નિયમો<button class="add" data-add="rules">➕</button></div>${S.rules.map((p,i)=>`<div class="li"><span class="tx">${gu(i+1)}. ${esc(p)}</span><button class="ib" data-ei="rules:${i}">✏️</button></div>`).join('')}`;
+  if(sub=='acc'){const tot=S.exp.reduce((a,b)=>a+(+b.a||0),0);h.innerHTML=back+`<div class="bar"><span>💰</span>હિસાબ<button class="add" data-add="acc">➕</button></div><div class="tot"><span>કુલ ખર્ચ</span><span>₹ ${gu(tot.toLocaleString('en-IN'))}</span></div>${S.exp.map((p,i)=>`<div class="li"><span class="tx">${esc(p.t)}</span><b style="color:var(--gold)">₹ ${gu((+p.a||0).toLocaleString('en-IN'))}</b><button class="ib" data-ei="acc:${i}">✏️</button></div>`).join('')||'<div class="emp">હજી કોઈ ખર્ચ નથી.</div>'}`}
+}
+function editList(kind,i){
+  const isNew=i<0;
+  if(kind=='acc'){const e=isNew?{t:'',a:''}:S.exp[i];modal({title:'હિસાબ',fields:[{k:'t',l:'વિગત',v:e.t},{k:'a',l:'રકમ (₹)',t:'number',v:e.a}],save:v=>{if(!v.t.trim())return;isNew?S.exp.push(v):S.exp[i]=v;save();renderMore()},del:isNew?null:()=>{S.exp.splice(i,1);save();renderMore()}});return}
+  const arr=kind=='pack'?S.pack:S.rules,cur=isNew?'':(kind=='pack'?arr[i].t:arr[i]);
+  modal({title:kind=='pack'?'શું લેવું':'નિયમ',fields:[{k:'t',l:'લખાણ',v:cur}],save:v=>{if(!v.t.trim())return;if(kind=='pack'){isNew?arr.push({t:v.t,d:0}):arr[i].t=v.t}else{isNew?arr.push(v.t):arr[i]=v.t}save();renderMore()},del:isNew?null:()=>{arr.splice(i,1);save();renderMore()}});
+}
+function settings(){
+  modal({title:'તારીખ અને નામ',fields:[{k:'n',l:'યાત્રાનું નામ',v:S.name},{k:'s',l:'યાત્રા શરૂ તારીખ',t:'date',v:S.start}],save:v=>{if(v.n.trim())S.name=v.n.trim();if(v.s)S.start=v.s;document.title=S.name;save();init()}});
+}
+/* ---------- મોડલ / ટોસ્ટ ---------- */
+function modal({title,info,fields,save:sv,del}){
+  const ov=document.createElement('div');ov.className='ov';
+  ov.innerHTML=`<div class="sheet"><h3>${esc(title)}</h3>${info||''}${fields.map(f=>`<label>${f.l}</label>${f.t=='select'?`<select data-k="${f.k}">${f.o.map(o=>`<option ${o==f.v?'selected':''}>${o}</option>`).join('')}</select>`:f.t=='area'?`<textarea data-k="${f.k}" rows="4">${esc(f.v)}</textarea>`:`<input data-k="${f.k}" type="${f.t||'text'}" value="${esc(f.v)}">`}`).join('')}<div class="btns"><button class="b1" data-s>સાચવો</button><button class="b2" data-c>રદ</button>${del?'<button class="b3" data-d>🗑</button>':''}</div></div>`;
+  document.body.appendChild(ov);
+  ov.onclick=e=>{const t=e.target;
+    if(t==ov||t.dataset.c!==undefined)ov.remove();
+    else if(t.dataset.s!==undefined){const v={};ov.querySelectorAll('[data-k]').forEach(i=>v[i.dataset.k]=i.value);ov.remove();sv(v)}
+    else if(t.dataset.d!==undefined){ov.remove();del()}};
+}
+function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),1800)}
+/* ---------- રેન્ડર / ઇવેન્ટ ---------- */
+function show(t){tab=t;document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t==t));document.querySelectorAll('.tab').forEach((x,i)=>x.classList.toggle('on',i==t));$('main').scrollTop=0}
+function render(){if(sel>=nDays())sel=0;renderDay();renderAll();renderPlaces();renderYat();renderMore();setLoc();tick()}
+function init(){const t=todayIdx();sel=t>=0?t:0;render()}
+document.addEventListener('click',e=>{
+  const g=s=>e.target.closest(s);let x;
+  if(x=g('nav button')){sub=null;show(+x.dataset.t);renderMore();return}
+  if(x=g('[data-day]')){sel=+x.dataset.day;render();show(0);return}
+  if(x=g('[data-ed]')){editItem(+x.dataset.ed);return}
+  if(g('#addit')){editItem(-1);return}
+  if(x=g('[data-pl]')||g('[data-pn]')){placeSheet(x.dataset.pl||x.dataset.pn);return}
+  if(g('#yadd')){editYat(-1);return}
+  if(g('#padd')){addPlace();return}
+  if(x=g('[data-ye]')){editYat(+x.dataset.ye);return}
+  if(x=g('[data-yc]')){const y=S.yat[+x.dataset.yc],t=`${y.n}\n${y.a?'ઉંમર: '+y.a+'\n':''}${y.p?'ફોન: '+y.p:''}`;try{navigator.clipboard.writeText(t).then(()=>toast('કૉપિ થયું'),()=>toast('કૉપિ ન થયું'))}catch(_){toast('કૉપિ ન થયું')}return}
+  if(x=g('[data-yf]')){yf=x.dataset.yf;renderYat();return}
+  if(x=g('[data-ys]')){ys=ys==x.dataset.ys?'':x.dataset.ys;renderYat();return}
+  if(x=g('[data-ei]')){const[k,i]=x.dataset.ei.split(':');e.preventDefault();editList(k,+i);return}
+  if(x=g('[data-add]')){editList(x.dataset.add,-1);return}
+  if(x=g('[data-m]')){const m=x.dataset.m;
+    if(m=='back'){sub=null;renderMore()}
+    else if(['pack','rules','acc'].includes(m)){sub=m;renderMore()}
+    else if(m=='set')settings();
+    else if(m=='today'){const t=todayIdx();if(t>=0){sel=t;render();show(0)}else{sel=0;render();show(0);toast('આજે યાત્રા નથી • દિવસ ૧ બતાવ્યો')}}
+    else if(m=='edit'){S.edit=!S.edit;save();renderDay();renderMore();toast(S.edit?'ફેરફાર ચાલુ':'ફેરફાર બંધ')}
+    else if(m=='test'){S.test=!S.test;save();init();toast(S.test?'ટેસ્ટ ચાલુ: કાલથી ૫ દિવસ':'ટેસ્ટ બંધ')}
+    return}
+});
+document.addEventListener('change',e=>{const i=e.target.dataset.pk;if(i!==undefined){S.pack[i].d=e.target.checked?1:0;save();renderMore()}});
+let tx=null;$('t0').addEventListener('touchstart',e=>tx=e.touches[0].clientX,{passive:true});
+$('t0').addEventListener('touchend',e=>{if(tx==null)return;const dx=e.changedTouches[0].clientX-tx;tx=null;if(Math.abs(dx)>60){sel=Math.max(0,Math.min(nDays()-1,sel+(dx<0?1:-1)));render()}});
+document.title=S.name;init();setInterval(tick,1000);
+</script>
+</body>
+</html>
