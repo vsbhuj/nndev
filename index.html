@@ -183,6 +183,7 @@ nav button.on{color:var(--or)}nav button.on:before{content:"";position:absolute;
 .gl .tx{white-space:pre-line}.gl .scb .sc .sch{min-height:40px;font-size:13.5px}.gl .scb .scb{margin-left:4px}.gl .scb{white-space:normal;padding:8px 6px 2px 10px;font-size:14px;line-height:1.6;color:#eadce4}
 .ltab{display:flex;gap:8px;margin:4px 0 10px}.ltab button{flex:1;border:0;border-radius:12px;padding:11px 4px;background:#2c2036;color:#f1e6d8;font:inherit;font-weight:700;font-size:13px}.ltab .a{background:#e58a3e;color:#1a0f08}.gl .swn{display:flex;justify-content:space-between;gap:8px;margin:4px 0 2px 6px;background:#2a1d2a;border-left:4px solid #e0c07a;border-radius:10px;padding:8px 12px;font-size:13.5px;cursor:pointer}.gl .swn small{opacity:.7;flex:none}.fb.sw{font-size:14px}
 .vw [data-sed],.vw [data-addsec],.vw [data-eds],.vw .fb.up,.vw .fbar:has(.up),.vw [data-del],.vw .sp[data-sp]:not(.on),.vw .fb[data-loc]:not(.sw),.vw .lnk[data-loc],.vw [data-pup]{display:none!important}
+.pkt{display:flex;gap:8px;margin-bottom:8px}.pkt button{flex:1;border:0;border-radius:12px;padding:10px 4px;background:var(--c4);color:#fff;font:inherit;font-weight:700;font-size:13px}.pkr{display:flex;align-items:center;gap:10px;background:var(--card);border:2px solid var(--bd);border-radius:14px;padding:10px 12px;margin:6px 0;font-weight:800;cursor:pointer}.pkr.sm{padding:7px 10px;font-size:13.5px;font-weight:700}.pks{margin:0 0 4px 22px}.pkn{flex:1;min-width:0}.pka{color:var(--mut);font-size:13px;padding:4px 2px;white-space:nowrap}.pkc{width:24px;height:24px;border-radius:7px;border:2px solid var(--mut);display:flex;align-items:center;justify-content:center;flex:none;font-size:15px;color:#2a1206}.pkc.on{background:var(--or);border-color:var(--or)}.pkc.part{background:var(--gold);border-color:var(--gold)}.pkbar{height:10px;border-radius:6px;background:var(--c6);overflow:hidden;margin-top:10px}.pkbar i{display:block;height:100%;width:0;background:var(--or);transition:width .2s}
 </style>
 </head>
 <body>
@@ -219,7 +220,7 @@ nav button.on{color:var(--or)}nav button.on:before{content:"";position:absolute;
 <div class="cat soon"><div class="ic">🛕</div><div><b>દક્ષિણ ભારત યાત્રા</b><small>રામેશ્વર • મદુરાઈ • કન્યાકુમારી</small></div><span class="tag">જલ્દી આવશે</span></div>
 <div class="lb" style="margin-top:14px">📖 તીર્થ ભંડાર</div>
 <div class="r2"><div class="hb" id="hm">🕉 મહિમા</div></div>
-<div class="r2"><a class="hb pri" href="yatra-sthalo.pdf" download target="_blank" rel="noopener" id="hpdf">📄 PDF ડાઉનલોડ / શેર</a></div></div>
+<div class="r2"><button class="hb pri" id="hpdf">📄 PDF બનાવો / શેર</button></div></div>
 <div id="hv"></div></div>
 <div id="upd"><span>🆕 એપનું નવું વર્ઝન આવ્યું છે</span><button id="updb">🔄 અપડેટ કરો</button></div>
 <div id="prt"></div>
@@ -611,7 +612,84 @@ const THEMES={'મરૂન':{'--bg':'#190e14','--card':'#22141f','--bd':'#3a244
 'કાળો':{'--bg':'#000','--card':'#141414','--bd':'#333','--gold':'#f2d27a','--bar':'#1e1e1e','--mar':'#444','--c2':'#1c1c1c','--c3':'#0a0a0a','--c4':'#1b1b1b','--c5':'#101010','--c6':'#080808','sw':'#444'}};
 function applyTheme(){const t=THEMES[S.theme]||THEMES['મરૂન'];const r=document.documentElement.style;Object.keys(t).forEach(k=>{if(k[0]=='-')r.setProperty(k,t[k])})}
 applyTheme();
-function printAll(){const a=places();$('prt').innerHTML='<h1>'+esc(S.name)+'</h1>'+a.map(p=>{const g=glFull(p.n).replace(/^§+ /gm,'• ');return '<h2>'+esc(p.n)+'</h2><p>'+esc(g)+'</p>'}).join('');setTimeout(()=>window.print(),100)}
+/* ---------- PDF નિકાસ (ઍપની અંદર જ બને) ---------- */
+function parseTree(t){const root={b:[],c:[]};let st=[{lv:0,n:root}];
+ String(t).split('\n').forEach(l=>{const m=l.match(/^(§{2,}) (.*)$/);
+  if(m){const lv=m[1].length-1;while(st[st.length-1].lv>=lv)st.pop();const nd={h:m[2],b:[],c:[]};st[st.length-1].n.c.push(nd);st.push({lv,n:nd})}
+  else if(l.startsWith('## ')){st=[{lv:0,n:root}];root.c.push({g:l.slice(3)})}
+  else st[st.length-1].n.b.push(l)});return root}
+const pdfTops=n=>parseTree(glFull(n)).c.map((x,i)=>({x,i})).filter(o=>!o.x.g);
+function pdfUnits(n,idx){const U=[],root=parseTree(glFull(n)),X=s=>esc(s);
+ const imgs=(a,h)=>a.length?'<div style="padding-bottom:8px;display:flex;gap:6px">'+a.slice(0,3).map(u=>'<img src="'+u+'" style="height:'+h+'px;width:'+(a.length==1?'360':'228')+'px;object-fit:cover;border-radius:6px" />').join('')+'</div>':'';
+ const lines=(txt,pad)=>String(txt||'').split('\n').forEach(l=>{l=l.trim();if(!l)return;const m=l.match(/^[•\-\*]\s*(.*)$/);U.push({h:m?'<div style="padding:0 0 4px '+(pad+16)+'px;text-indent:-12px">• '+X(m[1])+'</div>':'<div style="padding:0 0 5px '+pad+'px">'+X(l)+'</div>'})});
+ U.push({h:'<div style="font-size:23px;font-weight:800;color:#5a1a3a;border-bottom:2px solid #c9923f;padding:0 0 4px;margin-bottom:8px">'+X(n)+'</div>',br:1,kw:1});
+ const ph=[];if(PHOTO[n])ph.push(PHOTO[n]);((S.ph&&S.ph[n])||[]).forEach(u=>ph.push(u));if(ph.length)U.push({h:imgs(ph,150)});
+ const want=new Set(idx);if(want.has('intro'))lines(root.b.join('\n'),0);
+ let curG=null,gDone=null;
+ const walk=(nd,d,pre)=>{let c=0;nd.c.forEach(it=>{if(it.g)return;c++;const k=n+'|'+it.h,num=pre+gu(c)+'.',pad=d*14;
+   U.push({h:'<div style="padding:6px 0 3px '+pad+'px;font-size:'+(d?16:18)+'px;font-weight:800;color:'+(d?'#7a2a4a':'#8a3a12')+'">'+num+' '+X(it.h)+'</div>',kw:1});
+   const sw=S.sw&&S.sw[k];if(sw)U.push({h:'<div style="padding:0 0 4px '+pad+'px;color:#555;font-size:13.5px">📝 સ્થાન: '+X(sw)+'</div>'});
+   const sp=(S.sph&&S.sph[k])||[];if(sp.length)U.push({h:'<div style="padding-left:'+pad+'px">'+imgs(sp,120)+'</div>'});
+   lines((S.secov&&S.secov[k]!=null)?S.secov[k]:it.b.join('\n'),pad);
+   walk(it,d+1,num+' ')})};
+ const top=root.c.map((x,i)=>({x,i}));let c=0;
+ top.forEach(({x,i})=>{if(x.g){curG=x.g;gDone=false;return}c++;if(!want.has(i))return;
+   if(curG&&!gDone){U.push({h:'<div style="padding:8px 0 2px;font-size:14px;font-weight:800;color:#a06a10;letter-spacing:.3px">'+X(curG)+'</div>',kw:1});gDone=true}
+   const k=n+'|'+x.h;
+   U.push({h:'<div style="padding:8px 0 3px;font-size:18px;font-weight:800;color:#8a3a12">'+gu(c)+'. '+X(x.h)+'</div>',kw:1});
+   const sw=S.sw&&S.sw[k];if(sw)U.push({h:'<div style="padding:0 0 4px;color:#555;font-size:13.5px">📝 સ્થાન: '+X(sw)+'</div>'});
+   const sp=(S.sph&&S.sph[k])||[];if(sp.length)U.push({h:imgs(sp,120)});
+   lines((S.secov&&S.secov[k]!=null)?S.secov[k]:x.b.join('\n'),0);walk(x,1,gu(c)+'.'+' ')});
+ return U}
+const PGW=794,PGH=1123,PGP=44;
+const PGF="font:15px/1.6 'Noto Sans Gujarati','Noto Sans',sans-serif";
+function paginate(units){const m=document.createElement('div');m.style.cssText='position:absolute;left:-9999px;top:0;width:'+(PGW-80)+'px;'+PGF+';color:#000';
+ m.innerHTML=units.map(u=>'<div>'+u.h+'</div>').join('');document.body.appendChild(m);
+ const hs=[...m.children].map(e=>e.offsetHeight);m.remove();
+ const max=PGH-PGP*2-24,pages=[];let cur=[],used=0,hasBody=0;
+ units.forEach((u,i)=>{const h=hs[i],nx=u.kw&&units[i+1]?hs[i+1]:0;
+  if(cur.length&&(u.br&&hasBody||used+h+nx>max)){pages.push(cur);cur=[];used=0;hasBody=0}
+  cur.push(u);used+=h;if(!u.t)hasBody=1});
+ if(cur.length)pages.push(cur);return pages}
+async function pageJpg(us,no){const html='<div style="position:relative;width:'+PGW+'px;height:'+PGH+'px;box-sizing:border-box;padding:'+PGP+'px 40px;background:#fff;color:#111;overflow:hidden;'+PGF+'">'+us.map(u=>u.h).join('')+'<div style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#888">— '+gu(no)+' —</div></div>';
+ const svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+PGW+'" height="'+PGH+'"><foreignObject width="100%" height="100%"><div xmlns="http://www.w3.org/1999/xhtml">'+html+'</div></foreignObject></svg>';
+ const img=new Image();await new Promise((r,j)=>{img.onload=r;img.onerror=()=>j(new Error('img'));img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg)});
+ const sc=1.5,c=document.createElement('canvas');c.width=PGW*sc;c.height=PGH*sc;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(img,0,0,c.width,c.height);
+ const b=atob(c.toDataURL('image/jpeg',.8).split(',')[1]),a=new Uint8Array(b.length);for(let i=0;i<b.length;i++)a[i]=b.charCodeAt(i);return{u8:a,w:c.width,h:c.height}}
+function mkPdf(J){const enc=new TextEncoder(),P=[],xr=[];let off=0;const add=b=>{if(typeof b=='string')b=enc.encode(b);P.push(b);off+=b.length};
+ const obj=(n,body)=>{xr[n]=off;add(n+' 0 obj\n'+body+'\nendobj\n')},N=J.length;
+ add('%PDF-1.4\n');obj(1,'<</Type/Catalog/Pages 2 0 R>>');obj(2,'<</Type/Pages/Count '+N+'/Kids['+J.map((_,i)=>(5+3*i)+' 0 R').join(' ')+']>>');
+ J.forEach((j,i)=>{const im=3+3*i,ct=4+3*i,pg=5+3*i;xr[im]=off;add(im+' 0 obj\n<</Type/XObject/Subtype/Image/Width '+j.w+'/Height '+j.h+'/ColorSpace/DeviceRGB/BitsPerComponent 8/Filter/DCTDecode/Length '+j.u8.length+'>>\nstream\n');add(j.u8);add('\nendstream\nendobj\n');
+  const cs='q 595 0 0 842 0 0 cm /I'+i+' Do Q';obj(ct,'<</Length '+cs.length+'>>\nstream\n'+cs+'\nendstream');
+  obj(pg,'<</Type/Page/Parent 2 0 R/MediaBox[0 0 595 842]/Resources<</XObject<</I'+i+' '+im+' 0 R>>>>/Contents '+ct+' 0 R>>')});
+ const tot=3+3*N,xo=off;let x='xref\n0 '+tot+'\n0000000000 65535 f \n';for(let n=1;n<tot;n++)x+=String(xr[n]).padStart(10,'0')+' 00000 n \n';
+ add(x+'trailer\n<</Size '+tot+'/Root 1 0 R>>\nstartxref\n'+xo+'\n%%EOF');return new Blob(P,{type:'application/pdf'})}
+function pdfPick(){const mp=mainPlaces().map(p=>p.n),sel={},open={};
+ const ov=document.createElement('div');ov.className='ov';document.body.appendChild(ov);
+ const cnt=()=>Object.values(sel).filter(s=>s.size).length;
+ const draw=()=>{ov.innerHTML='<div class="sheet"><h3>📄 PDF માં કયા સ્થળ?</h3><div class="pkt"><button data-all>બધા પસંદ કરો</button><button data-none>બધા કાઢો</button></div>'+mp.map(n=>{const T=pdfTops(n),s=sel[n]||new Set(),all=T.length&&T.every(o=>s.has(o.i));
+   return '<div class="pkr" data-pkp="'+esc(n)+'"><span class="pkc'+(all?' on':(s.size?' part':''))+'">'+(all?'✓':(s.size?'–':''))+'</span><span class="pkn">'+esc(n)+'</span><span class="pka" data-pkop="'+esc(n)+'">'+(open[n]?'▴':'▾')+' '+gu(T.length)+'</span></div>'+(open[n]?'<div class="pks">'+T.map(o=>'<div class="pkr sm" data-pksb="'+esc(n)+'" data-pki="'+o.i+'"><span class="pkc'+(s.has(o.i)?' on':'')+'">'+(s.has(o.i)?'✓':'')+'</span><span class="pkn">'+esc(o.x.h)+'</span></div>').join('')+'</div>':'')}).join('')
+   +'<div class="btns" style="position:sticky;bottom:-8px;padding-top:8px;background:var(--c5)"><button class="b1" data-go '+(cnt()?'':'style="opacity:.45"')+'>📄 PDF બનાવો ('+gu(cnt())+')</button><button class="b2" data-c>બંધ</button></div></div>'};
+ draw();
+ ov.onclick=async e=>{const t=e.target,g=s=>t.closest(s);
+  if(t==ov||g('[data-c]')){ov.remove();return}
+  if(g('[data-all]')){mp.forEach(n=>sel[n]=new Set(['intro',...pdfTops(n).map(o=>o.i)]));draw();return}
+  if(g('[data-none]')){mp.forEach(n=>delete sel[n]);draw();return}
+  let x;if(x=g('[data-pkop]')){const n=x.dataset.pkop;open[n]=!open[n];draw();return}
+  if(x=g('[data-pksb]')){const n=x.dataset.pksb,i=+x.dataset.pki,s=sel[n]=sel[n]||new Set();s.has(i)?s.delete(i):s.add(i);if([...s].filter(v=>v!=='intro').length){s.add('intro')}else s.clear();draw();return}
+  if(x=g('[data-pkp]')){const n=x.dataset.pkp,T=pdfTops(n),s=sel[n]||new Set();if(T.every(o=>s.has(o.i))&&T.length)delete sel[n];else sel[n]=new Set(['intro',...T.map(o=>o.i)]);draw();return}
+  if(g('[data-go]')){if(!cnt()){toast('પહેલાં સ્થળ પસંદ કરો');return}
+   const U=[{h:'<div style="font-size:26px;font-weight:800;color:#5a1a3a;padding:0 0 4px">'+esc(S.name||'નરનારાયણ દેવ યાત્રા')+'</div><div style="font-size:15px;color:#777;padding-bottom:14px">તીર્થ મહિમા</div>',t:1}];
+   mp.forEach(n=>{if(sel[n]&&sel[n].size)pdfUnits(n,[...sel[n]]).forEach(u=>U.push(u))});
+   ov.innerHTML='<div class="sheet"><h3>📄 PDF બની રહી છે…</h3><div class="inf" data-st>તૈયારી ચાલુ છે</div><div class="pkbar"><i data-bar></i></div></div>';
+   try{const pages=paginate(U),J=[];for(let i=0;i<pages.length;i++){ov.querySelector('[data-st]').textContent='પેજ '+gu(i+1)+' / '+gu(pages.length);ov.querySelector('[data-bar]').style.width=Math.round(i/pages.length*100)+'%';await new Promise(r=>setTimeout(r,30));J.push(await pageJpg(pages[i],i+1))}
+    const blob=mkPdf(J),f=new File([blob],'narnarayan-dev-yatra.pdf',{type:'application/pdf'}),mb=(blob.size/1048576).toFixed(1);
+    ov.innerHTML='<div class="sheet"><h3>✅ PDF તૈયાર</h3><div class="inf">'+gu(pages.length)+' પેજ • '+gu(mb)+' MB</div><div class="btns"><button class="b1" data-sh>📤 શેર કરો</button><button class="b2" data-dl>⬇ સાચવો</button></div><div class="btns"><button class="b2" data-c>બંધ</button></div></div>';
+    ov.onclick=ev=>{const q=ev.target;if(q==ov||q.closest('[data-c]')){ov.remove();return}
+     if(q.closest('[data-sh]')){if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f],title:'તીર્થ મહિમા'}).catch(()=>{});else toast('શેર ઉપલબ્ધ નથી, “સાચવો” દબાવો')}
+     else if(q.closest('[data-dl]')){const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=f.name;document.body.appendChild(a);a.click();setTimeout(()=>{a.remove();URL.revokeObjectURL(a.href)},4000)}};
+   }catch(err){ov.innerHTML='<div class="sheet"><h3>⚠️ PDF બની શકી નહીં</h3><div class="inf">ફરી પ્રયત્ન કરો. ઓછા સ્થળ પસંદ કરવાથી પણ ચાલશે.</div><div class="btns"><button class="b2" data-c>બંધ</button></div></div>';ov.onclick=ev=>{if(ev.target==ov||ev.target.closest('[data-c]'))ov.remove()};console.error(err)}}}}
+function printAll(){pdfPick()}
 function openMenu(){const ov=document.createElement('div');ov.className='ov';
  ov.innerHTML='<div class="sheet"><h3>☰ સેટિંગ</h3><label>થીમ / કલર</label><div class="thm">'+Object.keys(THEMES).map(k=>'<button data-th="'+k+'" class="'+((S.theme||'મરૂન')==k?'on':'')+'" style="background:'+THEMES[k].sw+'">'+k+'</button>').join('')+'</div><button class="sl" data-a="print">🖨 બધા સ્થળોનો મહિમા – આઉટપુટ (પ્રિન્ટ / PDF)</button><button class="sl" data-a="edit">✏️ '+(S.edit?'ફેરફાર બંધ કરો':'ફેરફાર ચાલુ કરો')+'</button><button class="sl" data-a="home">🏠 હોમ પેજ</button><button class="sl" data-a="upd">🔄 નવું વર્ઝન તપાસો / રિફ્રેશ</button><button class="sl" data-a="set">📅 તારીખ અને નામ</button><div style="text-align:center;color:var(--mut);font-size:12px;margin-top:8px">વર્ઝન '+VER+'</div><div class="btns"><button class="b2" data-c>બંધ</button></div></div>';
  document.body.appendChild(ov);
@@ -624,7 +702,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}}}
 
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-35';
+const VER='2026-11-26-36';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
@@ -635,7 +713,7 @@ chkVer();setInterval(chkVer,300000);document.addEventListener('visibilitychange'
 /* ---------- જાહેર હોમ પેજ: નીચે “વર્ઝન” પર બે વાર ટેપ કરતાં યાત્રા ખૂલે ---------- */
 function showHome(){$('hcnt').textContent=gu(mainPlaces().length);$('hv').textContent='વર્ઝન '+VER;$('home').classList.add('on')}
 function openYatra(){$('home').classList.remove('on')}
-let ADM=false;document.body.classList.add('vw');
+$('hpdf').addEventListener('click',pdfPick);let ADM=false;document.body.classList.add('vw');
 (function(){let c=0,last=0;$('hv').addEventListener('click',()=>{const n=Date.now();c=(n-last<900)?c+1:1;last=n;if(c>=7){c=0;ADM=true;document.body.classList.remove('vw');toast('✏️ એડમિન મોડ ચાલુ');openYatra()}})})();
 function libSheet(title,body){const ov=document.createElement('div');ov.className='ov';ov.innerHTML='<div class="sheet"><h3>'+title+'</h3>'+body+'<div class="btns"><button class="b2" data-c>બંધ</button></div></div>';document.body.appendChild(ov);
  ov.onclick=e=>{const t=e.target.closest('[data-p]');if(e.target==ov||e.target.dataset.c!==undefined){ov.remove();return}if(t){placeSheet(t.dataset.p)}}}
