@@ -539,13 +539,13 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}}}
 
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-17';
+const VER='2026-11-26-18';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
- if(m&&m[1]!==VER){$('upd').classList.add('on');return true}else if(manual)toast('✅ તમારી પાસે નવું વર્ઝન છે')}catch(e){if(manual)toast('ઇન્ટરનેટ ચેક કરો')}return false}
+ if(m&&m[1]!==VER){let k='';try{k=sessionStorage.getItem('nnv')}catch(e){}if(k!==m[1]){try{sessionStorage.setItem('nnv',m[1])}catch(e){}refreshApp();return true}$('upd').classList.add('on');return true}else if(manual)toast('✅ તમારી પાસે નવું વર્ઝન છે')}catch(e){if(manual)toast('ઇન્ટરનેટ ચેક કરો')}return false}
 $('updb').onclick=refreshApp;
-setTimeout(chkVer,4000);setInterval(chkVer,300000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)chkVer()});
+chkVer();setInterval(chkVer,300000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)chkVer()});
 
 /* ---------- જાહેર હોમ પેજ: નીચે “વર્ઝન” પર બે વાર ટેપ કરતાં યાત્રા ખૂલે ---------- */
 function showHome(){$('hcnt').textContent=gu(mainPlaces().length);$('hv').textContent='વર્ઝન '+VER;$('home').classList.add('on')}
