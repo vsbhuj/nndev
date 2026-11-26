@@ -1,4 +1,4 @@
-const C='nndev-v3',F=['./','index.html','logo.png','icon-192.png','icon-512.png','apple-touch-icon.png','favicon.png','manifest.webmanifest'];
+const C='nndev-v4',F=['./','index.html','logo.png','icon-192.png','icon-512.png','apple-touch-icon.png','favicon.png','manifest.webmanifest'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(F)).then(()=>self.skipWaiting()))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!=C).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
 self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;
