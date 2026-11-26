@@ -350,7 +350,7 @@ function stopTitle(d){const st=d.items.filter(x=>!x.n).map(x=>x.x);return st.len
 function renderDay(){
   const d=S.days[sel];
   $('t0').innerHTML=`<div class="hero"><span class="pill">દિવસ ${gu(sel+1)} • ${dFull(sel)}</span><h1>${esc(stopTitle(d))}</h1><div class="nt">🛏 રાત્રિ રોકાણ: ${esc(key(d.night))}</div></div>
-  ${d.items.map((r,i)=>`<div class="row"><div class="tm">${esc(r.t)}</div><div class="tx">${esc(r.x)}</div>${r.pl&&isPl(r.pl)?`<button class="ib t" data-pl="${esc(r.pl)}" aria-label="સ્થળ">🛕</button>`:''}<button class="ib" data-ed="${i}" aria-label="ફેરફાર">✏️</button></div>`).join('')}
+  ${d.items.map((r,i)=>{if(r.pl&&CHILD[r.pl]&&d.items.some(q=>q.pl===CHILD[r.pl]))return '';const kids=r.pl?d.items.filter(q=>q.pl&&CHILD[q.pl]===r.pl).map(q=>q.pl):[];return `<div class="row"><div class="tm">${esc(r.t)}</div><div class="tx">${esc(r.x)}${kids.length?'<small style="display:block;color:var(--gold);margin-top:3px">અંદર: '+esc(kids.join(', '))+'</small>':''}</div>${r.pl&&isPl(r.pl)?`<button class="ib t" data-pl="${esc(r.pl)}" aria-label="સ્થળ">🛕</button>`:''}<button class="ib" data-ed="${i}" aria-label="ફેરફાર">✏️</button></div>`}).join('')}
   <div class="plus"><button id="addit" aria-label="કાર્યક્રમ ઉમેરો">+</button><span>બીજું ઉમેરો</span></div>`;
 }
 function editItem(i){
@@ -536,7 +536,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}}}
 
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-12';
+const VER='2026-11-26-13';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
