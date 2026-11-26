@@ -360,6 +360,7 @@ body.lt .row .tx,body.lt .hero h1,body.lt .yr .n,body.lt #home .cat b,body.lt .s
 body.lt .hero h1{font-size:23px}body.lt .row .tx{font-size:17px}
 body.lt .clock{font-family:'Anek Gujarati',system-ui,sans-serif;font-weight:700;color:#2b1d4e;letter-spacing:-1px}
 body.lt .gl,body.lt .pgt{font-size:16px;line-height:1.7;color:#2b1d4e}
+.pgt .ph4{font-size:1.12em;font-weight:800;margin:18px 0 6px;padding-bottom:4px;border-bottom:1.5px solid #c9923f;line-height:1.4}.pgt .ph4:first-child{margin-top:0}
 body.lt .pg .pi>span:nth-child(2) .nm{color:#fff;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.6)!important}
 body.lt .pg .pi>span:nth-child(2) .sb{color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6)!important}
 body.lt .pg .pi>span:nth-child(2){background:linear-gradient(transparent,rgba(43,29,78,.55))}
@@ -629,7 +630,7 @@ function splitPages(t){const blocks=String(t).split('\n').filter(l=>l.trim());co
  blocks.forEach(b=>{let parts=[b];if(b.length>PGLIM){parts=[];let s=b;while(s.length>PGLIM){let i=Math.max(s.lastIndexOf('. ',PGLIM),s.lastIndexOf('। ',PGLIM),s.lastIndexOf(' ',PGLIM));if(i<PGLIM*0.4)i=PGLIM;parts.push(s.slice(0,i+1).trim());s=s.slice(i+1).trim()}if(s)parts.push(s)}
   parts.forEach(p=>{if(n+p.length>PGLIM&&cur.length)push();cur.push(p);n+=p.length})});
  push();return pages.length?pages:[[]]}
-const fmtTx=t=>{let o='',ul=false;String(t).split('\n').forEach(l=>{const m=l.match(/^\s*[•\-\*]\s*(.*)$/);if(m){if(!ul){o+='<ul>';ul=true}o+='<li>'+esc(m[1])+'</li>'}else{if(ul){o+='</ul>';ul=false}if(l.trim())o+='<p>'+esc(l.trim())+'</p>'}});if(ul)o+='</ul>';return o};
+const fmtTx=t=>{let o='',ul=false;String(t).split('\n').forEach(l=>{const m=l.match(/^\s*[•\-\*]\s*(.*)$/);if(m){if(!ul){o+='<ul>';ul=true}o+='<li>'+esc(m[1])+'</li>'}else{if(ul){o+='</ul>';ul=false}if(/^◆ /.test(l.trim()))o+='<h4 class="ph4">'+esc(l.trim().slice(2))+'</h4>';else if(l.trim())o+='<p>'+esc(l.trim())+'</p>'}});if(ul)o+='</ul>';return o};
 function secPage(k){const [pn,hh]=[k.slice(0,k.indexOf('|')),k.slice(k.indexOf('|')+1)];const ov=pageOv();let ed=false;
  const isAdd=()=>S.add&&S.add[pn]&&S.add[pn].some(s=>s.h===hh);
  const fit=ta=>{ta.style.height='auto';ta.style.height=(ta.scrollHeight+4)+'px'};
@@ -670,12 +671,16 @@ function photoPage(k,after){const hh=k.slice(k.indexOf('|')+1),ov=pageOv();S.sph
  ov.onclick=e=>{const t=e.target;if(t==ov||t.closest('[data-x]'))ov.remove();else if(t.closest('[data-up]'))uploadSheet(k,upd);else if(t.closest('[data-del]')){if(!confirm('આ ફોટો કાઢી નાખવો છે?'))return;S.sph[k].splice(+t.closest('[data-del]').dataset.del,1);save();upd()}};
  }
 const pkHtml=(at,lbl,cls)=>'<div class="pk"><div class="pkc"><label class="pkb">📷<span>કેમેરા</span><input type="file" accept="image/*" capture="environment" hidden '+at+'></label><label class="pkb">🖼️<span>ફોટોસ (ગેલેરી)</span><input type="file" accept="image/*" multiple hidden '+at+'></label></div></div>';
+function foldLilas(nd,pn){nd.c.forEach(it=>{if(it.g||!it.c.length)return;
+  if(it.c.every(x=>!x.g&&!x.c.length)){it.c.forEach(x=>{const k=pn+'|'+x.h,o=pn&&S.secov&&S.secov[k];it.b.push('◆ '+x.h,...(o!=null&&o!==''&&o!==false?String(o).split('\n'):x.b))});it.c=[]}
+  else foldLilas(it,pn)})}
 function glHtml(t,pn){
   const root={b:[],c:[]};let st=[{lv:0,n:root}];
   String(t).split('\n').forEach(l=>{const m=l.match(/^(§{2,}) (.*)$/);
     if(m){const lv=m[1].length-1;while(st[st.length-1].lv>=lv)st.pop();const nd={h:m[2],b:[],c:[]};st[st.length-1].n.c.push(nd);st.push({lv,n:nd})}
     else if(l.startsWith('## ')){st=[{lv:0,n:root}];root.c.push({g:l.slice(3)})}
     else st[st.length-1].n.b.push(l)});
+  foldLilas(root,pn);
   const tx=(nd,top)=>{const s=esc(nd.b.join('\n').replace(/\n+$/,''));return s?(top?s:'<div class="tx">'+s+'</div>'):''};
   const rd=(nd,top)=>{let n=0,h=(top||!pn)?tx(nd,top):'';nd.c.forEach(it=>{if(it.g)h+='<div class="gg">'+esc(it.g)+'</div>';else{n++;const k=(pn||'')+'|'+it.h,ll=S.sg&&S.sg[k],sw=S.sw&&S.sw[k];const sp=(S.sph&&S.sph[k])||[];
     if(pn)SEC[k]={h:it.h,b:it.b.join('\n').replace(/\n+$/,''),pn};
@@ -854,9 +859,9 @@ function parseTree(t){const root={b:[],c:[]};let st=[{lv:0,n:root}];
   else if(l.startsWith('## ')){st=[{lv:0,n:root}];root.c.push({g:l.slice(3)})}
   else st[st.length-1].n.b.push(l)});return root}
 const pdfTops=n=>parseTree(glFull(n)).c.map((x,i)=>({x,i})).filter(o=>!o.x.g);
-function pdfUnits(n,idx){const U=[],root=parseTree(glFull(n)),X=s=>esc(s);
+function pdfUnits(n,idx){const U=[],root=parseTree(glFull(n)),X=s=>esc(s);foldLilas(root,n);
  const imgs=(a,h)=>a.length?'<div style="padding-bottom:8px;display:flex;gap:6px">'+a.slice(0,3).map(u=>'<img src="'+u+'" style="height:'+h+'px;width:'+(a.length==1?'360':'228')+'px;object-fit:cover;border-radius:6px" />').join('')+'</div>':'';
- const lines=(txt,pad)=>String(txt||'').split('\n').forEach(l=>{l=l.trim();if(!l)return;const m=l.match(/^[•\-\*]\s*(.*)$/);U.push({h:m?'<div style="padding:0 0 4px '+(pad+16)+'px;text-indent:-12px">• '+X(m[1])+'</div>':'<div style="padding:0 0 5px '+pad+'px">'+X(l)+'</div>'})});
+ const lines=(txt,pad)=>String(txt||'').split('\n').forEach(l=>{l=l.trim();if(!l)return;if(/^◆ /.test(l)){U.push({h:'<div style="padding:6px 0 3px '+pad+'px;font-size:16px;font-weight:800;color:#7a2a4a">'+X(l.slice(2))+'</div>',kw:1});return}const m=l.match(/^[•\-\*]\s*(.*)$/);U.push({h:m?'<div style="padding:0 0 4px '+(pad+16)+'px;text-indent:-12px">• '+X(m[1])+'</div>':'<div style="padding:0 0 5px '+pad+'px">'+X(l)+'</div>'})});
  U.push({h:'<div style="font-size:23px;font-weight:800;color:#5a1a3a;border-bottom:2px solid #c9923f;padding:0 0 4px;margin-bottom:8px">'+X(n)+'</div>',br:1,kw:1});
  const ph=[];if(PHOTO[n])ph.push(PHOTO[n]);((S.ph&&S.ph[n])||[]).forEach(u=>ph.push(u));if(ph.length)U.push({h:imgs(ph,150)});
  const want=new Set(idx);if(want.has('intro'))lines(root.b.join('\n'),0);
@@ -937,7 +942,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}
  }}
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-59';
+const VER='2026-11-26-60';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
