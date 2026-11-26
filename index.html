@@ -382,7 +382,7 @@ body.lt #home .ht img{content:url(th/logo.webp);float:right;height:74px;margin:0
 body.lt #home .ht h1{font-size:34px;line-height:1.08;max-width:240px;color:#4b1d8f;font-weight:800}
 body.lt #home .ht h1:after{width:150px;margin:6px 0 0;background-position:left center}
 body.lt #home .ht p{font-size:14px;color:#3d2a5c;margin-top:2px;font-weight:600}
-body.lt #home .hs{margin-top:auto;padding:30px 14px calc(env(safe-area-inset-bottom) + 44px);background:linear-gradient(170deg,rgba(243,232,254,.97),rgba(226,204,250,.97));border-top:2.5px solid #e8b53a;border-radius:30px 30px 0 0;box-shadow:0 -10px 30px rgba(80,30,140,.35),inset 0 2px 0 rgba(255,255,255,.8);position:relative}
+body.lt #home .hs{margin-top:auto;padding:40px 14px calc(env(safe-area-inset-bottom) + 44px);background:linear-gradient(170deg,rgba(243,232,254,.97),rgba(226,204,250,.97));border-top:2.5px solid #e8b53a;border-radius:30px 30px 0 0;box-shadow:0 -10px 30px rgba(80,30,140,.35),inset 0 2px 0 rgba(255,255,255,.8);position:relative}
 body.lt #home .hs:before{content:'';position:absolute;left:24px;top:-34px;width:62px;height:62px;border-radius:50%;background:#fff url(th/i-temple.webp) center/52px no-repeat;border:2.5px solid #e8b53a;box-shadow:0 6px 16px rgba(110,50,170,.35)}
 body.lt #home .lb{background:none;border:0;box-shadow:none;padding:0 0 6px 74px;font-size:15px;margin-top:-18px}
 body.lt #home .cat{padding:10px 12px}body.lt #home .cat .ic{width:46px;height:46px;font-size:24px}
@@ -424,7 +424,7 @@ body.lt #home .hst span.g{background:linear-gradient(#f7e2b4,#e9c46a);color:#4a2
   <button data-t="4"><span class="ic">☰</span>વધુ</button>
 </nav>
 <div id="home"><div class="ht"><img src="icon-192.png" alt=""><h1>નરનારાયણ દેવ યાત્રા</h1><p>તીર્થયાત્રાની માહિતી • મહિમા • ફોટા</p><div class="hst" id="hst"></div></div>
-<div class="hs"><div class="lb">🧭 યાત્રાની કેટેગરી</div>
+<div class="hs">
 <div class="cat"><div class="ic">🏔</div><div><b>ઉત્તર ભારત યાત્રા</b><small>ચાર ધામ • ઉત્તરાખંડ • કાશી • અયોધ્યા<br><span id="hcnt"></span> તીર્થ</small></div><span class="tag">ચાલુ</span></div>
 <div class="cat soon"><div class="ic">🛕</div><div><b>દક્ષિણ ભારત યાત્રા</b><small>રામેશ્વર • મદુરાઈ • કન્યાકુમારી</small></div><span class="tag">જલ્દી આવશે</span></div>
 <div style="height:6px"></div>
@@ -929,7 +929,7 @@ function demoData(){
  S.notes=S.notes||[];[{t:'પ્રસ્થાનનો સમય',d:'૨૧ સપ્ટે ૨૦૨૭, મંગળ',b:'ભુજ મંદિરથી સવારે ૫:૩૦ વાગ્યે બસ ઉપડશે. સૌએ ૫:૦૦ વાગ્યા સુધીમાં મંદિરે પહોંચી જવું.',imp:1},{t:'ઓળખપત્ર સાથે રાખવું',d:'આખી યાત્રા',b:'આધાર કાર્ડની અસલ અને બે ઝેરોક્ષ સાથે રાખવી. નેપાળમાં પ્રવેશ વખતે ઓળખપત્ર જરૂરી છે.',imp:1},{t:'હિમાલયમાં ઠંડી',d:'દિવસ ૫ થી ૧૨',b:'કેદારનાથ અને બદ્રીનાથમાં રાત્રે ઘણી ઠંડી હોય છે. સ્વેટર, શાલ, મોજાં અને ટોપી સાથે રાખવાં.'},{t:'દવાઓ',d:'',b:'નિયમિત લેતા હો તે દવાઓ પૂરતા પ્રમાણમાં સાથે રાખવી. ઊંચાઈ પર તકલીફ થાય તો તરત સંચાલકને જણાવવું.'},{t:'સંધ્યા આરતી – હર કી પૌડી',d:'૨૩ સપ્ટે ૨૦૨૭, સાંજે',b:'હરિદ્વારમાં સાંજે ગંગા આરતીમાં સૌએ સાથે જવાનું છે. ભીડમાં જૂથથી છૂટા ન પડવું.'}].forEach(n=>S.notes.push({...n,demo:1}));S.nseen=0;bellUp();save();renderYat();renderMore();toast('ડેમો નામ અને સૂચનાઓ ભર્યાં')}
 
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-56';
+const VER='2026-11-26-57';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
