@@ -56,7 +56,7 @@ main{flex:1;overflow-y:auto;padding:10px 12px 12px;-webkit-overflow-scrolling:to
 .hero .nt{color:var(--mut);font-size:13px}
 .row{display:flex;align-items:center;gap:12px;background:var(--card);border:2px solid var(--bd);border-radius:15px;padding:5px 6px 5px 12px;margin-bottom:7px;min-height:46px;gap:8px}
 .row .tm{flex:none;width:58px;color:var(--gold);font-weight:800;font-size:13px}
-.row .tx{flex:1;font-size:14.5px;line-height:1.3;font-weight:500}
+.row{cursor:pointer;-webkit-tap-highlight-color:transparent}.row:active{background:var(--c2)}.row .rch{flex:none;width:34px;height:34px;border-radius:10px;background:var(--mar);display:flex;align-items:center;justify-content:center;font-size:15px}.row .tx{flex:1;font-size:14.5px;line-height:1.3;font-weight:500}
 .ib{flex:none;width:34px;height:34px;border-radius:10px;border:0;background:var(--c2);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#fff}
 .ib.t{background:var(--mar)}
 .plus{display:flex;flex-direction:column;align-items:center;gap:6px;margin:14px 0 6px;color:var(--mut);font-size:12.5px;font-weight:600}.plus button{width:58px;height:58px;border-radius:50%;border:2.5px solid var(--gold);background:var(--bar);color:var(--gold);font-size:36px;line-height:1;font-weight:400;cursor:pointer;padding:0 0 4px;box-shadow:0 3px 12px rgba(0,0,0,.45)}
@@ -353,7 +353,7 @@ function stopTitle(d){const st=d.items.filter(x=>!x.n).map(x=>x.x);return st.len
 function renderDay(){
   const d=S.days[sel];
   $('t0').innerHTML=`<div class="hero"><span class="pill">દિવસ ${gu(sel+1)} • ${dFull(sel)}</span><h1>${esc(stopTitle(d))}</h1><div class="nt">🛏 રાત્રિ રોકાણ: ${esc(key(d.night))}</div></div>
-  ${d.items.map((r,i)=>{if(r.pl&&CHILD[r.pl]&&d.items.some(q=>q.pl===CHILD[r.pl]))return '';const kids=r.pl?d.items.filter(q=>q.pl&&CHILD[q.pl]===r.pl).map(q=>q.pl):[];return `<div class="row"><div class="tm">${esc(r.t)}</div><div class="tx">${esc(r.x)}${kids.length?'<small style="display:block;color:var(--gold);margin-top:3px">અંદર: '+esc(kids.join(', '))+'</small>':''}</div>${r.pl&&isPl(r.pl)?`<button class="ib t" data-pl="${esc(r.pl)}" aria-label="સ્થળ">🛕</button>`:''}<button class="ib" data-ed="${i}" aria-label="ફેરફાર">✏️</button></div>`}).join('')}
+  ${d.items.map((r,i)=>{if(r.pl&&CHILD[r.pl]&&d.items.some(q=>q.pl===CHILD[r.pl]))return '';const kids=r.pl?d.items.filter(q=>q.pl&&CHILD[q.pl]===r.pl).map(q=>q.pl):[];return `<div class="row" data-ri="${i}" role="button" tabindex="0"><div class="tm">${esc(r.t)}</div><div class="tx">${esc(r.x)}${kids.length?'<small style="display:block;color:var(--gold);margin-top:3px">અંદર: '+esc(kids.join(', '))+'</small>':''}</div><span class="rch">${r.pl&&isPl(r.pl)?'🛕':'✏️'}</span></div>`}).join('')}
   <div class="plus"><button id="addit" aria-label="કાર્યક્રમ ઉમેરો">+</button><span>બીજું ઉમેરો</span></div>`;
 }
 function editItem(i){
@@ -384,7 +384,7 @@ function glHtml(t){
   const tx=(nd,top)=>{const s=esc(nd.b.join('\n').replace(/\n+$/,''));return s?(top?s:'<div class="tx">'+s+'</div>'):''};
   const rd=(nd,top)=>{let n=0,h=tx(nd,top);nd.c.forEach(it=>{if(it.g)h+='<div class="gg">'+esc(it.g)+'</div>';else{n++;h+='<div class="sc"><button class="sch" data-sc><b>'+gu(n)+'</b><span>'+esc(it.h)+'</span><i>▾</i></button><div class="scb" hidden>'+rd(it,false)+'</div></div>'}});return h};
   return rd(root,true)}
-function placeSheet(n){
+function placeSheet(n,ri){
   const p=places().find(x=>x.n==n),g=GEO[n]||[n,0,0],q=encodeURIComponent(QRY[n]||g[0]||n),cust=S.cp.some(c=>c.n==n);
   const ov=document.createElement('div');ov.className='ov pv';
   const draw=()=>{
@@ -394,7 +394,7 @@ function placeSheet(n){
     <div class="bt2"><a class="bm" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${q}">📍 Google Maps</a></div>
     ${ph.length?`<div class="phs">${ph.map((u,i)=>`<div><img src="${u}" alt=""><button data-rp="${i}">✕</button></div>`).join('')}</div>`:''}
     <label class="bo w" style="display:block">📷 ફોટો ઉમેરો<input type="file" accept="image/*" multiple hidden data-file></label>
-    <button class="lnk" data-gl>✏️ મહિમા ફેરફાર</button>${cust?'<button class="lnk" data-dp style="margin-left:14px;color:#ff9aa8">🗑 સ્થળ કાઢો</button>':''}
+    ${ri!=null?'<button class="lnk" data-ri2>✏️ સમય / સ્થળ ફેરફાર</button><br>':''}<button class="lnk" data-gl>✏️ મહિમા ફેરફાર</button>${cust?'<button class="lnk" data-dp style="margin-left:14px;color:#ff9aa8">🗑 સ્થળ કાઢો</button>':''}
     </div>`;
   };
   draw();document.body.appendChild(ov);
@@ -404,6 +404,7 @@ function placeSheet(n){
     else if(t.closest('[data-sc]')){const b=t.closest('.sc'),x=b.querySelector(':scope>.scb');x.hidden=!x.hidden;b.classList.toggle('op',!x.hidden)}
     else if(t.closest('[data-pin]'))edit('પિન કોડ','p',S.pin,'text');
     else if(t.closest('[data-dt]'))edit('દર્શન સમય','d',S.dt,'text');
+    else if(t.closest('[data-ri2]')){ov.remove();editItem(ri)}
     else if(t.closest('[data-gl]'))edit('મહિમા','g',S.glory,'area');
     else if(t.closest('[data-dp]')){S.cp=S.cp.filter(c=>c.n!=n);delete S.glory[n];save();ov.remove();renderPlaces();renderDay()}
     else if(t.closest('[data-rp]')){S.ph[n].splice(+t.closest('[data-rp]').dataset.rp,1);save();draw()}};
@@ -478,6 +479,7 @@ document.addEventListener('click',e=>{
   if(x=g('nav button')){sub=null;show(+x.dataset.t);renderMore();return}
   if(x=g('[data-day]')){sel=+x.dataset.day;render();show(0);return}
   if(x=g('[data-ed]')){editItem(+x.dataset.ed);return}
+  if(x=g('[data-ri]')){const r=S.days[sel].items[+x.dataset.ri];if(r&&r.pl&&isPl(r.pl))placeSheet(r.pl,+x.dataset.ri);else editItem(+x.dataset.ri);return}
   if(g('#addit')){editItem(-1);return}
   if(x=g('[data-pl]')||g('[data-pn]')){placeSheet(x.dataset.pl||x.dataset.pn);return}
   if(g('#yadd')){editYat(-1);return}
@@ -539,7 +541,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}}}
 
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-18';
+const VER='2026-11-26-19';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
