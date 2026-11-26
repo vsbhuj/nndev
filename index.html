@@ -152,6 +152,22 @@ nav button.on{color:var(--or)}nav button.on:before{content:"";position:absolute;
 
 #upd{display:none;position:fixed;left:10px;right:10px;top:calc(env(safe-area-inset-top) + 8px);z-index:90;background:#f2c14e;color:#2b1624;border-radius:14px;padding:10px 12px;font-weight:800;font-size:14px;align-items:center;gap:10px;box-shadow:0 4px 18px rgba(0,0,0,.5)}
 #upd.on{display:flex}#upd span{flex:1}#upd button{border:0;border-radius:10px;padding:8px 12px;font-weight:800;background:#2b1624;color:#f2c14e;cursor:pointer;font-size:13px}
+
+#home{position:fixed;inset:0;z-index:40;background:var(--bg);overflow-y:auto;display:none;max-width:560px;margin:0 auto}
+#home.on{display:block}
+#home .ht{padding:calc(env(safe-area-inset-top) + 14px) 16px 14px;background:linear-gradient(180deg,#070a24,#10195a 60%,#27389a);border-bottom:5px solid var(--gold);text-align:center;color:#fff}
+#home .ht img{height:74px;border-radius:50%;margin-bottom:6px}#home .ht h1{margin:0;font-size:20px;font-weight:800}#home .ht p{margin:3px 0 0;font-size:12.5px;opacity:.9}
+#home .hs{padding:14px 14px 70px}#home .lb{font-size:13px;font-weight:800;color:var(--gold);margin:0 0 8px}
+#home .cat{display:flex;align-items:center;gap:12px;background:var(--card);border:2px solid var(--bd);border-radius:16px;padding:12px;margin-bottom:10px}
+#home .cat .ic{width:54px;height:54px;border-radius:14px;background:linear-gradient(180deg,#3d2623,#1f1218);display:flex;align-items:center;justify-content:center;font-size:28px;flex:none}
+#home .cat b{font-size:16px;display:block}#home .cat small{color:var(--mut);font-size:12.5px}
+#home .tag{margin-left:auto;font-size:11px;font-weight:800;border-radius:99px;padding:3px 10px;background:var(--mar);color:#fff;white-space:nowrap}
+#home .cat.soon{opacity:.6}#home .cat.soon .tag{background:var(--bd);color:var(--mut)}
+#home .r2{display:flex;gap:10px;margin-bottom:10px}#home .hb{flex:1;text-align:center;background:var(--card);border:2px solid var(--bd);border-radius:14px;padding:12px 6px;font-weight:800;font-size:14px;color:#fff;cursor:pointer;text-decoration:none}
+#home .hb.pri{background:var(--gold);color:#2b1624;border-color:var(--gold)}
+#hv{position:fixed;bottom:0;left:0;right:0;max-width:560px;margin:0 auto;text-align:center;font-size:11px;color:var(--mut);padding:12px;z-index:41;user-select:none;-webkit-user-select:none}
+.lst{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}.lst button{border:2px solid var(--bd);background:var(--c2);color:#fff;border-radius:12px;padding:9px 12px;font-weight:700;font-size:14px;cursor:pointer}
+.pg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}.pg button{border:0;padding:0;border-radius:12px;overflow:hidden;position:relative;background:var(--c2);aspect-ratio:1;cursor:pointer}.pg img{width:100%;height:100%;object-fit:cover;display:block}.pg span{position:absolute;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);color:#fff;font-size:11px;font-weight:700;padding:3px 4px}
 </style>
 </head>
 <body>
@@ -182,6 +198,14 @@ nav button.on{color:var(--or)}nav button.on:before{content:"";position:absolute;
   <button data-t="3"><span class="ic">👥</span>યાત્રિકો</button>
   <button data-t="4"><span class="ic">☰</span>વધુ</button>
 </nav>
+<div id="home"><div class="ht"><img src="icon-192.png" alt=""><h1>નરનારાયણ દેવ યાત્રા</h1><p>તીર્થયાત્રાની માહિતી • મહિમા • ફોટા</p></div>
+<div class="hs"><div class="lb">🧭 યાત્રાની કેટેગરી</div>
+<div class="cat"><div class="ic">🏔</div><div><b>ઉત્તર ભારત યાત્રા</b><small>ચાર ધામ • ઉત્તરાખંડ • કાશી • અયોધ્યા<br><span id="hcnt"></span> તીર્થ</small></div><span class="tag">ચાલુ</span></div>
+<div class="cat soon"><div class="ic">🛕</div><div><b>દક્ષિણ ભારત યાત્રા</b><small>રામેશ્વર • મદુરાઈ • કન્યાકુમારી</small></div><span class="tag">જલ્દી આવશે</span></div>
+<div class="lb" style="margin-top:14px">📖 તીર્થ ભંડાર</div>
+<div class="r2"><div class="hb" id="hm">🕉 મહિમા</div><div class="hb" id="hp">🖼 ફોટા</div></div>
+<div class="r2"><a class="hb pri" href="yatra-sthalo.pdf" download target="_blank" rel="noopener" id="hpdf">📄 PDF ડાઉનલોડ / શેર</a></div></div>
+<div id="hv"></div></div>
 <div id="upd"><span>🆕 એપનું નવું વર્ઝન આવ્યું છે</span><button id="updb">🔄 અપડેટ કરો</button></div>
 <div id="prt"></div>
 <script>
@@ -475,23 +499,34 @@ function applyTheme(){const t=THEMES[S.theme]||THEMES['મરૂન'];const r=do
 applyTheme();
 function printAll(){const a=places();$('prt').innerHTML='<h1>'+esc(S.name)+'</h1>'+a.map(p=>{const g=S.glory[p.n]!=null?S.glory[p.n]:(GLORY[p.n]||'');return '<h2>'+esc(p.n)+'</h2><p>'+esc(g)+'</p>'}).join('');setTimeout(()=>window.print(),100)}
 function openMenu(){const ov=document.createElement('div');ov.className='ov';
- ov.innerHTML='<div class="sheet"><h3>☰ સેટિંગ</h3><label>થીમ / કલર</label><div class="thm">'+Object.keys(THEMES).map(k=>'<button data-th="'+k+'" class="'+((S.theme||'મરૂન')==k?'on':'')+'" style="background:'+THEMES[k].sw+'">'+k+'</button>').join('')+'</div><button class="sl" data-a="print">🖨 બધા સ્થળોનો મહિમા – આઉટપુટ (પ્રિન્ટ / PDF)</button><button class="sl" data-a="edit">✏️ '+(S.edit?'ફેરફાર બંધ કરો':'ફેરફાર ચાલુ કરો')+'</button><button class="sl" data-a="upd">🔄 નવું વર્ઝન તપાસો / રિફ્રેશ</button><button class="sl" data-a="set">📅 તારીખ અને નામ</button><div style="text-align:center;color:var(--mut);font-size:12px;margin-top:8px">વર્ઝન '+VER+'</div><div class="btns"><button class="b2" data-c>બંધ</button></div></div>';
+ ov.innerHTML='<div class="sheet"><h3>☰ સેટિંગ</h3><label>થીમ / કલર</label><div class="thm">'+Object.keys(THEMES).map(k=>'<button data-th="'+k+'" class="'+((S.theme||'મરૂન')==k?'on':'')+'" style="background:'+THEMES[k].sw+'">'+k+'</button>').join('')+'</div><button class="sl" data-a="print">🖨 બધા સ્થળોનો મહિમા – આઉટપુટ (પ્રિન્ટ / PDF)</button><button class="sl" data-a="edit">✏️ '+(S.edit?'ફેરફાર બંધ કરો':'ફેરફાર ચાલુ કરો')+'</button><button class="sl" data-a="home">🏠 હોમ પેજ</button><button class="sl" data-a="upd">🔄 નવું વર્ઝન તપાસો / રિફ્રેશ</button><button class="sl" data-a="set">📅 તારીખ અને નામ</button><div style="text-align:center;color:var(--mut);font-size:12px;margin-top:8px">વર્ઝન '+VER+'</div><div class="btns"><button class="b2" data-c>બંધ</button></div></div>';
  document.body.appendChild(ov);
  ov.onclick=e=>{const t=e.target;if(t==ov||t.dataset.c!==undefined){ov.remove();return}
   if(t.dataset.th){S.theme=t.dataset.th;save();applyTheme();ov.querySelectorAll('.thm button').forEach(b=>b.classList.toggle('on',b.dataset.th==S.theme))}
   else if(t.dataset.a=='print'){ov.remove();printAll()}
   else if(t.dataset.a=='edit'){ov.remove();S.edit=!S.edit;save();renderDay();renderMore();toast(S.edit?'ફેરફાર ચાલુ':'ફેરફાર બંધ')}
+  else if(t.dataset.a=='home'){ov.remove();showHome()}
   else if(t.dataset.a=='upd'){ov.remove();chkVer(true).then(n=>{if(!n)setTimeout(()=>{if(confirm('ફરજિયાત રિફ્રેશ કરવું છે?'))refreshApp()},300)})}
   else if(t.dataset.a=='set'){ov.remove();settings()}}}
 
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-6';
+const VER='2026-11-26-7';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
  if(m&&m[1]!==VER){$('upd').classList.add('on');return true}else if(manual)toast('✅ તમારી પાસે નવું વર્ઝન છે')}catch(e){if(manual)toast('ઇન્ટરનેટ ચેક કરો')}return false}
 $('updb').onclick=refreshApp;
 setTimeout(chkVer,4000);setInterval(chkVer,300000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)chkVer()});
+
+/* ---------- જાહેર હોમ પેજ: નીચે “વર્ઝન” પર બે વાર ટેપ કરતાં યાત્રા ખૂલે ---------- */
+function showHome(){$('hcnt').textContent=gu(places().length);$('hv').textContent='વર્ઝન '+VER;$('home').classList.add('on')}
+function openYatra(){S.unl=1;save();$('home').classList.remove('on')}
+(function(){let last=0;$('hv').addEventListener('click',()=>{const n=Date.now();if(n-last<600){last=0;openYatra()}else last=n})})();
+function libSheet(title,body){const ov=document.createElement('div');ov.className='ov';ov.innerHTML='<div class="sheet"><h3>'+title+'</h3>'+body+'<div class="btns"><button class="b2" data-c>બંધ</button></div></div>';document.body.appendChild(ov);
+ ov.onclick=e=>{const t=e.target.closest('[data-p]');if(e.target==ov||e.target.dataset.c!==undefined){ov.remove();return}if(t){ov.remove();placeSheet(t.dataset.p)}}}
+$('hm').onclick=()=>libSheet('🕉 તીર્થ મહિમા','<div class="lst">'+places().map(p=>'<button data-p="'+esc(p.n)+'">'+esc(p.n)+'</button>').join('')+'</div>');
+$('hp').onclick=()=>{const a=places().map(p=>p.n).filter(n=>PHOTO[n]||(S.ph[n]&&S.ph[n].length));libSheet('🖼 ફોટા','<div class="pg">'+a.map(n=>'<button data-p="'+esc(n)+'"><img src="'+(PHOTO[n]||S.ph[n][0])+'"><span>'+esc(n)+'</span></button>').join('')+'</div>')};
+if(!S.unl)showHome();
 </script>
 </body>
 </html>
