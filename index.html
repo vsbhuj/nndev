@@ -182,7 +182,7 @@ nav button.on{color:var(--or)}nav button.on:before{content:"";position:absolute;
 .gl .sch span{flex:1;line-height:1.3}.gl .sch i{font-style:normal;color:var(--gold);transition:transform .15s}.gl .sc.op .sch i{transform:rotate(180deg)}
 .gl .tx{white-space:pre-line}.gl .scb .sc .sch{min-height:40px;font-size:13.5px}.gl .scb .scb{margin-left:4px}.gl .scb{white-space:normal;padding:8px 6px 2px 10px;font-size:14px;line-height:1.6;color:#eadce4}
 .ltab{display:flex;gap:8px;margin:4px 0 10px}.ltab button{flex:1;border:0;border-radius:12px;padding:11px 4px;background:#2c2036;color:#f1e6d8;font:inherit;font-weight:700;font-size:13px}.ltab .a{background:#e58a3e;color:#1a0f08}.gl .swn{display:flex;justify-content:space-between;gap:8px;margin:4px 0 2px 6px;background:#2a1d2a;border-left:4px solid #e0c07a;border-radius:10px;padding:8px 12px;font-size:13.5px;cursor:pointer}.gl .swn small{opacity:.7;flex:none}.fb.sw{font-size:14px}
-.vw [data-sed],.vw [data-addsec],.vw [data-eds],.vw .fb.up,.vw .fbar:has(.up),.vw [data-del],.vw .sp[data-sp]:not(.on),.vw .fb[data-loc]:not(.sw),.vw .lnk[data-loc],.vw [data-pup]{display:none!important}
+.vw [data-sed],.vw [data-addsec],.vw [data-eds],.vw .fb.up,.vw .fbar:has(.up),.vw [data-del],.vw .sp[data-sp]:not(.on),.vw .fb[data-loc]:not(.sw),.vw .lnk[data-loc],.vw [data-pup],.vw nav button[data-t="3"]{display:none!important}
 .pkt{display:flex;gap:8px;margin-bottom:8px}.pkt button{flex:1;border:0;border-radius:12px;padding:10px 4px;background:var(--c4);color:#fff;font:inherit;font-weight:700;font-size:13px}.pkr{display:flex;align-items:center;gap:10px;background:var(--card);border:2px solid var(--bd);border-radius:14px;padding:10px 12px;margin:6px 0;font-weight:800;cursor:pointer}.pkr.sm{padding:7px 10px;font-size:13.5px;font-weight:700}.pks{margin:0 0 4px 22px}.pkn{flex:1;min-width:0}.pka{color:var(--mut);font-size:13px;padding:4px 2px;white-space:nowrap}.pkc{width:24px;height:24px;border-radius:7px;border:2px solid var(--mut);display:flex;align-items:center;justify-content:center;flex:none;font-size:15px;color:#2a1206}.pkc.on{background:var(--or);border-color:var(--or)}.pkc.part{background:var(--gold);border-color:var(--gold)}.pkbar{height:10px;border-radius:6px;background:var(--c6);overflow:hidden;margin-top:10px}.pkbar i{display:block;height:100%;width:0;background:var(--or);transition:width .2s}
 /* ---- નવી આછી થીમ (body.lt) ---- */
 body.lt,body.lt #home{background:linear-gradient(175deg,#efe3ff 0%,#f8e4f3 50%,#fff0e6 100%) fixed;color:#35164F}
@@ -726,20 +726,32 @@ function addPlace(){
 }
 /* ---------- યાત્રિકો ---------- */
 function renderYat(){
-  const all=S.yat,act=all.filter(y=>y.s!='રદ').length,can=all.length-act;
+  const all=S.yat,act=all.filter(y=>y.s!='રદ').length,can=all.length-act,cnt=m=>all.filter(y=>y.mf==m&&y.s!='રદ').length;
   let l=all.map((y,i)=>({...y,i}));
-  l=yf=='all'?l:yf=='રદ'?l.filter(y=>y.s=='રદ'):l.filter(y=>y.g==yf);
-  if(ys=='n')l.sort((a,b)=>a.n.localeCompare(b.n,'gu'));if(ys=='a')l.sort((a,b)=>(+a.a||0)-(+b.a||0));
+  l=yf=='all'?l:yf=='રદ'?l.filter(y=>y.s=='રદ'):yf=='સંત'?l.filter(y=>y.g==yf):l.filter(y=>y.mf==yf);
+  if(ys=='n')l.sort((a,b)=>a.n.localeCompare(b.n,'gu'));if(ys=='a')l.sort((a,b)=>(+a.a||999)-(+b.a||999));
+  const card=(y,k)=>{const m=[y.v?esc(y.v):'',y.a?'ઉંમર '+gu(y.a):'',y.g=='સંત'?'સંત':''].filter(Boolean).join(' • '),d=[y.dob?'જન્મ '+gu(y.dob):'',y.doc?esc(y.doc):'',y.c?esc(y.c):''].filter(Boolean).join(' • ');
+    return `<div class="yr ${y.s=='રદ'?'x':''}"><div class="no">${gu(k+1)}</div><div class="gb"></div><div class="in"><div class="n">${esc(y.n)}</div>${m?`<div class="m">${m}</div>`:''}<div class="m">${y.p?'📞 <a href="tel:'+esc(y.p.replace(/[^+0-9]/g,''))+'" style="color:inherit">'+esc(y.p)+'</a>':'📞 નંબર બાકી'}</div>${d?`<div class="m">${d}</div>`:''}</div><button class="ib" data-yc="${y.i}">📋</button><button class="ib" data-ye="${y.i}">✏️</button></div>`};
+  const body=[['ભાઈ','ભાઈઓ'],['બહેન','બહેનો'],['','વિભાગ બાકી']].map(([m,t])=>{const g=l.filter(y=>(y.mf||'')==m);return g.length?`<div class="rh"><span>${t} (${gu(g.length)})</span></div>`+g.map(card).join(''):''}).join('');
   $('t3').innerHTML=`<div class="bar"><span>👥</span>યાત્રિકો<button class="add" id="yadd">➕ ઉમેરો</button></div>
-  <div class="chips"><span class="chp">કુલ ${gu(all.length)}</span><span class="chp">ચાલુ ${gu(act)}</span><span class="chp">રદ ${gu(can)}</span></div>
-  <div class="chips">${[['all','બધા'],['હરિભક્ત','હરિભક્તો'],['સંત','સંતો'],['રદ','રદ']].map(([k,t])=>`<button class="chp ${yf==k?'on':''}" data-yf="${k}">${t}</button>`).join('')}</div>
-  <div class="chips"><span class="lbl">ક્રમ:</span><button class="chp g ${ys=='n'?'on':''}" data-ys="n">ક ખ ગ</button><button class="chp g ${ys=='a'?'on':''}" data-ys="a">ઉંમર ↑</button></div>
-  ${l.length?l.map((y,k)=>`<div class="yr ${y.s=='રદ'?'x':''}"><div class="no">${k+1}</div><div class="gb"></div><div class="in"><div class="n">${esc(y.n)}</div><div class="m">${y.a?'ઉંમર '+gu(y.a)+' • ':''}${y.p?'📞 '+esc(y.p):esc(y.g)}</div></div><button class="ib" data-yc="${y.i}">📋</button><button class="ib" data-ye="${y.i}">✏️</button></div>`).join(''):'<div class="emp">હજી કોઈ યાત્રિક નથી.<br>ઉપર ➕ ઉમેરો થી યાત્રિક ઉમેરો.</div>'}`;
+  <div class="chips"><span class="chp">કુલ ${gu(all.length)}</span><span class="chp">ભાઈઓ ${gu(cnt('ભાઈ'))}</span><span class="chp">બહેનો ${gu(cnt('બહેન'))}</span><span class="chp">રદ ${gu(can)}</span></div>
+  <div class="chips">${[['all','બધા'],['ભાઈ','ભાઈઓ'],['બહેન','બહેનો'],['સંત','સંતો'],['રદ','રદ']].map(([k,t])=>`<button class="chp ${yf==k?'on':''}" data-yf="${k}">${t}</button>`).join('')}</div>
+  <div class="chips"><span class="lbl">ક્રમ:</span><button class="chp g ${ys=='n'?'on':''}" data-ys="n">ક ખ ગ</button><button class="chp g ${ys=='a'?'on':''}" data-ys="a">ઉંમર ↑</button><label class="chp">📥 ફાઇલથી ઉમેરો<input type="file" id="yimp" accept=".json,application/json" hidden></label></div>
+  ${body||'<div class="emp">હજી કોઈ યાત્રિક નથી.<br>➕ ઉમેરો અથવા 📥 ફાઇલથી ઉમેરો.</div>'}`;
+  const f=$('yimp');if(f)f.onchange=()=>{if(f.files[0])f.files[0].text().then(importYat,()=>toast('ફાઇલ વાંચી ન શકાઈ'))};
+}
+function importYat(t){
+  if(!ADM)return;let d;try{d=JSON.parse(t)}catch(e){}
+  if(!d||d.type!=='nndev-yatri'||!Array.isArray(d.list)){toast('આ યાત્રિક લિસ્ટની ફાઇલ નથી');return}
+  S.yat=S.yat.filter(y=>!y.demo);let add=0,old=0;
+  d.list.forEach(x=>{if(!x||!x.n)return;const y={};['n','a','p','v','mf','doc','dob','c'].forEach(k=>y[k]=String(x[k]||''));
+    if(S.yat.some(o=>o.n===y.n&&o.mf===y.mf)){old++;return}S.yat.push({...y,g:'હરિભક્ત',s:'ચાલુ'});add++});
+  yf='all';save();renderYat();toast(gu(add)+' ઉમેર્યા'+(old?' • '+gu(old)+' પહેલેથી હતા':''));
 }
 function editYat(i){
-  const y=i<0?{n:'',a:'',p:'',g:'હરિભક્ત',s:'ચાલુ'}:S.yat[i];
-  modal({title:i<0?'યાત્રિક ઉમેરો':'યાત્રિક ફેરફાર',fields:[{k:'n',l:'નામ',v:y.n},{k:'a',l:'ઉંમર',t:'number',v:y.a},{k:'p',l:'મોબાઇલ',t:'tel',v:y.p},{k:'g',l:'પ્રકાર',t:'select',o:['હરિભક્ત','સંત'],v:y.g},{k:'s',l:'સ્થિતિ',t:'select',o:['ચાલુ','રદ'],v:y.s}],
-    save:v=>{if(!v.n.trim())return;if(i<0)S.yat.push(v);else S.yat[i]=v;save();renderYat()},del:i<0?null:()=>{S.yat.splice(i,1);save();renderYat()}});
+  const y=i<0?{n:'',a:'',p:'',g:'હરિભક્ત',s:'ચાલુ',mf:yf=='બહેન'?'બહેન':'ભાઈ'}:S.yat[i];
+  modal({title:i<0?'યાત્રિક ઉમેરો':'યાત્રિક ફેરફાર',fields:[{k:'n',l:'નામ',v:y.n},{k:'mf',l:'વિભાગ',t:'select',o:['ભાઈ','બહેન'],v:y.mf||'ભાઈ'},{k:'v',l:'ગામ',v:y.v||''},{k:'a',l:'ઉંમર',t:'number',v:y.a},{k:'p',l:'મોબાઇલ',t:'tel',v:y.p},{k:'doc',l:'પાસપોર્ટ / આધાર',v:y.doc||''},{k:'dob',l:'જન્મ તારીખ',v:y.dob||''},{k:'c',l:'દેશ / શહેર',v:y.c||''},{k:'g',l:'પ્રકાર',t:'select',o:['હરિભક્ત','સંત'],v:y.g},{k:'s',l:'સ્થિતિ',t:'select',o:['ચાલુ','રદ'],v:y.s}],
+    save:v=>{if(!v.n.trim())return;if(i<0)S.yat.push(v);else S.yat[i]={...S.yat[i],...v};save();renderYat()},del:i<0?null:()=>{S.yat.splice(i,1);save();renderYat()}});
 }
 /* ---------- વધુ ---------- */
 function renderMore(){
@@ -929,7 +941,7 @@ function demoData(){
  S.notes=S.notes||[];[{t:'પ્રસ્થાનનો સમય',d:'૨૧ સપ્ટે ૨૦૨૭, મંગળ',b:'ભુજ મંદિરથી સવારે ૫:૩૦ વાગ્યે બસ ઉપડશે. સૌએ ૫:૦૦ વાગ્યા સુધીમાં મંદિરે પહોંચી જવું.',imp:1},{t:'ઓળખપત્ર સાથે રાખવું',d:'આખી યાત્રા',b:'આધાર કાર્ડની અસલ અને બે ઝેરોક્ષ સાથે રાખવી. નેપાળમાં પ્રવેશ વખતે ઓળખપત્ર જરૂરી છે.',imp:1},{t:'હિમાલયમાં ઠંડી',d:'દિવસ ૫ થી ૧૨',b:'કેદારનાથ અને બદ્રીનાથમાં રાત્રે ઘણી ઠંડી હોય છે. સ્વેટર, શાલ, મોજાં અને ટોપી સાથે રાખવાં.'},{t:'દવાઓ',d:'',b:'નિયમિત લેતા હો તે દવાઓ પૂરતા પ્રમાણમાં સાથે રાખવી. ઊંચાઈ પર તકલીફ થાય તો તરત સંચાલકને જણાવવું.'},{t:'સંધ્યા આરતી – હર કી પૌડી',d:'૨૩ સપ્ટે ૨૦૨૭, સાંજે',b:'હરિદ્વારમાં સાંજે ગંગા આરતીમાં સૌએ સાથે જવાનું છે. ભીડમાં જૂથથી છૂટા ન પડવું.'}].forEach(n=>S.notes.push({...n,demo:1}));S.nseen=0;bellUp();save();renderYat();renderMore();toast('ડેમો નામ અને સૂચનાઓ ભર્યાં')}
 
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-57';
+const VER='2026-11-26-58';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
