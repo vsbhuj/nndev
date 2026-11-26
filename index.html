@@ -168,6 +168,12 @@ nav button.on{color:var(--or)}nav button.on:before{content:"";position:absolute;
 #hv{position:fixed;bottom:0;left:0;right:0;max-width:560px;margin:0 auto;text-align:center;font-size:11px;color:var(--mut);padding:12px;z-index:41;user-select:none;-webkit-user-select:none}
 .lst{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}.lst button{border:2px solid var(--bd);background:var(--c2);color:#fff;border-radius:12px;padding:9px 12px;font-weight:700;font-size:14px;cursor:pointer}
 .pg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:6px}.pg button{border:0;padding:0;border-radius:12px;overflow:hidden;position:relative;background:var(--c2);aspect-ratio:1;cursor:pointer}.pg img{width:100%;height:100%;object-fit:cover;display:block}.pg span{position:absolute;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);color:#fff;font-size:11px;font-weight:700;padding:3px 4px}
+
+.pl{display:flex;flex-direction:column;gap:7px;margin-top:6px}
+.pl .rw{display:flex;align-items:center;height:50px;background:var(--c2);border:2px solid var(--bd);border-radius:13px;overflow:hidden}
+.pl .no{flex:none;width:44px;text-align:center;color:var(--gold);font-weight:800;font-size:14px}
+.pl .nm{flex:1;height:100%;border:0;background:none;color:#fff;font-weight:700;font-size:15px;text-align:left;padding:0 6px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pl .mp{flex:none;width:50px;height:100%;display:flex;align-items:center;justify-content:center;background:var(--mar);color:#fff;text-decoration:none;font-size:20px}
 </style>
 </head>
 <body>
@@ -510,7 +516,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}}}
 
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-7';
+const VER='2026-11-26-8';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
@@ -524,7 +530,8 @@ function openYatra(){S.unl=1;save();$('home').classList.remove('on')}
 (function(){let last=0;$('hv').addEventListener('click',()=>{const n=Date.now();if(n-last<600){last=0;openYatra()}else last=n})})();
 function libSheet(title,body){const ov=document.createElement('div');ov.className='ov';ov.innerHTML='<div class="sheet"><h3>'+title+'</h3>'+body+'<div class="btns"><button class="b2" data-c>બંધ</button></div></div>';document.body.appendChild(ov);
  ov.onclick=e=>{const t=e.target.closest('[data-p]');if(e.target==ov||e.target.dataset.c!==undefined){ov.remove();return}if(t){ov.remove();placeSheet(t.dataset.p)}}}
-$('hm').onclick=()=>libSheet('🕉 તીર્થ મહિમા','<div class="lst">'+places().map(p=>'<button data-p="'+esc(p.n)+'">'+esc(p.n)+'</button>').join('')+'</div>');
+const mapUrl=n=>{const g=GEO[n]||[n,0,0];const q=QRY[n]||((g[1]||g[2])?g[1]+','+g[2]:n);return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q)};
+$('hm').onclick=()=>libSheet('🕉 તીર્થ મહિમા ('+gu(places().length)+')','<div class="pl">'+places().map((p,i)=>'<div class="rw"><span class="no">'+gu(i+1)+'.</span><button class="nm" data-p="'+esc(p.n)+'">'+esc(p.n)+'</button><a class="mp" target="_blank" rel="noopener" href="'+mapUrl(p.n)+'" aria-label="નકશો">📍</a></div>').join('')+'</div>');
 $('hp').onclick=()=>{const a=places().map(p=>p.n).filter(n=>PHOTO[n]||(S.ph[n]&&S.ph[n].length));libSheet('🖼 ફોટા','<div class="pg">'+a.map(n=>'<button data-p="'+esc(n)+'"><img src="'+(PHOTO[n]||S.ph[n][0])+'"><span>'+esc(n)+'</span></button>').join('')+'</div>')};
 if(!S.unl)showHome();
 </script>
