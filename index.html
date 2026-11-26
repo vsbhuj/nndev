@@ -385,8 +385,8 @@ function renderMore(){
   if(!sub){h.innerHTML=`<div class="bar"><span>☰</span>વધુ</div><div class="tiles">
   <button class="tile" data-m="pack"><em>🎒</em>શું લેવું</button><button class="tile" data-m="rules"><em>📜</em>નિયમો</button>
   <button class="tile" data-m="acc"><em>💰</em>હિસાબ</button><button class="tile" data-m="set"><em>📅</em>તારીખ અને નામ</button>
-  <button class="tile" data-m="today"><em>📍</em>આજના દિવસે જાઓ</button><button class="tile" data-m="edit"><em>✏️</em>${S.edit?'ફેરફાર બંધ કરો':'ફેરફાર ચાલુ કરો'}</button>
-  <button class="tile" data-m="menu"><em>⚙️</em>સેટિંગ</button><button class="tile" data-m="test"><em>🧪</em>${S.test?'ટેસ્ટ બંધ કરો':'ટેસ્ટ ચાલુ (૫ દિવસ, કાલથી)'}</button></div>`;return}
+  
+  <button class="tile" data-m="menu"><em>⚙️</em>સેટિંગ</button></div>`;return}
   const back='<button class="back" data-m="back">← પાછા</button>';
   if(sub=='pack')h.innerHTML=back+`<div class="bar"><span>🎒</span>શું લેવું<button class="add" data-add="pack">➕</button></div>${S.pack.map((p,i)=>`<label class="li ${p.d?'dn':''}"><input type="checkbox" data-pk="${i}" ${p.d?'checked':''}><span class="tx">${esc(p.t)}</span><button class="ib" data-ei="pack:${i}">✏️</button></label>`).join('')}`;
   if(sub=='rules')h.innerHTML=back+`<div class="bar"><span>📜</span>નિયમો<button class="add" data-add="rules">➕</button></div>${(()=>{let k=0;return S.rules.map((p,i)=>p.startsWith('## ')?(k=0,`<div class="rh"><span>${esc(p.slice(3))}</span><button class="ib" data-ei="rules:${i}">✏️</button></div>`):`<div class="li"><span class="tx">${gu(++k)}. ${esc(p)}</span><button class="ib" data-ei="rules:${i}">✏️</button></div>`).join('')})()}`;
@@ -471,11 +471,12 @@ function applyTheme(){const t=THEMES[S.theme]||THEMES['મરૂન'];const r=do
 applyTheme();
 function printAll(){const a=places();$('prt').innerHTML='<h1>'+esc(S.name)+'</h1>'+a.map(p=>{const g=S.glory[p.n]!=null?S.glory[p.n]:(GLORY[p.n]||'');return '<h2>'+esc(p.n)+'</h2><p>'+esc(g)+'</p>'}).join('');setTimeout(()=>window.print(),100)}
 function openMenu(){const ov=document.createElement('div');ov.className='ov';
- ov.innerHTML='<div class="sheet"><h3>☰ સેટિંગ</h3><label>થીમ / કલર</label><div class="thm">'+Object.keys(THEMES).map(k=>'<button data-th="'+k+'" class="'+((S.theme||'મરૂન')==k?'on':'')+'" style="background:'+THEMES[k].sw+'">'+k+'</button>').join('')+'</div><button class="sl" data-a="print">🖨 બધા સ્થળોનો મહિમા – આઉટપુટ (પ્રિન્ટ / PDF)</button><button class="sl" data-a="upd">🔄 નવું વર્ઝન તપાસો / રિફ્રેશ</button><button class="sl" data-a="set">📅 તારીખ અને નામ</button><div style="text-align:center;color:var(--mut);font-size:12px;margin-top:8px">વર્ઝન '+VER+'</div><div class="btns"><button class="b2" data-c>બંધ</button></div></div>';
+ ov.innerHTML='<div class="sheet"><h3>☰ સેટિંગ</h3><label>થીમ / કલર</label><div class="thm">'+Object.keys(THEMES).map(k=>'<button data-th="'+k+'" class="'+((S.theme||'મરૂન')==k?'on':'')+'" style="background:'+THEMES[k].sw+'">'+k+'</button>').join('')+'</div><button class="sl" data-a="print">🖨 બધા સ્થળોનો મહિમા – આઉટપુટ (પ્રિન્ટ / PDF)</button><button class="sl" data-a="edit">✏️ '+(S.edit?'ફેરફાર બંધ કરો':'ફેરફાર ચાલુ કરો')+'</button><button class="sl" data-a="upd">🔄 નવું વર્ઝન તપાસો / રિફ્રેશ</button><button class="sl" data-a="set">📅 તારીખ અને નામ</button><div style="text-align:center;color:var(--mut);font-size:12px;margin-top:8px">વર્ઝન '+VER+'</div><div class="btns"><button class="b2" data-c>બંધ</button></div></div>';
  document.body.appendChild(ov);
  ov.onclick=e=>{const t=e.target;if(t==ov||t.dataset.c!==undefined){ov.remove();return}
   if(t.dataset.th){S.theme=t.dataset.th;save();applyTheme();ov.querySelectorAll('.thm button').forEach(b=>b.classList.toggle('on',b.dataset.th==S.theme))}
   else if(t.dataset.a=='print'){ov.remove();printAll()}
+  else if(t.dataset.a=='edit'){ov.remove();S.edit=!S.edit;save();renderDay();renderMore();toast(S.edit?'ફેરફાર ચાલુ':'ફેરફાર બંધ')}
   else if(t.dataset.a=='upd'){ov.remove();chkVer(true).then(n=>{if(!n)setTimeout(()=>{if(confirm('ફરજિયાત રિફ્રેશ કરવું છે?'))refreshApp()},300)})}
   else if(t.dataset.a=='set'){ov.remove();settings()}}}
 
