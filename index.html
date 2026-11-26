@@ -507,10 +507,13 @@ const IDB={open:()=>new Promise((r,j)=>{try{const q=indexedDB.open('nndev',1);q.
  put:v=>IDB.open().then(d=>new Promise(r=>{const t=d.transaction('k','readwrite');t.objectStore('k').put(v,'S');t.oncomplete=()=>r(1);t.onerror=()=>r(0);t.onabort=()=>r(0)})).catch(()=>0),
  get:()=>IDB.open().then(d=>new Promise(r=>{const q=d.transaction('k').objectStore('k').get('S');q.onsuccess=()=>r(q.result||null);q.onerror=()=>r(null)})).catch(()=>null)};
 let _svt,_warned=0;
+/* જૂનો ડેમો ડેટા (demo ફ્લેગવાળો) દરેક ઉપકરણમાંથી કાઢવો */
+function dropDemo(){let n=0;['yat','exp','notes'].forEach(k=>{if(!S[k])return;const l=S[k].filter(x=>!x.demo);n+=S[k].length-l.length;S[k]=l});if(n)S.nseen=Math.min(S.nseen||0,(S.notes||[]).length);return n}
 const save=()=>{S._t=Date.now();let ok=1;try{localStorage.setItem(ST,JSON.stringify(S))}catch(e){ok=0}
  clearTimeout(_svt);_svt=setTimeout(()=>{IDB.put(JSON.stringify(S)).then(r=>{if(!ok&&!r&&!_warned){_warned=1;toast('⚠️ ફોનમાં જગ્યા ભરાઈ ગઈ, સાચવી શકાયું નહીં')}})},250)};
 try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
-IDB.get().then(v=>{try{const d=v&&JSON.parse(v);if(d&&(d._t||0)>(S._t||0)){S=d;try{localStorage.setItem(ST,JSON.stringify(S))}catch(e){}if(typeof render==='function')render()}else if(!v&&S._t)IDB.put(JSON.stringify(S))}catch(e){}});
+IDB.get().then(v=>{try{const d=v&&JSON.parse(v);if(d&&(d._t||0)>(S._t||0)){S=d;if(dropDemo())save();try{localStorage.setItem(ST,JSON.stringify(S))}catch(e){}if(typeof render==='function')render()}else if(!v&&S._t)IDB.put(JSON.stringify(S))}catch(e){}});
+if(dropDemo())save();
 let sel=0,tab=0,sub=null,yf='all',ys='';
 /* ---------- તારીખ ---------- */
 const istNow=()=>new Date(Date.now()+19800000);
@@ -923,7 +926,7 @@ function pdfPick(){const mp=mainPlaces().map(p=>p.n),sel={},open={};
    }catch(err){ov.innerHTML='<div class="sheet"><h3>⚠️ PDF બની શકી નહીં</h3><div class="inf">ફરી પ્રયત્ન કરો. ઓછા સ્થળ પસંદ કરવાથી પણ ચાલશે.</div><div class="btns"><button class="b2" data-c>બંધ</button></div></div>';ov.onclick=ev=>{if(ev.target==ov||ev.target.closest('[data-c]'))ov.remove()};console.error(err)}}}}
 function printAll(){pdfPick()}
 function openMenu(){const ov=document.createElement('div');ov.className='ov';
- ov.innerHTML='<div class="sheet"><h3>☰ સેટિંગ</h3>'+(ADM?'<label>થીમ / કલર (ફક્ત એડમિન)</label><div class="thm">'+Object.keys(THEMES).map(k=>'<button data-th="'+k+'" class="'+((S.theme||DEF_TH)==k?'on':'')+'" style="background:'+THEMES[k].sw+'">'+k+'</button>').join('')+'</div>':'')+'<button class="sl" data-a="print">🖨 બધા સ્થળોનો મહિમા – આઉટપુટ (પ્રિન્ટ / PDF)</button><button class="sl" data-a="edit">✏️ '+(S.edit?'ફેરફાર બંધ કરો':'ફેરફાર ચાલુ કરો')+'</button><button class="sl" data-a="home">🏠 હોમ પેજ</button><button class="sl" data-a="upd">🔄 નવું વર્ઝન તપાસો / રિફ્રેશ</button><button class="sl" data-a="set">📅 તારીખ અને નામ</button>'+(ADM?'<button class="sl" data-a="demo">🧪 '+(S.yat.some(y=>y.demo)?'ડેમો નામ કાઢી નાખો':'ડેમો નામ ભરો (ફક્ત આ ફોનમાં)')+'</button>':'')+'<div style="text-align:center;color:var(--mut);font-size:12px;margin-top:8px">વર્ઝન '+VER+'</div><div class="btns"><button class="b2" data-c>બંધ</button></div></div>';
+ ov.innerHTML='<div class="sheet"><h3>☰ સેટિંગ</h3>'+(ADM?'<label>થીમ / કલર (ફક્ત એડમિન)</label><div class="thm">'+Object.keys(THEMES).map(k=>'<button data-th="'+k+'" class="'+((S.theme||DEF_TH)==k?'on':'')+'" style="background:'+THEMES[k].sw+'">'+k+'</button>').join('')+'</div>':'')+'<button class="sl" data-a="print">🖨 બધા સ્થળોનો મહિમા – આઉટપુટ (પ્રિન્ટ / PDF)</button><button class="sl" data-a="edit">✏️ '+(S.edit?'ફેરફાર બંધ કરો':'ફેરફાર ચાલુ કરો')+'</button><button class="sl" data-a="home">🏠 હોમ પેજ</button><button class="sl" data-a="upd">🔄 નવું વર્ઝન તપાસો / રિફ્રેશ</button><button class="sl" data-a="set">📅 તારીખ અને નામ</button>'+'<div style="text-align:center;color:var(--mut);font-size:12px;margin-top:8px">વર્ઝન '+VER+'</div><div class="btns"><button class="b2" data-c>બંધ</button></div></div>';
  document.body.appendChild(ov);
  ov.onclick=e=>{const t=e.target;if(t==ov||t.dataset.c!==undefined){ov.remove();return}
   if(t.dataset.th){S.theme=t.dataset.th;save();applyTheme();ov.querySelectorAll('.thm button').forEach(b=>b.classList.toggle('on',b.dataset.th==S.theme))}
@@ -932,16 +935,9 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='home'){ov.remove();showHome()}
   else if(t.dataset.a=='upd'){ov.remove();chkVer(true).then(n=>{if(!n)setTimeout(()=>{if(confirm('ફરજિયાત રિફ્રેશ કરવું છે?'))refreshApp()},300)})}
   else if(t.dataset.a=='set'){ov.remove();settings()}
-  else if(t.dataset.a=='demo'){ov.remove();demoData()}}}
-function demoData(){
- if(S.yat.some(y=>y.demo)){S.yat=S.yat.filter(y=>!y.demo);S.exp=S.exp.filter(e=>!e.demo);S.notes=(S.notes||[]).filter(n=>!n.demo);S.nseen=Math.min(S.nseen||0,S.notes.length);bellUp();save();renderYat();renderMore();toast('ડેમો નામ કાઢી નાખ્યાં');return}
- const N=[['પૂ. સ્વામી ધર્મવલ્લભદાસજી','62','સંત'],['પૂ. સ્વામી હરિપ્રકાશદાસજી','48','સંત'],['રમેશભાઈ પટેલ','58'],['ગીતાબેન પટેલ','54'],['મહેશભાઈ ઠક્કર','67'],['કાંતાબેન ઠક્કર','63'],['દિનેશભાઈ સોની','45'],['ભાવનાબેન સોની','41'],['હરેશભાઈ ભાનુશાળી','52'],['જયશ્રીબેન ભાનુશાળી','49'],['નરેન્દ્રભાઈ જોષી','71'],['સવિતાબેન જોષી','68'],['કિશોરભાઈ ગોર','39'],['પ્રવીણભાઈ ચૌહાણ','56'],['લક્ષ્મીબેન ચૌહાણ','53'],['વિનોદભાઈ મહેતા','60','હરિભક્ત','રદ']];
- N.forEach((x,i)=>S.yat.push({n:x[0],a:x[1],p:'98'+String(25000000+i*731137).slice(0,8),g:x[2]||'હરિભક્ત',s:x[3]||'ચાલુ',demo:1}));
- [['બસ ભાડું (એડવાન્સ)',150000],['ધર્મશાળા – હરિદ્વાર',42000],['ભોજન – દિવસ ૧ થી ૫',36500],['ગંગા આરતી પ્રસાદ',2100]].forEach(e=>S.exp.push({t:e[0],a:String(e[1]),demo:1}));
- S.notes=S.notes||[];[{t:'પ્રસ્થાનનો સમય',d:'૨૧ સપ્ટે ૨૦૨૭, મંગળ',b:'ભુજ મંદિરથી સવારે ૫:૩૦ વાગ્યે બસ ઉપડશે. સૌએ ૫:૦૦ વાગ્યા સુધીમાં મંદિરે પહોંચી જવું.',imp:1},{t:'ઓળખપત્ર સાથે રાખવું',d:'આખી યાત્રા',b:'આધાર કાર્ડની અસલ અને બે ઝેરોક્ષ સાથે રાખવી. નેપાળમાં પ્રવેશ વખતે ઓળખપત્ર જરૂરી છે.',imp:1},{t:'હિમાલયમાં ઠંડી',d:'દિવસ ૫ થી ૧૨',b:'કેદારનાથ અને બદ્રીનાથમાં રાત્રે ઘણી ઠંડી હોય છે. સ્વેટર, શાલ, મોજાં અને ટોપી સાથે રાખવાં.'},{t:'દવાઓ',d:'',b:'નિયમિત લેતા હો તે દવાઓ પૂરતા પ્રમાણમાં સાથે રાખવી. ઊંચાઈ પર તકલીફ થાય તો તરત સંચાલકને જણાવવું.'},{t:'સંધ્યા આરતી – હર કી પૌડી',d:'૨૩ સપ્ટે ૨૦૨૭, સાંજે',b:'હરિદ્વારમાં સાંજે ગંગા આરતીમાં સૌએ સાથે જવાનું છે. ભીડમાં જૂથથી છૂટા ન પડવું.'}].forEach(n=>S.notes.push({...n,demo:1}));S.nseen=0;bellUp();save();renderYat();renderMore();toast('ડેમો નામ અને સૂચનાઓ ભર્યાં')}
-
+ }}
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-58';
+const VER='2026-11-26-59';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
