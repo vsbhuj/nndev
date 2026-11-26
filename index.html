@@ -149,6 +149,9 @@ nav button.on{color:var(--or)}nav button.on:before{content:"";position:absolute;
 .sl{display:flex;align-items:center;gap:10px;width:100%;margin-top:10px;background:var(--c2);border:2px solid var(--bd);border-radius:14px;color:#fff;padding:12px 14px;font-size:15px;font-weight:700;cursor:pointer;text-align:left}
 #prt{display:none}
 @media print{body>*:not(#prt){display:none!important}body{display:block!important;height:auto!important;overflow:visible!important;background:#fff!important;color:#000!important}#prt{display:block!important;padding:10px;font-size:13px;line-height:1.55;color:#000}#prt h1{font-size:20px;margin:0 0 6px}#prt h2{font-size:16px;margin:14px 0 3px;border-bottom:1px solid #999;page-break-after:avoid}#prt p{white-space:pre-line;margin:0 0 6px}}
+
+#upd{display:none;position:fixed;left:10px;right:10px;top:calc(env(safe-area-inset-top) + 8px);z-index:90;background:#f2c14e;color:#2b1624;border-radius:14px;padding:10px 12px;font-weight:800;font-size:14px;align-items:center;gap:10px;box-shadow:0 4px 18px rgba(0,0,0,.5)}
+#upd.on{display:flex}#upd span{flex:1}#upd button{border:0;border-radius:10px;padding:8px 12px;font-weight:800;background:#2b1624;color:#f2c14e;cursor:pointer;font-size:13px}
 </style>
 </head>
 <body>
@@ -180,6 +183,8 @@ nav button.on{color:var(--or)}nav button.on:before{content:"";position:absolute;
   <button data-t="3"><span class="ic">👥</span>યાત્રિકો</button>
   <button data-t="4"><span class="ic">☰</span>વધુ</button>
 </nav>
+<div id="upd"><span>🆕 એપનું નવું વર્ઝન આવ્યું છે</span><button id="updb">🔄 અપડેટ કરો</button></div>
+<div id="prt"></div>
 <script>
 const $=id=>document.getElementById(id);
 const gu=n=>String(n).replace(/\d/g,d=>'૦૧૨૩૪૫૬૭૮૯'[d]);
@@ -380,9 +385,9 @@ function renderMore(){
   const h=$('t4');
   if(!sub){h.innerHTML=`<div class="bar"><span>☰</span>વધુ</div><div class="tiles">
   <button class="tile" data-m="pack"><em>🎒</em>શું લેવું</button><button class="tile" data-m="rules"><em>📜</em>નિયમો</button>
-  <button class="tile" data-m="acc"><em>💰</em>હિસાબ</button><button class="tile" data-m="set"><em>⚙️</em>તારીખ અને નામ</button>
+  <button class="tile" data-m="acc"><em>💰</em>હિસાબ</button><button class="tile" data-m="set"><em>📅</em>તારીખ અને નામ</button>
   <button class="tile" data-m="today"><em>📍</em>આજના દિવસે જાઓ</button><button class="tile" data-m="edit"><em>✏️</em>${S.edit?'ફેરફાર બંધ કરો':'ફેરફાર ચાલુ કરો'}</button>
-  <button class="tile" data-m="test"><em>🧪</em>${S.test?'ટેસ્ટ બંધ કરો':'ટેસ્ટ ચાલુ (૫ દિવસ, કાલથી)'}</button></div>`;return}
+  <button class="tile" data-m="menu"><em>⚙️</em>સેટિંગ</button><button class="tile" data-m="test"><em>🧪</em>${S.test?'ટેસ્ટ બંધ કરો':'ટેસ્ટ ચાલુ (૫ દિવસ, કાલથી)'}</button></div>`;return}
   const back='<button class="back" data-m="back">← પાછા</button>';
   if(sub=='pack')h.innerHTML=back+`<div class="bar"><span>🎒</span>શું લેવું<button class="add" data-add="pack">➕</button></div>${S.pack.map((p,i)=>`<label class="li ${p.d?'dn':''}"><input type="checkbox" data-pk="${i}" ${p.d?'checked':''}><span class="tx">${esc(p.t)}</span><button class="ib" data-ei="pack:${i}">✏️</button></label>`).join('')}`;
   if(sub=='rules')h.innerHTML=back+`<div class="bar"><span>📜</span>નિયમો<button class="add" data-add="rules">➕</button></div>${(()=>{let k=0;return S.rules.map((p,i)=>p.startsWith('## ')?(k=0,`<div class="rh"><span>${esc(p.slice(3))}</span><button class="ib" data-ei="rules:${i}">✏️</button></div>`):`<div class="li"><span class="tx">${gu(++k)}. ${esc(p)}</span><button class="ib" data-ei="rules:${i}">✏️</button></div>`).join('')})()}`;
@@ -430,6 +435,7 @@ document.addEventListener('click',e=>{
   if(x=g('[data-m]')){const m=x.dataset.m;
     if(m=='back'){sub=null;renderMore()}
     else if(['pack','rules','acc'].includes(m)){sub=m;renderMore()}
+    else if(m=='menu')openMenu();
     else if(m=='set')settings();
     else if(m=='today'){const t=todayIdx();if(t>=0){sel=t;render();show(0)}else{sel=0;render();show(0);toast('આજે યાત્રા નથી • દિવસ ૧ બતાવ્યો')}}
     else if(m=='edit'){S.edit=!S.edit;save();renderDay();renderMore();toast(S.edit?'ફેરફાર ચાલુ':'ફેરફાર બંધ')}
@@ -466,14 +472,23 @@ function applyTheme(){const t=THEMES[S.theme]||THEMES['મરૂન'];const r=do
 applyTheme();
 function printAll(){const a=places();$('prt').innerHTML='<h1>'+esc(S.name)+'</h1>'+a.map(p=>{const g=S.glory[p.n]!=null?S.glory[p.n]:(GLORY[p.n]||'');return '<h2>'+esc(p.n)+'</h2><p>'+esc(g)+'</p>'}).join('');setTimeout(()=>window.print(),100)}
 function openMenu(){const ov=document.createElement('div');ov.className='ov';
- ov.innerHTML='<div class="sheet"><h3>☰ સેટિંગ</h3><label>થીમ / કલર</label><div class="thm">'+Object.keys(THEMES).map(k=>'<button data-th="'+k+'" class="'+((S.theme||'મરૂન')==k?'on':'')+'" style="background:'+THEMES[k].sw+'">'+k+'</button>').join('')+'</div><button class="sl" data-a="print">🖨 બધા સ્થળોનો મહિમા – આઉટપુટ (પ્રિન્ટ / PDF)</button><button class="sl" data-a="set">⚙️ તારીખ અને નામ</button><div class="btns"><button class="b2" data-c>બંધ</button></div></div>';
+ ov.innerHTML='<div class="sheet"><h3>☰ સેટિંગ</h3><label>થીમ / કલર</label><div class="thm">'+Object.keys(THEMES).map(k=>'<button data-th="'+k+'" class="'+((S.theme||'મરૂન')==k?'on':'')+'" style="background:'+THEMES[k].sw+'">'+k+'</button>').join('')+'</div><button class="sl" data-a="print">🖨 બધા સ્થળોનો મહિમા – આઉટપુટ (પ્રિન્ટ / PDF)</button><button class="sl" data-a="upd">🔄 નવું વર્ઝન તપાસો / રિફ્રેશ</button><button class="sl" data-a="set">📅 તારીખ અને નામ</button><div style="text-align:center;color:var(--mut);font-size:12px;margin-top:8px">વર્ઝન '+VER+'</div><div class="btns"><button class="b2" data-c>બંધ</button></div></div>';
  document.body.appendChild(ov);
  ov.onclick=e=>{const t=e.target;if(t==ov||t.dataset.c!==undefined){ov.remove();return}
   if(t.dataset.th){S.theme=t.dataset.th;save();applyTheme();ov.querySelectorAll('.thm button').forEach(b=>b.classList.toggle('on',b.dataset.th==S.theme))}
   else if(t.dataset.a=='print'){ov.remove();printAll()}
+  else if(t.dataset.a=='upd'){ov.remove();chkVer(true).then(n=>{if(!n)setTimeout(()=>{if(confirm('ફરજિયાત રિફ્રેશ કરવું છે?'))refreshApp()},300)})}
   else if(t.dataset.a=='set'){ov.remove();settings()}}}
 $('menub').onclick=openMenu;
+
+/* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
+const VER='2026-11-26-6';
+async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
+ const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
+async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
+ if(m&&m[1]!==VER){$('upd').classList.add('on');return true}else if(manual)toast('✅ તમારી પાસે નવું વર્ઝન છે')}catch(e){if(manual)toast('ઇન્ટરનેટ ચેક કરો')}return false}
+$('updb').onclick=refreshApp;
+setTimeout(chkVer,4000);setInterval(chkVer,300000);document.addEventListener('visibilitychange',()=>{if(!document.hidden)chkVer()});
 </script>
-<div id="prt"></div>
 </body>
 </html>
