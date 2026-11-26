@@ -45,7 +45,7 @@ header.day .moon{display:none}header.day .sunb{display:block}
 .sr .l{font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}.sr .v{font-size:15px;font-weight:700;margin-top:1px}
 .wc{display:inline-flex;align-items:center;gap:8px;margin-top:7px;padding:3px 13px;border:2px solid rgba(255,255,255,.38);border-radius:99px;background:rgba(255,255,255,.08);font-size:13px;font-weight:600;color:#fff;text-decoration:none}
 /* ---- મુખ્ય ---- */
-main{flex:1;overflow-y:auto;padding:10px 12px 12px;-webkit-overflow-scrolling:touch}
+main{flex:1;min-height:0;overflow-y:auto;padding:10px 12px calc(76px + env(safe-area-inset-bottom));-webkit-overflow-scrolling:touch}
 .tab{display:none}.tab.on{display:block}
 .bar{display:flex;align-items:center;gap:8px;background:var(--bar);border-radius:12px;padding:7px 12px;margin-bottom:9px;font-size:16px;font-weight:800;color:var(--gold)}
 .bar .cnt{margin-left:auto;font-size:13px;color:var(--gold);border:2px solid var(--bd);background:var(--c3);border-radius:99px;padding:2px 12px}
@@ -92,7 +92,7 @@ main{flex:1;overflow-y:auto;padding:10px 12px 12px;-webkit-overflow-scrolling:to
 .tot{background:var(--bar);border-radius:12px;padding:8px 12px;margin-bottom:8px;font-size:15px;font-weight:800;color:var(--gold);display:flex;justify-content:space-between}
 .emp{text-align:center;color:var(--mut);padding:26px 10px;font-size:14.5px;line-height:1.6}
 /* ---- નીચેનો નેવ ---- */
-nav{flex:none;display:flex;background:#1d111a;border-top:2px solid #3a2540;padding:0 0 env(safe-area-inset-bottom)}
+nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:560px;z-index:40;display:flex;background:#1d111a;border-top:2px solid #3a2540;padding:0 0 env(safe-area-inset-bottom)}
 nav button{position:relative;flex:1;border:0;background:none;color:var(--mut);font-size:12.5px;font-weight:700;padding:6px 0 4px;display:flex;flex-direction:column;align-items:center;gap:1px;cursor:pointer}
 nav button .ic{height:28px;display:flex;align-items:center;justify-content:center;font-size:24px;line-height:1}
 nav button.on{color:var(--or)}nav button.on:before{content:"";position:absolute;left:0;right:0;top:-2px;height:3px;background:var(--or)}
@@ -607,7 +607,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}}}
 
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-28';
+const VER='2026-11-26-29';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
