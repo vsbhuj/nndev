@@ -110,3 +110,10 @@
 - **પગથિયું 2 પૂરું (2026-11-26):** migration `initial_tables_and_rls` (SQL Supabase માં સાચવેલું). ટેબલ: admins, families, pilgrims, devices, photos, notes, settings, expenses. બધા પર RLS; anon ને કોઈ હક નહીં; ફક્ત admins ટેબલમાં હોય તે લોગિન વપરાશકર્તા વાંચે/લખે. pin_hash અને token_hash ઍડમિન પણ વાંચી/લખી ન શકે (service_role જ). પરિવાર દીઠ 2 ફોન (trigger). rollback વાળી ટેસ્ટ પાસ, security advisors માં 0 ચેતવણી, કોઈ સાચો/ટેસ્ટ ડેટા નથી.
 - ધ્યાન: ઍપમાં `admins` ઉમેરવા SQL જ. families માં `select *` નહીં ચાલે (કૉલમ નામ લખવાં). યાત્રાળુનું વાંચન પગથિયું 5 માં Edge Function થી (doc/dob ક્યારેય પાછાં ન મોકલવાં).
 - હવે પછી: પગથિયું 3 (ઍડમિન લોગિન; જાહેર signup બંધ કરવું). ઉપયોગકર્તા "બરાબર" કહે પછી.
+
+### લોગિનની મંજૂર રીત (2026-11-26) — વિભાગ 10 ના પગથિયું 5 ના PIN ને બદલે
+- નમૂનો: `design/yatra-login-sample.jpg`. ઍડમિન યાદીમાં "કોડ મોકલો" → 6 આંકડાનો એક-વખતનો કોડ → wa.me થી તે વ્યક્તિના WhatsApp પર (ગ્રુપમાં નહીં). "ફરી મોકલો", "બીજો ફોન", "ફોન રીસેટ". નંબર/પરિવાર દીઠ 2 ફોન. લોગિન ફોનમાં ચાલુ રહે.
+- સર્વર તૈયાર: migration `one_time_login_codes` (pin_hash → code_hash; કોડ 7 દિવસ; 5 ખોટા = 15 મિનિટ બંધ; 10 ખોટા = કોડ રદ). ઍડમિન: rpc `issue_login_code(p_family)` (કોડ ફક્ત ત્યારે જ મળે). ફોન રીસેટ: devices ની row delete. Edge Function `pilgrim-login` (verify_jwt=false, કોડ જ ઓળખ; CORS ફક્ત vsbhuj.github.io) {mobile,code,label} → {status: ok|invalid|locked|device_limit|error, token}.
+- ડેટાબેઝ ટેસ્ટ પાસ (rollback), advisors 0. Edge Function ની HTTP ટેસ્ટ બાકી.
+- ઍપ UI બાકી: પહેલાં પગથિયું 3 (ઉપયોગકર્તા dashboard માં યુઝર બનાવે, signup બંધ કરે, ઈમેલ આપે → admins માં ઉમેરવો; repo માં ઈમેલ ન લખવો). લાઇવ લોગિન સ્ક્રીન યાત્રિક આયાત અને ટેસ્ટ પછી જ ફરજિયાત કરવી.
+- ધ્યાન: wa.me માટે દેશ કોડ જોઈએ; mobile સાચવવાનું ફોર્મેટ આયાત વખતે એકસરખું નક્કી કરવું (લોગિનમાં પણ તે જ). ટોકનથી ડેટા વાંચવાનું Function હજી બાકી.
