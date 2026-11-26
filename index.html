@@ -363,6 +363,17 @@ body.lt .gl,body.lt .pgt{font-size:16px;line-height:1.7;color:#2b1d4e}
 body.lt .pg .pi>span:nth-child(2) .nm{color:#fff;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.6)!important}
 body.lt .pg .pi>span:nth-child(2) .sb{color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6)!important}
 body.lt .pg .pi>span:nth-child(2){background:linear-gradient(transparent,rgba(43,29,78,.55))}
+/* હોમ: લોગો આસપાસ સોનેરી-લવંડર મંડળ, નીચે મંદિર વોટરમાર્ક */
+body.lt #home .ht{position:relative;isolation:isolate}
+body.lt #home .ht:before{content:'';position:absolute;left:50%;top:calc(env(safe-area-inset-top) + 2px);width:300px;height:300px;margin-left:-150px;z-index:-1;border-radius:50%;
+ background:radial-gradient(circle,rgba(255,236,170,.55) 0 30%,transparent 31%),repeating-radial-gradient(circle,transparent 0 22px,rgba(232,181,58,.35) 22px 23.5px,transparent 23.5px 34px),radial-gradient(circle,rgba(206,160,250,.55),rgba(206,160,250,0) 70%);
+ -webkit-mask:radial-gradient(circle,#000 55%,transparent 72%);mask:radial-gradient(circle,#000 55%,transparent 72%)}
+body.lt #home .ht:after{content:'';position:absolute;left:8px;right:8px;top:calc(env(safe-area-inset-top) + 70px);height:70px;z-index:-1;
+ background:url(th/i-bell.webp) left center/54px no-repeat,url(th/i-bell.webp) right center/54px no-repeat;opacity:.9}
+body.lt #home .hs{position:relative;padding-bottom:220px}
+body.lt #home .hs:after{content:'';position:absolute;left:0;right:0;bottom:40px;height:170px;background:url(th/wm.webp) center bottom/contain no-repeat;opacity:.22;pointer-events:none}
+body.lt #home .ht:after{display:none}
+body.lt #home .ht:before{top:calc(env(safe-area-inset-top) - 46px);width:280px;height:280px;margin-left:-140px}
 </style>
 </head>
 <body>
@@ -398,7 +409,7 @@ body.lt .pg .pi>span:nth-child(2){background:linear-gradient(transparent,rgba(43
 <div class="hs"><div class="lb">🧭 યાત્રાની કેટેગરી</div>
 <div class="cat"><div class="ic">🏔</div><div><b>ઉત્તર ભારત યાત્રા</b><small>ચાર ધામ • ઉત્તરાખંડ • કાશી • અયોધ્યા<br><span id="hcnt"></span> તીર્થ</small></div><span class="tag">ચાલુ</span></div>
 <div class="cat soon"><div class="ic">🛕</div><div><b>દક્ષિણ ભારત યાત્રા</b><small>રામેશ્વર • મદુરાઈ • કન્યાકુમારી</small></div><span class="tag">જલ્દી આવશે</span></div>
-<div class="lb" style="margin-top:14px">📖 તીર્થ ભંડાર</div>
+<div style="height:6px"></div>
 <div class="r2"><div class="hb" id="hm">🕉 મહિમા</div></div>
 <div class="r2"><button class="hb pri" id="hpdf">📄 PDF બનાવો / શેર</button></div></div>
 <div id="hv"></div></div>
@@ -899,7 +910,7 @@ function demoData(){
  S.notes=S.notes||[];[{t:'પ્રસ્થાનનો સમય',d:'૨૧ સપ્ટે ૨૦૨૭, મંગળ',b:'ભુજ મંદિરથી સવારે ૫:૩૦ વાગ્યે બસ ઉપડશે. સૌએ ૫:૦૦ વાગ્યા સુધીમાં મંદિરે પહોંચી જવું.',imp:1},{t:'ઓળખપત્ર સાથે રાખવું',d:'આખી યાત્રા',b:'આધાર કાર્ડની અસલ અને બે ઝેરોક્ષ સાથે રાખવી. નેપાળમાં પ્રવેશ વખતે ઓળખપત્ર જરૂરી છે.',imp:1},{t:'હિમાલયમાં ઠંડી',d:'દિવસ ૫ થી ૧૨',b:'કેદારનાથ અને બદ્રીનાથમાં રાત્રે ઘણી ઠંડી હોય છે. સ્વેટર, શાલ, મોજાં અને ટોપી સાથે રાખવાં.'},{t:'દવાઓ',d:'',b:'નિયમિત લેતા હો તે દવાઓ પૂરતા પ્રમાણમાં સાથે રાખવી. ઊંચાઈ પર તકલીફ થાય તો તરત સંચાલકને જણાવવું.'},{t:'સંધ્યા આરતી – હર કી પૌડી',d:'૨૩ સપ્ટે ૨૦૨૭, સાંજે',b:'હરિદ્વારમાં સાંજે ગંગા આરતીમાં સૌએ સાથે જવાનું છે. ભીડમાં જૂથથી છૂટા ન પડવું.'}].forEach(n=>S.notes.push({...n,demo:1}));S.nseen=0;bellUp();save();renderYat();renderMore();toast('ડેમો નામ અને સૂચનાઓ ભર્યાં')}
 
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-50';
+const VER='2026-11-26-51';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
