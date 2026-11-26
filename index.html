@@ -607,7 +607,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}}}
 
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-31';
+const VER='2026-11-26-32';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
@@ -620,7 +620,7 @@ function showHome(){$('hcnt').textContent=gu(mainPlaces().length);$('hv').textCo
 function openYatra(){$('home').classList.remove('on')}
 (function(){let last=0;$('hv').addEventListener('click',()=>{const n=Date.now();if(n-last<600){last=0;openYatra()}else last=n})})();
 function libSheet(title,body){const ov=document.createElement('div');ov.className='ov';ov.innerHTML='<div class="sheet"><h3>'+title+'</h3>'+body+'<div class="btns"><button class="b2" data-c>બંધ</button></div></div>';document.body.appendChild(ov);
- ov.onclick=e=>{const t=e.target.closest('[data-p]');if(e.target==ov||e.target.dataset.c!==undefined){ov.remove();return}if(t){ov.remove();placeSheet(t.dataset.p)}}}
+ ov.onclick=e=>{const t=e.target.closest('[data-p]');if(e.target==ov||e.target.dataset.c!==undefined){ov.remove();return}if(t){placeSheet(t.dataset.p)}}}
 const mapUrl=n=>{const g=GEO[n]||[n,0,0];const q=QRY[n]||((g[1]||g[2])?g[1]+','+g[2]:n);return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q)};
 $('hm').onclick=()=>libSheet('🕉 તીર્થ મહિમા ('+gu(mainPlaces().length)+')','<div class="pl">'+mainPlaces().map((p,i)=>'<div class="rw"><span class="no">'+gu(i+1)+'.</span><button class="nm" data-p="'+esc(p.n)+'">'+esc(p.n)+'</button><a class="mp" target="_blank" rel="noopener" href="'+mapUrl(p.n)+'" aria-label="નકશો">📍</a></div>').join('')+'</div>');
 showHome();
