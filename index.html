@@ -281,7 +281,14 @@ if((S.mig||0)<1){const ADD=[[0,['રાપર મંદિર','કૃષ્ણ 
  S.mig=1;try{localStorage.setItem(ST,JSON.stringify(S))}catch(e){}}
 
 S.pack=S.pack||PACK.map(t=>({t,d:0}));S.rules=(!S.rules||JSON.stringify(S.rules)===JSON.stringify(OLDRULES))?RULES.slice():S.rules;S.glory=S.glory||{};S.pin=S.pin||{};S.cp=S.cp||[];S.dt=S.dt||{};S.ph=S.ph||{};S.edit=!!S.edit;S.test=!!S.test;
-const save=()=>{try{localStorage.setItem(ST,JSON.stringify(S))}catch(e){}};
+const IDB={open:()=>new Promise((r,j)=>{try{const q=indexedDB.open('nndev',1);q.onupgradeneeded=()=>q.result.createObjectStore('k');q.onsuccess=()=>r(q.result);q.onerror=()=>j()}catch(e){j()}}),
+ put:v=>IDB.open().then(d=>new Promise(r=>{const t=d.transaction('k','readwrite');t.objectStore('k').put(v,'S');t.oncomplete=()=>r(1);t.onerror=()=>r(0);t.onabort=()=>r(0)})).catch(()=>0),
+ get:()=>IDB.open().then(d=>new Promise(r=>{const q=d.transaction('k').objectStore('k').get('S');q.onsuccess=()=>r(q.result||null);q.onerror=()=>r(null)})).catch(()=>null)};
+let _svt,_warned=0;
+const save=()=>{S._t=Date.now();let ok=1;try{localStorage.setItem(ST,JSON.stringify(S))}catch(e){ok=0}
+ clearTimeout(_svt);_svt=setTimeout(()=>{IDB.put(JSON.stringify(S)).then(r=>{if(!ok&&!r&&!_warned){_warned=1;toast('⚠️ ફોનમાં જગ્યા ભરાઈ ગઈ, સાચવી શકાયું નહીં')}})},250)};
+try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
+IDB.get().then(v=>{try{const d=v&&JSON.parse(v);if(d&&(d._t||0)>(S._t||0)){S=d;try{localStorage.setItem(ST,JSON.stringify(S))}catch(e){}if(typeof render==='function')render()}else if(!v&&S._t)IDB.put(JSON.stringify(S))}catch(e){}});
 let sel=0,tab=0,sub=null,yf='all',ys='';
 /* ---------- તારીખ ---------- */
 const istNow=()=>new Date(Date.now()+19800000);
@@ -487,7 +494,7 @@ function placeSheet(n,ri){
     [...e.target.files].slice(0,3).forEach(f=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{
       const c=document.createElement('canvas'),k=Math.min(1,520/Math.max(im.width,im.height));c.width=im.width*k;c.height=im.height*k;
       c.getContext('2d').drawImage(im,0,0,c.width,c.height);
-      const arr=sk?((S.sph=S.sph||{})[sk]=S.sph[sk]||[]):(S.ph[n]=S.ph[n]||[]);try{arr.push(c.toDataURL('image/jpeg',.6));localStorage.setItem(ST,JSON.stringify(S));draw()}catch(_){arr.pop();toast('ફોટો સાચવી શકાયો નહીં')}};im.src=r.result};r.readAsDataURL(f)})};
+      const arr=sk?((S.sph=S.sph||{})[sk]=S.sph[sk]||[]):(S.ph[n]=S.ph[n]||[]);try{arr.push(c.toDataURL('image/jpeg',.6));save();draw()}catch(_){arr.pop();toast('ફોટો સાચવી શકાયો નહીં')}};im.src=r.result};r.readAsDataURL(f)})};
 }
 function addPlace(){
   modal({title:'સ્થળ ઉમેરો',fields:[{k:'n',l:'સ્થળનું નામ',v:''},{k:'g',l:'મહિમા',t:'area',v:''},{k:'p',l:'પિન કોડ (વૈકલ્પિક)',v:''},{k:'d',l:'દર્શન સમય (વૈકલ્પિક)',v:''}],save:v=>{
@@ -616,7 +623,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}}}
 
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-33';
+const VER='2026-11-26-34';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
