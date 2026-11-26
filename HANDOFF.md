@@ -122,3 +122,4 @@
 - **nndev-yatra** (id `wpcaujyjsaumudfmdplu`, મુંબઈ) હવે **vsbhuj's Org** `betdjckqtjjuhtliypij` માં (Free plan). Claude નું Supabase જોડાણ આ org સાથે છે.
 - ખસેડ્યા પછી તપાસ પાસ: ACTIVE_HEALTHY, 8 ટેબલ RLS + 8 policy, anon હક 0, બંને migration, `pilgrim-login` ACTIVE, security advisors 0; users 0, pilgrims 0.
 - હવે પછી: ઉપયોગકર્તા dashboard માં ઍડમિન યુઝર બનાવે અને જાહેર signup બંધ કરે.
+- **2026-11-27:** પહેલો ઍડમિન ઉમેરાયો (auth યુઝર 1, admins 1). બાકી: જાહેર signup બંધ થયાની પુષ્ટિ; પછી ઍપમાં ઍડમિન લોગિન અને "કોડ મોકલો" UI.
