@@ -607,7 +607,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}}}
 
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-30';
+const VER='2026-11-26-31';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
@@ -626,14 +626,17 @@ $('hm').onclick=()=>libSheet('🕉 તીર્થ મહિમા ('+gu(mainPla
 showHome();
 
 /* બેક બટન */
-(()=>{const st=[];let skip=0;
+(()=>{const st=[];let skip=0,hd=0;
 history.replaceState({b:1},'');history.pushState({b:2},'');
-new MutationObserver(ms=>ms.forEach(m=>{
- m.addedNodes.forEach(n=>{if(n.classList&&n.classList.contains('ov')){st.push(n);history.pushState({ov:1},'')}});
- m.removedNodes.forEach(n=>{const i=st.indexOf(n);if(i>-1){st.splice(i,1);skip++;history.back()}})})).observe(document.body,{childList:true});
+function sync(){const d=hd-st.length;if(d>0){hd=st.length;skip++;history.go(-d)}}
+new MutationObserver(ms=>{
+ ms.forEach(m=>{
+  m.addedNodes.forEach(n=>{if(n.classList&&n.classList.contains('ov')&&!st.includes(n)){st.push(n);history.pushState({ov:1},'');hd++}});
+  m.removedNodes.forEach(n=>{const i=st.indexOf(n);if(i>-1)st.splice(i,1)})});
+ sync()}).observe(document.body,{childList:true});
 addEventListener('popstate',()=>{
  if(skip>0){skip--;return}
- if(st.length){st.pop().remove();return}
+ if(st.length){hd=Math.max(0,hd-1);st.pop().remove();return}
  if(typeof tab!=='undefined'&&tab!==0){show(0);history.pushState({b:2},'');return}
  if(!$('home').classList.contains('on')){showHome();history.pushState({b:2},'');return}
  history.back()})})();
