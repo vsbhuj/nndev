@@ -182,6 +182,7 @@ nav button.on{color:var(--or)}nav button.on:before{content:"";position:absolute;
 .gl .sch span{flex:1;line-height:1.3}.gl .sch i{font-style:normal;color:var(--gold);transition:transform .15s}.gl .sc.op .sch i{transform:rotate(180deg)}
 .gl .tx{white-space:pre-line}.gl .scb .sc .sch{min-height:40px;font-size:13.5px}.gl .scb .scb{margin-left:4px}.gl .scb{white-space:normal;padding:8px 6px 2px 10px;font-size:14px;line-height:1.6;color:#eadce4}
 .ltab{display:flex;gap:8px;margin:4px 0 10px}.ltab button{flex:1;border:0;border-radius:12px;padding:11px 4px;background:#2c2036;color:#f1e6d8;font:inherit;font-weight:700;font-size:13px}.ltab .a{background:#e58a3e;color:#1a0f08}.gl .swn{display:flex;justify-content:space-between;gap:8px;margin:4px 0 2px 6px;background:#2a1d2a;border-left:4px solid #e0c07a;border-radius:10px;padding:8px 12px;font-size:13.5px;cursor:pointer}.gl .swn small{opacity:.7;flex:none}.fb.sw{font-size:14px}
+.vw [data-sed],.vw [data-addsec],.vw [data-eds],.vw .fb.up,.vw .fbar:has(.up),.vw [data-del],.vw .sp[data-sp]:not(.on),.vw .fb[data-loc]:not(.sw),.vw .lnk[data-loc],.vw [data-pup]{display:none!important}
 </style>
 </head>
 <body>
@@ -388,7 +389,7 @@ const SEC={};
 const secText=k=>(S.secov&&S.secov[k]!=null)?S.secov[k]:((SEC[k]&&SEC[k].b)||'');
 const refreshPlace=()=>document.querySelectorAll('.ov.pv').forEach(o=>o._draw&&o._draw());
 function addImgs(files,arr,done){[...files].slice(0,3).forEach(f=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas'),k=Math.min(1,900/Math.max(im.width,im.height));c.width=im.width*k;c.height=im.height*k;c.getContext('2d').drawImage(im,0,0,c.width,c.height);try{arr.push(c.toDataURL('image/jpeg',.6));localStorage.setItem(ST,JSON.stringify(S));done()}catch(_){arr.pop();toast('ફોટો સાચવી શકાયો નહીં (જગ્યા ઓછી)')}};im.src=r.result};r.readAsDataURL(f)})}
-function locEdit(k,done){S.sg=S.sg||{};S.sw=S.sw||{};const nm=k.split('|')[1],ov=document.createElement('div');ov.className='ov';let tabx=(S.sw[k]&&!S.sg[k])?'w':'m';
+function locEdit(k,done){if(!ADM)return;S.sg=S.sg||{};S.sw=S.sw||{};const nm=k.split('|')[1],ov=document.createElement('div');ov.className='ov';let tabx=(S.sw[k]&&!S.sg[k])?'w':'m';
  const draw=()=>{ov.innerHTML='<div class="sheet"><h3>📍 '+esc(nm)+'</h3><div class="ltab"><button data-lt="m" class="'+(tabx=='m'?'a':'')+'">📍 નકશાનું લોકેશન</button><button data-lt="w" class="'+(tabx=='w'?'a':'')+'">📝 સ્થાન લખો</button></div>'+(tabx=='m'?'<p style="font-size:12.5px;opacity:.75;margin:2px 0 6px">Google Maps માં જગ્યા પર લાંબું દબાવો, ઉપરના આંકડા અહીં પેસ્ટ કરો. ખાલી રાખો તો કાઢી નંખાશે.</p><label>અક્ષાંશ, રેખાંશ</label><input data-v value="'+esc(S.sg[k]||'')+'">':'<label>આ વસ્તુ ક્યાં છે તે લખો</label><textarea data-v rows="3" placeholder="જેમ કે: મુખ્ય મંદિરની અંદર, પરિક્રમામાં">'+esc(S.sw[k]||'')+'</textarea><p style="font-size:12px;opacity:.6;margin:4px 0 0">ખાલી રાખીને સાચવો તો લખાણ કાઢી નંખાશે.</p>')+'<div class="btns"><button class="b1" data-s>સાચવો</button><button class="b2" data-c>રદ</button></div></div>'};
  draw();document.body.appendChild(ov);
  ov.onclick=e=>{const t=e.target;if(t==ov||t.dataset.c!==undefined){ov.remove();return}
@@ -420,7 +421,7 @@ function secPage(k){const [pn,hh]=[k.slice(0,k.indexOf('|')),k.slice(k.indexOf('
   else if(t.closest('[data-gop]'))photoPage(k,draw);
   else if(t.closest('[data-up]'))uploadSheet(k,()=>{draw();refreshPlace()});
   else if(t.closest('[data-loc]'))locEdit(k,()=>{draw();refreshPlace()});
-  else if(t.closest('[data-sed]')){ed=true;draw()}
+  else if(t.closest('[data-sed]')){if(!ADM)return;ed=true;draw()}
   else if(t.closest('[data-cn]')){ed=false;draw()}
   else if(t.closest('[data-dl]')){if(!confirm('“'+hh+'” કાઢી નાખવું છે?'))return;const L=S.add[pn],j=L.findIndex(s=>s.h===hh);L.splice(j,1);if(S.sg)delete S.sg[k];if(S.sw)delete S.sw[k];if(S.sph)delete S.sph[k];save();ov.remove();refreshPlace();toast('કાઢી નાખ્યું')}
   else if(t.closest('[data-sv]')){const b=ov.querySelector('[data-tx]').value.trim();
@@ -428,12 +429,12 @@ function secPage(k){const [pn,hh]=[k.slice(0,k.indexOf('|')),k.slice(k.indexOf('
    else{S.secov=S.secov||{};if(b&&b!==((SEC[k]&&SEC[k].b)||''))S.secov[k]=b;else delete S.secov[k];save();toast('સાચવ્યું')}
    ed=false;draw()}};
 }
-function placeUpload(n,after){const ov=document.createElement('div');ov.className='ov';
+function placeUpload(n,after){if(!ADM)return;const ov=document.createElement('div');ov.className='ov';
  ov.innerHTML='<div class="sheet"><h3>➕📷 ફોટો અપલોડ</h3><p style="font-size:13px;opacity:.8;margin:2px 0 8px">'+esc(n)+'</p>'+pkHtml('data-pfile')+'<div class="btns"><button class="b2" data-c>રદ</button></div></div>';
  document.body.appendChild(ov);
  ov.onclick=e=>{if(e.target==ov||e.target.dataset.c!==undefined)ov.remove()};
  ov.onchange=e=>{if(e.target.dataset.pfile===undefined)return;ov.remove();addImgs(e.target.files,(S.ph[n]=S.ph[n]||[]),()=>{toast('ફોટો ઉમેરાયો ✅');after&&after()})}}
-function uploadSheet(k,after){const hh=k.slice(k.indexOf('|')+1),ov=document.createElement('div');ov.className='ov';S.sph=S.sph||{};
+function uploadSheet(k,after){if(!ADM)return;const hh=k.slice(k.indexOf('|')+1),ov=document.createElement('div');ov.className='ov';S.sph=S.sph||{};
  ov.innerHTML='<div class="sheet"><h3>➕📷 ફોટો અપલોડ</h3><p style="font-size:13px;opacity:.8;margin:2px 0 8px">'+esc(hh)+'</p>'+pkHtml('data-sfile="'+esc(k)+'"')+'<div class="btns"><button class="b2" data-c>રદ</button></div></div>';
  document.body.appendChild(ov);
  ov.onclick=e=>{if(e.target==ov||e.target.dataset.c!==undefined)ov.remove()};
@@ -623,7 +624,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}}}
 
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-34';
+const VER='2026-11-26-35';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
@@ -634,7 +635,8 @@ chkVer();setInterval(chkVer,300000);document.addEventListener('visibilitychange'
 /* ---------- જાહેર હોમ પેજ: નીચે “વર્ઝન” પર બે વાર ટેપ કરતાં યાત્રા ખૂલે ---------- */
 function showHome(){$('hcnt').textContent=gu(mainPlaces().length);$('hv').textContent='વર્ઝન '+VER;$('home').classList.add('on')}
 function openYatra(){$('home').classList.remove('on')}
-(function(){let last=0;$('hv').addEventListener('click',()=>{const n=Date.now();if(n-last<600){last=0;openYatra()}else last=n})})();
+let ADM=false;document.body.classList.add('vw');
+(function(){let c=0,last=0;$('hv').addEventListener('click',()=>{const n=Date.now();c=(n-last<900)?c+1:1;last=n;if(c>=7){c=0;ADM=true;document.body.classList.remove('vw');toast('✏️ એડમિન મોડ ચાલુ');openYatra()}})})();
 function libSheet(title,body){const ov=document.createElement('div');ov.className='ov';ov.innerHTML='<div class="sheet"><h3>'+title+'</h3>'+body+'<div class="btns"><button class="b2" data-c>બંધ</button></div></div>';document.body.appendChild(ov);
  ov.onclick=e=>{const t=e.target.closest('[data-p]');if(e.target==ov||e.target.dataset.c!==undefined){ov.remove();return}if(t){placeSheet(t.dataset.p)}}}
 const mapUrl=n=>{const g=GEO[n]||[n,0,0];const q=QRY[n]||((g[1]||g[2])?g[1]+','+g[2]:n);return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q)};
