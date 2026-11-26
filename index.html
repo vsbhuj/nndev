@@ -126,7 +126,7 @@ nav button.on{color:var(--or)}nav button.on:before{content:"";position:absolute;
 .phs button{position:absolute;top:3px;right:3px;width:22px;height:22px;border-radius:50%;border:0;background:rgba(0,0,0,.65);color:#fff;font-size:12px}
 .ft{color:var(--mut);font-size:12.5px;line-height:1.5}
 .lnk{border:0;background:none;color:var(--gold);font-weight:700;font-size:13px;padding:6px 0;cursor:pointer}
-.ci.im{background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;font-size:0}.pg .ci.im{width:50px!important;height:38px!important;border-radius:9px!important;border:0}
+.ci.im{background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;font-size:0}.pg .ci.im{position:absolute!important;left:0;top:0;width:100%!important;height:100%!important;border-radius:0!important;border:0;z-index:0}.pg .pi>span:nth-child(2){position:absolute;left:0;right:0;bottom:0;z-index:1;background:linear-gradient(transparent,rgba(0,0,0,.85));padding:18px 6px 5px;text-align:left}.pg .pi>span:nth-child(2) .nm,.pg .pi>span:nth-child(2) .sb{text-shadow:0 1px 3px #000;color:#fff}
 .himg{display:block;width:100%;height:150px;object-fit:cover;border-radius:16px;margin-bottom:10px}
 .rh{display:flex;align-items:center;gap:8px;margin:12px 0 7px;padding-left:4px;color:var(--gold);font-weight:800;font-size:15px}.rh span{flex:1}
 #spl{position:fixed;inset:0;z-index:100;background:radial-gradient(circle at 50% 42%,#2b1624 0%,#190e14 70%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .5s}
@@ -607,7 +607,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}}}
 
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-29';
+const VER='2026-11-26-30';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
