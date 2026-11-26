@@ -161,7 +161,6 @@ nav button.on{color:var(--or)}nav button.on:before{content:"";position:absolute;
   <div class="fx" id="fx"></div>
   <svg class="arc fx" viewBox="0 0 421 130" preserveAspectRatio="none"><path d="M150 24 C240 -6 330 12 356 62" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="2.2" stroke-dasharray="3 8" stroke-linecap="round"/><circle cx="356" cy="62" r="3.5" fill="#fff"/><circle cx="250" cy="14" r="3" fill="#fff" opacity=".8"/></svg>
   <div class="moon"></div><div class="sunb"></div>
-  <button class="menub" id="menub" aria-label="સેટિંગ"><i></i><i></i><i></i></button>
   <div class="hin">
     <div class="clock"><span id="ck">--:--:--</span><small id="ap">PM • IST</small></div>
     <div class="cd" id="cd"></div>
@@ -479,7 +478,6 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='print'){ov.remove();printAll()}
   else if(t.dataset.a=='upd'){ov.remove();chkVer(true).then(n=>{if(!n)setTimeout(()=>{if(confirm('ફરજિયાત રિફ્રેશ કરવું છે?'))refreshApp()},300)})}
   else if(t.dataset.a=='set'){ov.remove();settings()}}}
-$('menub').onclick=openMenu;
 
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
 const VER='2026-11-26-6';
