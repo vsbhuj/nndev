@@ -107,3 +107,6 @@
 ### Supabase સ્થિતિ (2026-11-26 રાત)
 - પગથિયું 1 પૂરું: org `qkzpuxpcxasbuvuthiyk` (Free plan). નવો પ્રોજેક્ટ **nndev-yatra**, id `wpcaujyjsaumudfmdplu`, region ap-south-1 (મુંબઈ), ACTIVE_HEALTHY. બીજો પ્રોજેક્ટ "Mandal" બીજી ઍપનો છે — તેને ન અડવું.
 - હવે પછી: પગથિયું 2 (ટેબલ + RLS). ઍપમાં હજી કોઈ જોડાણ નથી.
+- **પગથિયું 2 પૂરું (2026-11-26):** migration `initial_tables_and_rls` (SQL Supabase માં સાચવેલું). ટેબલ: admins, families, pilgrims, devices, photos, notes, settings, expenses. બધા પર RLS; anon ને કોઈ હક નહીં; ફક્ત admins ટેબલમાં હોય તે લોગિન વપરાશકર્તા વાંચે/લખે. pin_hash અને token_hash ઍડમિન પણ વાંચી/લખી ન શકે (service_role જ). પરિવાર દીઠ 2 ફોન (trigger). rollback વાળી ટેસ્ટ પાસ, security advisors માં 0 ચેતવણી, કોઈ સાચો/ટેસ્ટ ડેટા નથી.
+- ધ્યાન: ઍપમાં `admins` ઉમેરવા SQL જ. families માં `select *` નહીં ચાલે (કૉલમ નામ લખવાં). યાત્રાળુનું વાંચન પગથિયું 5 માં Edge Function થી (doc/dob ક્યારેય પાછાં ન મોકલવાં).
+- હવે પછી: પગથિયું 3 (ઍડમિન લોગિન; જાહેર signup બંધ કરવું). ઉપયોગકર્તા "બરાબર" કહે પછી.
