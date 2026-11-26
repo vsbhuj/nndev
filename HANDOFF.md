@@ -117,3 +117,8 @@
 - ડેટાબેઝ ટેસ્ટ પાસ (rollback), advisors 0. Edge Function ની HTTP ટેસ્ટ બાકી.
 - ઍપ UI બાકી: પહેલાં પગથિયું 3 (ઉપયોગકર્તા dashboard માં યુઝર બનાવે, signup બંધ કરે, ઈમેલ આપે → admins માં ઉમેરવો; repo માં ઈમેલ ન લખવો). લાઇવ લોગિન સ્ક્રીન યાત્રિક આયાત અને ટેસ્ટ પછી જ ફરજિયાત કરવી.
 - ધ્યાન: wa.me માટે દેશ કોડ જોઈએ; mobile સાચવવાનું ફોર્મેટ આયાત વખતે એકસરખું નક્કી કરવું (લોગિનમાં પણ તે જ). ટોકનથી ડેટા વાંચવાનું Function હજી બાકી.
+
+### Supabase Org બદલાયું (2026-11-27) — ઉપરની જૂની org વિગત હવે લાગુ નથી
+- **nndev-yatra** (id `wpcaujyjsaumudfmdplu`, મુંબઈ) હવે **vsbhuj's Org** `betdjckqtjjuhtliypij` માં (Free plan). Claude નું Supabase જોડાણ આ org સાથે છે.
+- ખસેડ્યા પછી તપાસ પાસ: ACTIVE_HEALTHY, 8 ટેબલ RLS + 8 policy, anon હક 0, બંને migration, `pilgrim-login` ACTIVE, security advisors 0; users 0, pilgrims 0.
+- હવે પછી: ઉપયોગકર્તા dashboard માં ઍડમિન યુઝર બનાવે અને જાહેર signup બંધ કરે.
