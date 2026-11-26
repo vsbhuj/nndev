@@ -208,6 +208,12 @@ const RULES=['## યાત્રાની વિગતો','પરિવાર �
 /* ---------- સ્ટેટ ---------- */
 const ST='tirth-sys-v1';let S={};try{S=JSON.parse(localStorage.getItem(ST)||'{}')}catch(e){}
 S.name=(!S.name||S.name==='તીર્થ યાત્રા')?'નરનારાયણ દેવ યાત્રા 2027':S.name;S.start=S.start||'2027-09-21';S.days=S.days||buildDays();S.yat=S.yat||[];S.exp=S.exp||[];
+/* સ્થળ-ઉમેરણ (સમયપત્રક મુજબ આજુબાજુનાં સ્થળોની તારીખે): દરેક ઉપકરણે એક જ વાર */
+if((S.mig||0)<1){const ADD=[[0,['રાપર મંદિર','કૃષ્ણ વડ'],99],[1,['નાથદ્વારા'],0],[3,['ઋષિકેશ'],99],[6,['સૂર્ય કુંડ','પાંડવ ગુફા'],1],[7,['ગૌરીકુંડ'],1],[8,['ગરુડ કુંડ'],1],[8,['ગુપ્ત કાશી'],99],[9,['ભવિષ્ય બદ્રી'],99],[10,['ગરુડ ગંગા','જોશીમઠ'],0],[11,['વ્યાસ અને ગણેશ ગુફા','એકાદશી ગુફા','હનુમાન ચટ્ટી','યોગ બદ્રી','વૃદ્ધ બદ્રી'],99],[14,['મખોડા ઘાટ'],99],[16,['ગલેશ્વર મહાદેવ','ભરતજીનું તપ સ્થાન'],99],[19,['ચિત્રકૂટ','પ્રયાગરાજ'],0]];
+ const has=p=>S.days.some(d=>d.items.some(r=>r.pl===p));
+ ADD.forEach(([di,ps,pos])=>{const d=S.days[di];if(!d)return;const night=d.items.filter(r=>r.n),rest=d.items.filter(r=>!r.n);let at=Math.min(pos,rest.length);ps.forEach(p=>{if(has(p))return;rest.splice(at,0,{t:'પછી',x:p,pl:p});at++});rest.forEach((r,i)=>r.t=LBL[i]||'પછી');d.items=[...rest,...night]});
+ S.mig=1;try{localStorage.setItem(ST,JSON.stringify(S))}catch(e){}}
+
 S.pack=S.pack||PACK.map(t=>({t,d:0}));S.rules=(!S.rules||JSON.stringify(S.rules)===JSON.stringify(OLDRULES))?RULES.slice():S.rules;S.glory=S.glory||{};S.pin=S.pin||{};S.cp=S.cp||[];S.dt=S.dt||{};S.ph=S.ph||{};S.edit=!!S.edit;S.test=!!S.test;
 const save=()=>{try{localStorage.setItem(ST,JSON.stringify(S))}catch(e){}};
 let sel=0,tab=0,sub=null,yf='all',ys='';
