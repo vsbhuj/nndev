@@ -1,0 +1,452 @@
+{
+  "units": "source image pixels",
+  "nominal_margin": 28,
+  "shadow": {
+    "color": "#573276",
+    "opacity": 0.137,
+    "offset_x": 0,
+    "offset_y": 4,
+    "gaussian_blur_radius": 7,
+    "spread": 0
+  },
+  "inner_shadow": {
+    "top_color": "#8464A2",
+    "peak_opacity": 0.204,
+    "blur_radius": 2,
+    "rim_width": 5,
+    "offset_x": 0,
+    "offset_y": 0
+  },
+  "inner_highlight_width": 2,
+  "notes": [
+    "The center of every frame is empty; the control-state shapes (toggle thumb and radio dot) are intrinsic. Checked checkbox uses purple fill without a checkmark as requested.",
+    "28px is geometric margin; soft shadows occupy part of this transparent area.",
+    "9-slice insets include margins and rounded corners. Pill frames should be stretched horizontally; toggles, radio and checkboxes should be scaled uniformly. Vertical gradients may look different when stretched in height. The bottom sheet has square lower corners."
+  ],
+  "palette": {
+    "success_green": [
+      "#D1F5E3",
+      "#9AD8BA",
+      "#64B590"
+    ],
+    "danger_rose": [
+      "#FFCDD8",
+      "#E995AB",
+      "#C96A87"
+    ],
+    "disabled_grey_lavender": [
+      "#E9E5EE",
+      "#D9D3E3",
+      "#C9C2D5"
+    ],
+    "pressed_purple": [
+      "#B981E9",
+      "#8B43D2",
+      "#6630B2"
+    ],
+    "primary_purple": [
+      "#D5A1FC",
+      "#A75FEA",
+      "#8242CF"
+    ],
+    "gold": "#D6A658",
+    "dark_purple_text": "#35164F",
+    "secondary_text": "#655676",
+    "card_white": "#FFFFFF"
+  },
+  "assets": [
+    {
+      "file": "01_bottom_sheet.png",
+      "label": "01  Bottom sheet",
+      "canvas": [
+        976,
+        1116
+      ],
+      "frame": [
+        920,
+        1060
+      ],
+      "corner_radius": {
+        "top": 52,
+        "bottom": 0
+      },
+      "border_width": 2,
+      "nominal_margin": 28,
+      "nine_slice_insets": {
+        "left": 82,
+        "top": 82,
+        "right": 82,
+        "bottom": 30
+      },
+      "resize": "9-slice; width-only preferred to preserve vertical gradient",
+      "fill_hex": [
+        "#FFFAFE",
+        "#F7ECFC",
+        "#F3E5F5"
+      ],
+      "fill_opacity": 0.961,
+      "inner_shadow": false,
+      "state": null
+    },
+    {
+      "file": "02_modal_dialog.png",
+      "label": "02  Modal dialog",
+      "canvas": [
+        736,
+        556
+      ],
+      "frame": [
+        680,
+        500
+      ],
+      "corner_radius": 46,
+      "border_width": 2,
+      "nominal_margin": 28,
+      "nine_slice_insets": {
+        "left": 76,
+        "top": 76,
+        "right": 76,
+        "bottom": 76
+      },
+      "resize": "9-slice; width-only preferred to preserve vertical gradient",
+      "fill_hex": [
+        "#FDF1F9",
+        "#F3E6FA",
+        "#F2DDEC"
+      ],
+      "fill_opacity": 0.949,
+      "inner_shadow": false,
+      "state": null
+    },
+    {
+      "file": "03_search_box.png",
+      "label": "03  Search box",
+      "canvas": [
+        856,
+        168
+      ],
+      "frame": [
+        800,
+        112
+      ],
+      "corner_radius": 56,
+      "border_width": 2,
+      "nominal_margin": 28,
+      "nine_slice_insets": {
+        "left": 86,
+        "top": 86,
+        "right": 86,
+        "bottom": 86
+      },
+      "resize": "9-slice; width-only preferred to preserve vertical gradient",
+      "fill_hex": [
+        "#FFFAFE",
+        "#F7ECFC",
+        "#F3E5F5"
+      ],
+      "fill_opacity": 0.871,
+      "inner_shadow": false,
+      "state": null
+    },
+    {
+      "file": "04_text_input.png",
+      "label": "04  Text input",
+      "canvas": [
+        856,
+        168
+      ],
+      "frame": [
+        800,
+        112
+      ],
+      "corner_radius": 27,
+      "border_width": 2,
+      "nominal_margin": 28,
+      "nine_slice_insets": {
+        "left": 57,
+        "top": 57,
+        "right": 57,
+        "bottom": 57
+      },
+      "resize": "9-slice; width-only preferred to preserve vertical gradient",
+      "fill_hex": [
+        "#FFFAFE",
+        "#F7ECFC",
+        "#F3E5F5"
+      ],
+      "fill_opacity": 0.961,
+      "inner_shadow": true,
+      "state": null
+    },
+    {
+      "file": "05_text_area.png",
+      "label": "05  Large text area",
+      "canvas": [
+        856,
+        436
+      ],
+      "frame": [
+        800,
+        380
+      ],
+      "corner_radius": 32,
+      "border_width": 2,
+      "nominal_margin": 28,
+      "nine_slice_insets": {
+        "left": 62,
+        "top": 62,
+        "right": 62,
+        "bottom": 62
+      },
+      "resize": "9-slice; width-only preferred to preserve vertical gradient",
+      "fill_hex": [
+        "#FFFAFE",
+        "#F7ECFC",
+        "#F3E5F5"
+      ],
+      "fill_opacity": 0.961,
+      "inner_shadow": true,
+      "state": null
+    },
+    {
+      "file": "06_list_row.png",
+      "label": "06  List row",
+      "canvas": [
+        976,
+        188
+      ],
+      "frame": [
+        920,
+        132
+      ],
+      "corner_radius": 30,
+      "border_width": 2,
+      "nominal_margin": 28,
+      "nine_slice_insets": {
+        "left": 60,
+        "top": 60,
+        "right": 60,
+        "bottom": 60
+      },
+      "resize": "9-slice; width-only preferred to preserve vertical gradient",
+      "fill_hex": [
+        "#FDF1F9",
+        "#F3E6FA",
+        "#F2DDEC"
+      ],
+      "fill_opacity": 0.914,
+      "inner_shadow": false,
+      "state": null
+    },
+    {
+      "file": "07_section_heading.png",
+      "label": "07  Section heading",
+      "canvas": [
+        876,
+        156
+      ],
+      "frame": [
+        820,
+        100
+      ],
+      "corner_radius": 50,
+      "border_width": 2,
+      "nominal_margin": 28,
+      "nine_slice_insets": {
+        "left": 80,
+        "top": 80,
+        "right": 80,
+        "bottom": 80
+      },
+      "resize": "9-slice; width-only preferred to preserve vertical gradient",
+      "fill_hex": [
+        "#FFFAFE",
+        "#F7ECFC",
+        "#F3E5F5"
+      ],
+      "fill_opacity": 0.863,
+      "inner_shadow": false,
+      "state": null
+    },
+    {
+      "file": "08a_toggle_off.png",
+      "label": "08a  Toggle OFF",
+      "canvas": [
+        220,
+        140
+      ],
+      "frame": [
+        164,
+        84
+      ],
+      "corner_radius": 42,
+      "border_width": 2,
+      "nominal_margin": 28,
+      "nine_slice_insets": null,
+      "resize": "uniform scale only; preserve state geometry",
+      "fill_hex": [
+        "#E9E5EE",
+        "#D9D3E3",
+        "#C9C2D5"
+      ],
+      "fill_opacity": 0.91,
+      "inner_shadow": false,
+      "state": "off"
+    },
+    {
+      "file": "08b_toggle_on.png",
+      "label": "08b  Toggle ON",
+      "canvas": [
+        220,
+        140
+      ],
+      "frame": [
+        164,
+        84
+      ],
+      "corner_radius": 42,
+      "border_width": 2,
+      "nominal_margin": 28,
+      "nine_slice_insets": null,
+      "resize": "uniform scale only; preserve state geometry",
+      "fill_hex": [
+        "#D5A1FC",
+        "#A75FEA",
+        "#8242CF"
+      ],
+      "fill_opacity": 1.0,
+      "inner_shadow": false,
+      "state": "on"
+    },
+    {
+      "file": "09a_checkbox_unchecked.png",
+      "label": "09a  Checkbox unchecked",
+      "canvas": [
+        136,
+        136
+      ],
+      "frame": [
+        80,
+        80
+      ],
+      "corner_radius": 16,
+      "border_width": 2,
+      "nominal_margin": 28,
+      "nine_slice_insets": null,
+      "resize": "uniform scale only; preserve state geometry",
+      "fill_hex": [
+        "#FFFAFE",
+        "#F7ECFC",
+        "#F3E5F5"
+      ],
+      "fill_opacity": 0.91,
+      "inner_shadow": false,
+      "state": "unchecked"
+    },
+    {
+      "file": "09b_checkbox_checked.png",
+      "label": "09b  Checkbox checked",
+      "canvas": [
+        136,
+        136
+      ],
+      "frame": [
+        80,
+        80
+      ],
+      "corner_radius": 16,
+      "border_width": 2,
+      "nominal_margin": 28,
+      "nine_slice_insets": null,
+      "resize": "uniform scale only; preserve state geometry",
+      "fill_hex": [
+        "#D5A1FC",
+        "#A75FEA",
+        "#8242CF"
+      ],
+      "fill_opacity": 1.0,
+      "inner_shadow": false,
+      "state": "checked"
+    },
+    {
+      "file": "09c_radio_unchecked.png",
+      "label": "09c  Radio unchecked",
+      "canvas": [
+        136,
+        136
+      ],
+      "frame": [
+        80,
+        80
+      ],
+      "corner_radius": 40,
+      "border_width": 2,
+      "nominal_margin": 28,
+      "nine_slice_insets": null,
+      "resize": "uniform scale only; preserve state geometry",
+      "fill_hex": [
+        "#FFFAFE",
+        "#F7ECFC",
+        "#F3E5F5"
+      ],
+      "fill_opacity": 0.91,
+      "inner_shadow": false,
+      "state": "unchecked"
+    },
+    {
+      "file": "09d_radio_checked.png",
+      "label": "09d  Radio checked",
+      "canvas": [
+        136,
+        136
+      ],
+      "frame": [
+        80,
+        80
+      ],
+      "corner_radius": 40,
+      "border_width": 2,
+      "nominal_margin": 28,
+      "nine_slice_insets": null,
+      "resize": "uniform scale only; preserve state geometry",
+      "fill_hex": [
+        "#FFFAFE",
+        "#F7ECFC",
+        "#F3E5F5"
+      ],
+      "fill_opacity": 0.91,
+      "inner_shadow": false,
+      "state": "checked"
+    },
+    {
+      "file": "10_toast_notification.png",
+      "label": "10  Toast / notification",
+      "canvas": [
+        896,
+        196
+      ],
+      "frame": [
+        840,
+        140
+      ],
+      "corner_radius": 32,
+      "border_width": 2,
+      "nominal_margin": 28,
+      "nine_slice_insets": {
+        "left": 62,
+        "top": 62,
+        "right": 62,
+        "bottom": 62
+      },
+      "resize": "9-slice; width-only preferred to preserve vertical gradient",
+      "fill_hex": [
+        "#7850A0",
+        "#533079",
+        "#35164F"
+      ],
+      "fill_opacity": 0.961,
+      "inner_shadow": false,
+      "state": null
+    }
+  ]
+}

@@ -1,0 +1,192 @@
+{
+  "units": "pixels",
+  "notes": "Insets include the 28px nominal margin and the rounded corner. For rectangular assets, preserve corners via 9-slice; the center is empty but includes a vertical gradient. For circles, scale uniformly; never 9-slice. For pill buttons, maintain original aspect of corners, and prefer changing width only.",
+  "assets": [
+    {
+      "file": "01_primary_normal.png",
+      "canvas": [
+        616,
+        156
+      ],
+      "frame": [
+        560,
+        100
+      ],
+      "corner_radius": 41,
+      "nominal_margin": 28,
+      "nine_slice_inset": 71,
+      "resize": "9-slice; preserve corner and stretch straight edges; width-only preferred"
+    },
+    {
+      "file": "02_primary_pressed.png",
+      "canvas": [
+        616,
+        156
+      ],
+      "frame": [
+        560,
+        100
+      ],
+      "corner_radius": 41,
+      "nominal_margin": 28,
+      "nine_slice_inset": 71,
+      "resize": "9-slice; preserve corner and stretch straight edges; width-only preferred"
+    },
+    {
+      "file": "03_disabled.png",
+      "canvas": [
+        616,
+        156
+      ],
+      "frame": [
+        560,
+        100
+      ],
+      "corner_radius": 41,
+      "nominal_margin": 28,
+      "nine_slice_inset": 71,
+      "resize": "9-slice; preserve corner and stretch straight edges; width-only preferred"
+    },
+    {
+      "file": "04_secondary_outline.png",
+      "canvas": [
+        616,
+        156
+      ],
+      "frame": [
+        560,
+        100
+      ],
+      "corner_radius": 41,
+      "nominal_margin": 28,
+      "nine_slice_inset": 71,
+      "resize": "9-slice; preserve corner and stretch straight edges; width-only preferred"
+    },
+    {
+      "file": "05_danger_delete.png",
+      "canvas": [
+        616,
+        156
+      ],
+      "frame": [
+        560,
+        100
+      ],
+      "corner_radius": 41,
+      "nominal_margin": 28,
+      "nine_slice_inset": 71,
+      "resize": "9-slice; preserve corner and stretch straight edges; width-only preferred"
+    },
+    {
+      "file": "06_success_confirm.png",
+      "canvas": [
+        616,
+        156
+      ],
+      "frame": [
+        560,
+        100
+      ],
+      "corner_radius": 41,
+      "nominal_margin": 28,
+      "nine_slice_inset": 71,
+      "resize": "9-slice; preserve corner and stretch straight edges; width-only preferred"
+    },
+    {
+      "file": "07_small_icon_button.png",
+      "canvas": [
+        184,
+        184
+      ],
+      "frame": [
+        128,
+        128
+      ],
+      "corner_radius": 64,
+      "nominal_margin": 28,
+      "nine_slice_inset": null,
+      "resize": "uniform only"
+    },
+    {
+      "file": "08_floating_action_button.png",
+      "canvas": [
+        296,
+        296
+      ],
+      "frame": [
+        240,
+        240
+      ],
+      "corner_radius": 120,
+      "nominal_margin": 28,
+      "nine_slice_inset": null,
+      "resize": "uniform only"
+    },
+    {
+      "file": "09_chip_normal.png",
+      "canvas": [
+        376,
+        156
+      ],
+      "frame": [
+        320,
+        100
+      ],
+      "corner_radius": 41,
+      "nominal_margin": 28,
+      "nine_slice_inset": 71,
+      "resize": "9-slice; preserve corner and stretch straight edges; width-only preferred"
+    },
+    {
+      "file": "10_chip_selected.png",
+      "canvas": [
+        376,
+        156
+      ],
+      "frame": [
+        320,
+        100
+      ],
+      "corner_radius": 41,
+      "nominal_margin": 28,
+      "nine_slice_inset": 71,
+      "resize": "9-slice; preserve corner and stretch straight edges; width-only preferred"
+    }
+  ],
+  "colors": {
+    "primary_gradient": [
+      "#D5A1FC",
+      "#A75FEA",
+      "#8242CF"
+    ],
+    "pressed_gradient": [
+      "#B981E9",
+      "#8B43D2",
+      "#6630B2"
+    ],
+    "disabled_gradient": [
+      "#E9E5EE",
+      "#D9D3E3",
+      "#C9C2D5"
+    ],
+    "secondary_gradient": [
+      "#FDF1F9",
+      "#F3E6FA",
+      "#F2DDEC"
+    ],
+    "danger_gradient": [
+      "#FFCDD8",
+      "#E995AB",
+      "#C96A87"
+    ],
+    "success_gradient": [
+      "#D1F5E3",
+      "#9AD8BA",
+      "#64B590"
+    ],
+    "gold": "#D6A658",
+    "dark_purple_text": "#35164F",
+    "secondary_text": "#655676",
+    "card_white": "#FFFFFF"
+  }
+}
