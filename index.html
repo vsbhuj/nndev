@@ -318,6 +318,20 @@ body.lt header.day .hin:after{box-shadow:0 0 12px 4px rgba(242,179,61,.45);backg
 body.lt .hin>*{position:relative}
 body.lt header .moon,body.lt header .sunb{display:none}
 body.lt .wc{background:linear-gradient(90deg,#f7e2b4,#f3d391 50%,#f7e2b4);border:1px solid #e2b968;font-weight:700}
+
+.bell{position:absolute;right:58px;top:0;width:38px;height:38px;border-radius:12px;border:2px solid rgba(255,255,255,.4);background:rgba(0,0,0,.25) center/26px no-repeat;cursor:pointer;padding:0;font-size:19px;z-index:2}
+.bell:before{content:'🔔'}
+.bell i{position:absolute;top:-6px;right:-6px;min-width:18px;height:18px;border-radius:9px;background:#e0463c;color:#fff;font:800 11px/18px sans-serif;font-style:normal;padding:0 4px;display:none}
+.bell i.on{display:block}
+.ntc{background:var(--card);border:2px solid var(--bd);border-left:5px solid var(--gold);border-radius:14px;padding:10px 12px;margin-bottom:8px}
+.ntc .h{display:flex;align-items:center;gap:8px;font-weight:800;font-size:15px}.ntc .h span{flex:1}
+.ntc .d{font-size:11.5px;color:var(--mut);margin-top:2px}.ntc p{margin:6px 0 0;font-size:14px;line-height:1.6;white-space:pre-line}
+.ntc.imp{border-left-color:#e0463c}
+body.lt .bell{right:56px;top:6px;width:40px;height:40px;border:0;background:url(th/i-bell.webp) center/contain no-repeat}
+body.lt .bell:before{content:''}
+body.lt .ntc{background:#fff;border:1.5px solid #e2b968;border-left:5px solid #D6A658;color:#35164F;box-shadow:0 3px 8px rgba(87,50,118,.12)}
+body.lt .ntc.imp{border-left-color:#C96A87}body.lt .ntc .d{color:#655676}
+body.lt .hin{isolation:isolate}body.lt .hin>.bell{position:absolute;right:52px;top:4px}
 </style>
 </head>
 <body>
@@ -331,6 +345,7 @@ body.lt .wc{background:linear-gradient(90deg,#f7e2b4,#f3d391 50%,#f7e2b4);border
     <div class="clock"><span id="ck">--:--:--</span><small id="ap">PM • IST</small></div>
     <div class="cd" id="cd"></div>
     <div class="sr"><div class="s"><div class="l">🌅 સૂર્યોદય</div><div class="v" id="sr">--</div></div><div class="s"><div class="l">🌇 સૂર્યાસ્ત</div><div class="v" id="ss">--</div></div></div>
+    <button class="bell" id="bell" aria-label="સૂચના"><i id="bn"></i></button>
     <a class="wc" id="wc" target="_blank" rel="noopener">🌦 <span id="wn">--</span> • લાઈવ હવામાન આંકડા</a>
   </div>
 </header>
@@ -846,14 +861,14 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}
   else if(t.dataset.a=='demo'){ov.remove();demoData()}}}
 function demoData(){
- if(S.yat.some(y=>y.demo)){S.yat=S.yat.filter(y=>!y.demo);S.exp=S.exp.filter(e=>!e.demo);save();renderYat();renderMore();toast('ડેમો નામ કાઢી નાખ્યાં');return}
+ if(S.yat.some(y=>y.demo)){S.yat=S.yat.filter(y=>!y.demo);S.exp=S.exp.filter(e=>!e.demo);S.notes=(S.notes||[]).filter(n=>!n.demo);S.nseen=Math.min(S.nseen||0,S.notes.length);bellUp();save();renderYat();renderMore();toast('ડેમો નામ કાઢી નાખ્યાં');return}
  const N=[['પૂ. સ્વામી ધર્મવલ્લભદાસજી','62','સંત'],['પૂ. સ્વામી હરિપ્રકાશદાસજી','48','સંત'],['રમેશભાઈ પટેલ','58'],['ગીતાબેન પટેલ','54'],['મહેશભાઈ ઠક્કર','67'],['કાંતાબેન ઠક્કર','63'],['દિનેશભાઈ સોની','45'],['ભાવનાબેન સોની','41'],['હરેશભાઈ ભાનુશાળી','52'],['જયશ્રીબેન ભાનુશાળી','49'],['નરેન્દ્રભાઈ જોષી','71'],['સવિતાબેન જોષી','68'],['કિશોરભાઈ ગોર','39'],['પ્રવીણભાઈ ચૌહાણ','56'],['લક્ષ્મીબેન ચૌહાણ','53'],['વિનોદભાઈ મહેતા','60','હરિભક્ત','રદ']];
  N.forEach((x,i)=>S.yat.push({n:x[0],a:x[1],p:'98'+String(25000000+i*731137).slice(0,8),g:x[2]||'હરિભક્ત',s:x[3]||'ચાલુ',demo:1}));
  [['બસ ભાડું (એડવાન્સ)',150000],['ધર્મશાળા – હરિદ્વાર',42000],['ભોજન – દિવસ ૧ થી ૫',36500],['ગંગા આરતી પ્રસાદ',2100]].forEach(e=>S.exp.push({t:e[0],a:String(e[1]),demo:1}));
- save();renderYat();renderMore();toast('ડેમો નામ ભર્યાં (૧૬ યાત્રિક, ૪ ખર્ચ)')}
+ S.notes=S.notes||[];[{t:'પ્રસ્થાનનો સમય',d:'૨૧ સપ્ટે ૨૦૨૭, મંગળ',b:'ભુજ મંદિરથી સવારે ૫:૩૦ વાગ્યે બસ ઉપડશે. સૌએ ૫:૦૦ વાગ્યા સુધીમાં મંદિરે પહોંચી જવું.',imp:1},{t:'ઓળખપત્ર સાથે રાખવું',d:'આખી યાત્રા',b:'આધાર કાર્ડની અસલ અને બે ઝેરોક્ષ સાથે રાખવી. નેપાળમાં પ્રવેશ વખતે ઓળખપત્ર જરૂરી છે.',imp:1},{t:'હિમાલયમાં ઠંડી',d:'દિવસ ૫ થી ૧૨',b:'કેદારનાથ અને બદ્રીનાથમાં રાત્રે ઘણી ઠંડી હોય છે. સ્વેટર, શાલ, મોજાં અને ટોપી સાથે રાખવાં.'},{t:'દવાઓ',d:'',b:'નિયમિત લેતા હો તે દવાઓ પૂરતા પ્રમાણમાં સાથે રાખવી. ઊંચાઈ પર તકલીફ થાય તો તરત સંચાલકને જણાવવું.'},{t:'સંધ્યા આરતી – હર કી પૌડી',d:'૨૩ સપ્ટે ૨૦૨૭, સાંજે',b:'હરિદ્વારમાં સાંજે ગંગા આરતીમાં સૌએ સાથે જવાનું છે. ભીડમાં જૂથથી છૂટા ન પડવું.'}].forEach(n=>S.notes.push({...n,demo:1}));S.nseen=0;bellUp();save();renderYat();renderMore();toast('ડેમો નામ અને સૂચનાઓ ભર્યાં')}
 
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-47';
+const VER='2026-11-26-48';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
@@ -887,6 +902,19 @@ addEventListener('popstate',()=>{
  if(typeof tab!=='undefined'&&tab!==0){show(0);history.pushState({b:2},'');return}
  if(!$('home').classList.contains('on')){showHome();history.pushState({b:2},'');return}
  history.back()})})();
+
+function noteOpen(){S.nseen=(S.notes||[]).length;save();bellUp();const ov=document.createElement('div');ov.className='ov';
+ const L=S.notes||[];
+ ov.innerHTML='<div class="sheet"><h3>🔔 સૂચનાઓ</h3>'+(ADM?'<button class="b1" data-na style="width:100%;margin-bottom:10px;border:0;border-radius:14px;padding:11px;font-weight:800">➕ નવી સૂચના</button>':'')+(L.length?L.map((n,i)=>'<div class="ntc '+(n.imp?'imp':'')+'"><div class="h"><span>'+(n.imp?'⚠️ ':'📢 ')+esc(n.t)+'</span>'+(ADM?'<button class="ib" data-ne="'+i+'">✏️</button>':'')+'</div>'+(n.d?'<div class="d">'+esc(n.d)+'</div>':'')+(n.b?'<p>'+esc(n.b)+'</p>':'')+'</div>').join(''):'<div class="emp">હજી કોઈ સૂચના નથી.</div>')+'<div class="btns"><button class="b2" data-c>બંધ</button></div></div>';
+ document.body.appendChild(ov);
+ ov.onclick=e=>{const t=e.target;if(t==ov||t.dataset.c!==undefined){ov.remove();return}
+  if(t.dataset.na!==undefined){ov.remove();noteEdit(-1)}else if(t.dataset.ne){ov.remove();noteEdit(+t.dataset.ne)}}}
+function noteEdit(i){S.notes=S.notes||[];const n=i<0?{t:'',d:'',b:'',imp:''}:S.notes[i];
+ modal({title:i<0?'નવી સૂચના':'સૂચના ફેરફાર',fields:[{k:'t',l:'શીર્ષક',v:n.t},{k:'d',l:'તારીખ / સમય',v:n.d},{k:'b',l:'વિગત',t:'area',v:n.b},{k:'imp',l:'પ્રકાર',t:'select',o:['સામાન્ય','મહત્ત્વની'],v:n.imp?'મહત્ત્વની':'સામાન્ય'}],
+  save:v=>{if(!v.t.trim())return;v.imp=v.imp=='મહત્ત્વની'?1:0;if(n.demo)v.demo=1;if(i<0)S.notes.unshift(v);else S.notes[i]=v;save();noteOpen()},
+  del:i<0?null:()=>{S.notes.splice(i,1);save();noteOpen()}})}
+function bellUp(){const c=Math.max(0,(S.notes||[]).length-(S.nseen||0)),b=$('bn');if(b){b.textContent=gu(c);b.classList.toggle('on',c>0)}}
+$('bell').addEventListener('click',noteOpen);bellUp();
 </script>
 </body>
 </html>
