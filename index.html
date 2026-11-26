@@ -177,7 +177,7 @@ nav button.on{color:var(--or)}nav button.on:before{content:"";position:absolute;
 
 .gl .gg{margin:14px 0 4px;color:var(--gold);font-weight:800;font-size:13.5px}
 .gl .sc{margin-top:8px;white-space:normal}
-.gl .shw{display:flex;gap:6px;align-items:stretch}.gl .shw .sch{flex:1;min-width:0}.gl .sp{flex:none;width:46px;border-radius:12px;border:2px dashed var(--bd);background:transparent;display:flex;align-items:center;justify-content:center;font-size:17px;text-decoration:none;cursor:pointer;opacity:.6;color:#fff}.gl .sp small{font-size:12px;color:var(--gold);font-weight:700}.gl .sp.on{opacity:1;border-style:solid;background:var(--mar)}.gl .lnk.sm{font-size:13px;margin-top:6px;display:block}.gl .addsec{display:block;width:100%;margin-top:10px;min-height:42px;border-radius:12px;border:2px dashed var(--gold);background:transparent;color:var(--gold);font-weight:700;font-size:14px;cursor:pointer}.gl .sch{display:flex;align-items:center;gap:10px;width:100%;min-height:46px;background:var(--c2);border:2px solid var(--bd);border-radius:12px;color:#fff;font-weight:700;font-size:14.5px;text-align:left;padding:6px 10px;cursor:pointer}
+.gl .shw{display:flex;gap:6px;align-items:stretch}.gl .shw .sch{flex:1;min-width:0}.gl .sp{flex:none;width:46px;border-radius:12px;border:2px dashed var(--bd);background:transparent;display:flex;align-items:center;justify-content:center;font-size:17px;text-decoration:none;cursor:pointer;opacity:.6;color:#fff}.gl .sp small{font-size:12px;color:var(--gold);font-weight:700}.gl .sp.on{opacity:1;border-style:solid;background:var(--mar)}.gl .lnk.sm{font-size:13px;margin-top:6px;display:block}.gl .sph{display:block;margin-top:8px;padding:9px;border:2px solid var(--gold);border-radius:10px;text-align:center;color:var(--gold);font-weight:700;font-size:13.5px;cursor:pointer}.gl .phs{margin-top:8px}.gl .addsec{display:block;width:100%;margin-top:10px;min-height:42px;border-radius:12px;border:2px dashed var(--gold);background:transparent;color:var(--gold);font-weight:700;font-size:14px;cursor:pointer}.gl .sch{display:flex;align-items:center;gap:10px;width:100%;min-height:46px;background:var(--c2);border:2px solid var(--bd);border-radius:12px;color:#fff;font-weight:700;font-size:14.5px;text-align:left;padding:6px 10px;cursor:pointer}
 .gl .sch b{flex:none;width:28px;height:28px;border-radius:50%;background:var(--mar);display:flex;align-items:center;justify-content:center;font-size:13px}
 .gl .sch span{flex:1;line-height:1.3}.gl .sch i{font-style:normal;color:var(--gold);transition:transform .15s}.gl .sc.op .sch i{transform:rotate(180deg)}
 .gl .tx{white-space:pre-line}.gl .scb .sc .sch{min-height:40px;font-size:13.5px}.gl .scb .scb{margin-left:4px}.gl .scb{white-space:normal;padding:8px 6px 2px 10px;font-size:14px;line-height:1.6;color:#eadce4}
@@ -383,20 +383,22 @@ function glHtml(t,pn){
     else if(l.startsWith('## ')){st=[{lv:0,n:root}];root.c.push({g:l.slice(3)})}
     else st[st.length-1].n.b.push(l)});
   const tx=(nd,top)=>{const s=esc(nd.b.join('\n').replace(/\n+$/,''));return s?(top?s:'<div class="tx">'+s+'</div>'):''};
-  const rd=(nd,top)=>{let n=0,h=tx(nd,top);nd.c.forEach(it=>{if(it.g)h+='<div class="gg">'+esc(it.g)+'</div>';else{n++;const k=(pn||'')+'|'+it.h,ll=S.sg&&S.sg[k];h+='<div class="sc"><div class="shw"><button class="sch" data-sc><b>'+gu(n)+'</b><span>'+esc(it.h)+'</span><i>▾</i></button>'+(pn?(ll?'<a class="sp on" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+ll+'" aria-label="નકશો">📍</a>':'<button class="sp" data-sp="'+esc(k)+'" aria-label="લોકેશન ઉમેરો">📍<small>+</small></button>'):'')+'</div><div class="scb" hidden>'+rd(it,false)+(pn&&ll?'<button class="lnk sm" data-sp="'+esc(k)+'">📍 લોકેશન ફેરફાર</button>':'')+'</div></div>'}});return h};
+  const rd=(nd,top)=>{let n=0,h=tx(nd,top);nd.c.forEach(it=>{if(it.g)h+='<div class="gg">'+esc(it.g)+'</div>';else{n++;const k=(pn||'')+'|'+it.h,ll=S.sg&&S.sg[k];const sp=(S.sph&&S.sph[k])||[];h+='<div class="sc" data-k="'+esc(k)+'"><div class="shw"><button class="sch" data-sc><b>'+gu(n)+'</b><span>'+esc(it.h)+'</span><i>▾</i></button>'+(pn?(ll?'<a class="sp on" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+ll+'" aria-label="નકશો">📍</a>':'<button class="sp" data-sp="'+esc(k)+'" aria-label="લોકેશન ઉમેરો">📍<small>+</small></button>'):'')+'</div><div class="scb" hidden>'+rd(it,false)+(pn?(sp.length?'<div class="phs">'+sp.map((u,j)=>'<div><img src="'+u+'" alt=""><button data-rsk="'+esc(k)+'" data-rsi="'+j+'">✕</button></div>').join('')+'</div>':'')+'<label class="sph">📷 આ સ્થળનો ફોટો ઉમેરો<input type="file" accept="image/*" multiple hidden data-sfile="'+esc(k)+'"></label>':'')+(pn&&ll?'<button class="lnk sm" data-sp="'+esc(k)+'">📍 લોકેશન ફેરફાર</button>':'')+'</div></div>'}});return h};
   return rd(root,true)}
 function placeSheet(n,ri){
   const p=places().find(x=>x.n==n),g=GEO[n]||[n,0,0],q=encodeURIComponent(QRY[n]||g[0]||n),cust=S.cp.some(c=>c.n==n);
   const ov=document.createElement('div');ov.className='ov pv';
   const draw=()=>{
+    const opn=[...ov.querySelectorAll('.sc.op')].map(e=>e.dataset.k),stp=ov.querySelector('.sh2')?ov.querySelector('.sh2').scrollTop:0;
     const gl=glFull(n),ph=S.ph[n]||[];
     ov.innerHTML=`<div class="sh2"><div class="sh2h"><span class="t">🛕 ${esc(n)}</span><button class="x" data-x aria-label="બંધ">✕</button></div>
     ${PHOTO[n]?`<img class="himg" src="${PHOTO[n]}" alt="">`:''}<div class="gl">${gl?glHtml(gl,n):'મહિમા ઉમેરવાનો બાકી.'}<button class="addsec" data-addsec>➕ પેટા-સ્થળ ઉમેરો</button><small>${p&&p.days.length?'દિવસ '+p.days.map(x=>gu(x+1)+' ('+dShort(x)+')').join(', '):''}</small></div>
-    <div class="bt2"><a class="bm" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${q}">📍 Google Maps</a></div>
+    ${/^§§ /m.test(gl)?'':`<div class="bt2"><a class="bm" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${q}">📍 Google Maps</a></div>`}
     ${ph.length?`<div class="phs">${ph.map((u,i)=>`<div><img src="${u}" alt=""><button data-rp="${i}">✕</button></div>`).join('')}</div>`:''}
     <label class="bo w" style="display:block">📷 ફોટો ઉમેરો<input type="file" accept="image/*" multiple hidden data-file></label>
     ${ri!=null?'<button class="lnk" data-ri2>✏️ સમય / સ્થળ ફેરફાર</button><br>':''}<button class="lnk" data-gl>✏️ મહિમા ફેરફાર</button>${cust?'<button class="lnk" data-dp style="margin-left:14px;color:#ff9aa8">🗑 સ્થળ કાઢો</button>':''}
     </div>`;
+    ov.querySelectorAll('.sc').forEach(s=>{if(opn.includes(s.dataset.k)){s.classList.add('op');s.querySelector(':scope>.scb').hidden=false}});const s2=ov.querySelector('.sh2');if(s2)s2.scrollTop=stp;
   };
   draw();document.body.appendChild(ov);
   const edit=(title,k,store,type)=>modal({title,fields:[{k:'v',l:title,t:type,v:store[n]!=null?store[n]:(k=='g'?(GLORY[n]||''):'')}],save:v=>{store[n]=v.v;save();draw()}});
@@ -406,16 +408,17 @@ function placeSheet(n,ri){
     else if(t.closest('[data-pin]'))edit('પિન કોડ','p',S.pin,'text');
     else if(t.closest('[data-dt]'))edit('દર્શન સમય','d',S.dt,'text');
     else if(t.closest('[data-ri2]')){ov.remove();editItem(ri)}
+    else if(t.closest('[data-rsk]')){const x=t.closest('[data-rsk]');S.sph[x.dataset.rsk].splice(+x.dataset.rsi,1);save();draw()}
     else if(t.closest('[data-sp]')){const k=t.closest('[data-sp]').dataset.sp;S.sg=S.sg||{};modal({title:'📍 લોકેશન: '+k.split('|')[1],info:'<p style="font-size:13px;opacity:.8;margin:4px 0 8px">Google Maps માં જગ્યા પર લાંબું દબાવો, ઉપર આવતા આંકડા (જેમ કે 24.6012, 72.7034) અહીં પેસ્ટ કરો. ખાલી રાખો તો લોકેશન નીકળી જશે.</p>',fields:[{k:'v',l:'અક્ષાંશ, રેખાંશ (Latitude, Longitude)',v:S.sg[k]||''}],save:v=>{const m=String(v.v||'').match(/(-?\d+(?:\.\d+)?)\s*[, ]\s*(-?\d+(?:\.\d+)?)/);if(m)S.sg[k]=m[1]+','+m[2];else{delete S.sg[k];if(String(v.v||'').trim())toast('આંકડા બરાબર નથી')}save();draw()}})}
     else if(t.closest('[data-addsec]')){modal({title:'➕ પેટા-સ્થળ ઉમેરો',fields:[{k:'h',l:'નામ'},{k:'b',l:'મહિમા',t:'area'},{k:'ll',l:'અક્ષાંશ, રેખાંશ (વૈકલ્પિક)'}],save:v=>{const hh=String(v.h||'').trim();if(!hh)return;S.add=S.add||{};(S.add[n]=S.add[n]||[]).push({h:hh,b:String(v.b||'').trim()});const m=String(v.ll||'').match(/(-?\d+(?:\.\d+)?)\s*[, ]\s*(-?\d+(?:\.\d+)?)/);if(m){S.sg=S.sg||{};S.sg[n+'|'+hh]=m[1]+','+m[2]}save();draw()}})}
     else if(t.closest('[data-gl]'))edit('મહિમા','g',S.glory,'area');
     else if(t.closest('[data-dp]')){S.cp=S.cp.filter(c=>c.n!=n);delete S.glory[n];save();ov.remove();renderPlaces();renderDay()}
     else if(t.closest('[data-rp]')){S.ph[n].splice(+t.closest('[data-rp]').dataset.rp,1);save();draw()}};
-  ov.onchange=e=>{if(!e.target.matches('[data-file]'))return;
+  ov.onchange=e=>{const sk=e.target.dataset&&e.target.dataset.sfile;if(!sk&&!e.target.matches('[data-file]'))return;
     [...e.target.files].slice(0,3).forEach(f=>{const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{
       const c=document.createElement('canvas'),k=Math.min(1,520/Math.max(im.width,im.height));c.width=im.width*k;c.height=im.height*k;
       c.getContext('2d').drawImage(im,0,0,c.width,c.height);
-      try{(S.ph[n]=S.ph[n]||[]).push(c.toDataURL('image/jpeg',.6));localStorage.setItem(ST,JSON.stringify(S));draw()}catch(_){S.ph[n].pop();toast('ફોટો સાચવી શકાયો નહીં')}};im.src=r.result};r.readAsDataURL(f)})};
+      const arr=sk?((S.sph=S.sph||{})[sk]=S.sph[sk]||[]):(S.ph[n]=S.ph[n]||[]);try{arr.push(c.toDataURL('image/jpeg',.6));localStorage.setItem(ST,JSON.stringify(S));draw()}catch(_){arr.pop();toast('ફોટો સાચવી શકાયો નહીં')}};im.src=r.result};r.readAsDataURL(f)})};
 }
 function addPlace(){
   modal({title:'સ્થળ ઉમેરો',fields:[{k:'n',l:'સ્થળનું નામ',v:''},{k:'g',l:'મહિમા',t:'area',v:''},{k:'p',l:'પિન કોડ (વૈકલ્પિક)',v:''},{k:'d',l:'દર્શન સમય (વૈકલ્પિક)',v:''}],save:v=>{
@@ -544,7 +547,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}}}
 
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-20';
+const VER='2026-11-26-21';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
