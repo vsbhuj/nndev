@@ -13,7 +13,7 @@
 <title>નરનારાયણ દેવ યાત્રા 2027</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;500;600;700;800&family=Noto+Serif:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gujarati:wght@400;500;600;700;800&family=Anek+Gujarati:wght@400;500;600;700;800&family=Noto+Serif:wght@700;800&display=swap" rel="stylesheet">
 <style>
 :root{--c2:#2e1b2b;--c3:#1a0f17;--c4:#321b2a;--c5:#251522;--c6:#170c14;--bg:#190e14;--card:#22141f;--bd:#3a2441;--gold:#e9c46a;--or:#f08a3c;--mut:#a899ae;--bar:#351c2a;--mar:#6b2040}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
@@ -332,6 +332,37 @@ body.lt .bell:before{content:''}
 body.lt .ntc{background:#fff;border:1.5px solid #e2b968;border-left:5px solid #D6A658;color:#35164F;box-shadow:0 3px 8px rgba(87,50,118,.12)}
 body.lt .ntc.imp{border-left-color:#C96A87}body.lt .ntc .d{color:#655676}
 body.lt .hin{isolation:isolate}body.lt .hin>.bell{position:absolute;right:52px;top:4px}
+/* લવંડર બૉક્સ + ચમકતી સોનેરી ફ્રેમ (આઇકન જેવું) */
+body.lt .row,body.lt .yr,body.lt .li,body.lt .cell,body.lt .tile,body.lt .hero,body.lt #home .cat,body.lt #home .hb,body.lt .hin,body.lt .bar,body.lt .tot,body.lt .rh,body.lt #home .lb,body.lt .gl .sch,body.lt .pl .rw,body.lt .sl,body.lt .lst button,body.lt .fb,body.lt .chp,body.lt .cc{
+ background:linear-gradient(160deg,#e9d5fc 0%,#d9b8f7 55%,#ecc9f1 100%);border:2.5px solid #e8b53a;
+ box-shadow:0 0 0 1px #fff3c4 inset,0 0 10px rgba(245,190,60,.55),0 4px 12px rgba(110,50,170,.22);color:#35164F}
+body.lt .hin{background:linear-gradient(160deg,#efe0fd 0%,#dcbdf8 60%,#efcdf3 100%)}
+body.lt .cell.cur,body.lt .chp.on{background:linear-gradient(#b47ff0,#8242CF);color:#fff}
+body.lt .gl,body.lt .pgt,body.lt .ntc{background:linear-gradient(170deg,#f6ecfe,#eedcfc);border:2.5px solid #e8b53a;border-left-width:6px;box-shadow:0 0 0 1px #fff3c4 inset,0 0 10px rgba(245,190,60,.45),0 4px 12px rgba(110,50,170,.18);color:#2a0f40}
+body.lt .sheet,body.lt .sh2,body.lt .pgs{background:linear-gradient(#f4e8fe,#ead6fb)}
+body.lt .row .tx,body.lt .hero h1,body.lt .yr .n,body.lt .tile,body.lt #home .cat b{color:#3a0f55}
+body.lt .row .tm,body.lt .cell b,body.lt .pl .no{color:#6a2bb5}
+body.lt .cell span,body.lt .yr .m,body.lt #home .cat small,body.lt .sr .l,body.lt .cd{color:#4e3a66}
+body.lt .pg .pi{border:2.5px solid #e8b53a;box-shadow:0 0 0 1px #fff3c4 inset,0 0 12px rgba(245,190,60,.6),0 4px 12px rgba(110,50,170,.25)}
+body.lt .pg .ci:not(.im){background-color:#d9b8f7}
+body.lt nav{background:linear-gradient(160deg,rgba(233,213,252,.96),rgba(217,184,247,.96));border:2.5px solid #e8b53a;box-shadow:0 0 0 1px #fff3c4 inset,0 0 10px rgba(245,190,60,.5),0 8px 22px rgba(110,50,170,.3)}body.lt nav button{color:#3a0f55}
+body.lt .row,body.lt .yr,body.lt .li,body.lt .cell,body.lt .tile,body.lt .hero,body.lt #home .cat,body.lt #home .hb,body.lt .hin,body.lt .bar,body.lt .tot,body.lt .rh,body.lt #home .lb,body.lt .gl .sch,body.lt .pl .rw,body.lt .sl,body.lt .fb,body.lt .gl,body.lt .pgt,body.lt .ntc,body.lt .pg .pi{
+ box-shadow:inset 0 2px 0 rgba(255,255,255,.75),inset 0 -3px 6px rgba(130,66,207,.12),0 0 8px rgba(245,190,60,.45),6px 10px 18px rgba(214,150,40,.28),3px 14px 24px rgba(100,40,160,.28)}
+body.lt .row:active,body.lt .cell:active,body.lt .tile:active,body.lt #home .hb:active,body.lt #home .cat:active,body.lt .pg .pi:active{transform:translateY(2px);box-shadow:inset 0 2px 0 rgba(255,255,255,.75),0 0 6px rgba(245,190,60,.4),2px 4px 8px rgba(100,40,160,.25)}
+body.lt .row,body.lt .cell,body.lt .tile,body.lt #home .hb,body.lt #home .cat,body.lt .pg .pi{transition:transform .12s,box-shadow .12s}
+body.lt .row,body.lt .yr,body.lt .li{margin-bottom:12px}
+body.lt nav{box-shadow:inset 0 2px 0 rgba(255,255,255,.7),0 0 10px rgba(245,190,60,.5),4px 12px 26px rgba(100,40,160,.35)}
+/* નવી થીમ: આધુનિક સાદો ફોન્ટ, ઝાંય વગર */
+body.lt,body.lt button,body.lt input,body.lt select,body.lt textarea,body.lt .clock small{font-family:'Anek Gujarati','Noto Sans Gujarati',system-ui,sans-serif}
+body.lt *{text-shadow:none!important}
+body.lt{color:#2b1d4e}
+body.lt .row .tx,body.lt .hero h1,body.lt .yr .n,body.lt #home .cat b,body.lt .sh2h .t,body.lt #home .ht h1,body.lt .sheet h3,body.lt .bar,body.lt .ntc .h{color:#2b1d4e;font-weight:700;letter-spacing:-.2px}
+body.lt .hero h1{font-size:23px}body.lt .row .tx{font-size:17px}
+body.lt .clock{font-family:'Anek Gujarati',system-ui,sans-serif;font-weight:700;color:#2b1d4e;letter-spacing:-1px}
+body.lt .gl,body.lt .pgt{font-size:16px;line-height:1.7;color:#2b1d4e}
+body.lt .pg .pi>span:nth-child(2) .nm{color:#fff;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.6)!important}
+body.lt .pg .pi>span:nth-child(2) .sb{color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.6)!important}
+body.lt .pg .pi>span:nth-child(2){background:linear-gradient(transparent,rgba(43,29,78,.55))}
 </style>
 </head>
 <body>
@@ -868,7 +899,7 @@ function demoData(){
  S.notes=S.notes||[];[{t:'પ્રસ્થાનનો સમય',d:'૨૧ સપ્ટે ૨૦૨૭, મંગળ',b:'ભુજ મંદિરથી સવારે ૫:૩૦ વાગ્યે બસ ઉપડશે. સૌએ ૫:૦૦ વાગ્યા સુધીમાં મંદિરે પહોંચી જવું.',imp:1},{t:'ઓળખપત્ર સાથે રાખવું',d:'આખી યાત્રા',b:'આધાર કાર્ડની અસલ અને બે ઝેરોક્ષ સાથે રાખવી. નેપાળમાં પ્રવેશ વખતે ઓળખપત્ર જરૂરી છે.',imp:1},{t:'હિમાલયમાં ઠંડી',d:'દિવસ ૫ થી ૧૨',b:'કેદારનાથ અને બદ્રીનાથમાં રાત્રે ઘણી ઠંડી હોય છે. સ્વેટર, શાલ, મોજાં અને ટોપી સાથે રાખવાં.'},{t:'દવાઓ',d:'',b:'નિયમિત લેતા હો તે દવાઓ પૂરતા પ્રમાણમાં સાથે રાખવી. ઊંચાઈ પર તકલીફ થાય તો તરત સંચાલકને જણાવવું.'},{t:'સંધ્યા આરતી – હર કી પૌડી',d:'૨૩ સપ્ટે ૨૦૨૭, સાંજે',b:'હરિદ્વારમાં સાંજે ગંગા આરતીમાં સૌએ સાથે જવાનું છે. ભીડમાં જૂથથી છૂટા ન પડવું.'}].forEach(n=>S.notes.push({...n,demo:1}));S.nseen=0;bellUp();save();renderYat();renderMore();toast('ડેમો નામ અને સૂચનાઓ ભર્યાં')}
 
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-26-48';
+const VER='2026-11-26-49';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
