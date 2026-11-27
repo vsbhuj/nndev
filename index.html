@@ -396,7 +396,7 @@ body.lt #hv{position:static;padding:0 0 calc(env(safe-area-inset-bottom) + 10px)
 body.lt #home .hst{display:flex;flex-wrap:nowrap;gap:6px;margin-top:12px;clear:both}
 body.lt #home .hst span{padding:4px 9px;border-radius:99px;background:linear-gradient(160deg,#f3e6fe,#dcc0f8);border:1.5px solid #e8b53a;font-size:12px;font-weight:700;color:#3a0f55;box-shadow:0 0 6px rgba(245,190,60,.4),2px 5px 10px rgba(100,40,160,.2)}
 body.lt #home .hst span.g{background:linear-gradient(#f7e2b4,#e9c46a);color:#4a2a00}
-#abtn{display:none!important}.al .sheet{max-height:92vh;overflow:auto}.al .alc{border-top:1px solid rgba(128,90,160,.25);padding:11px 0}.al small{display:block;opacity:.8}.al .alr{display:flex;gap:6px;margin-top:6px}.al .alp{flex:1;border:2px solid var(--gold);border-radius:12px;padding:8px 12px;font-weight:800;letter-spacing:3px;font-size:19px}.al .alb{border:2px solid #8242CF;border-radius:18px;background:#fff;color:#6f2fb5;font:inherit;font-weight:800;padding:7px 12px}.al .alb.on{background:#7c3bc4;color:#fff}.al .alb:disabled{opacity:.4}.al .aln{background:#fff3cd;color:#5c4200;border-radius:12px;padding:9px 12px;margin:8px 0;font-size:14px}.al .ale{color:#b3123f;font-weight:700;margin:8px 0}.al .sheet{padding-left:8px;padding-right:8px}.al .alt{width:100%;border-collapse:collapse;margin-top:8px;background:#fff;color:#241036;font-size:12px;line-height:1.35}.al .alt th,.al .alt td{border:1px solid #b9a7c9;padding:5px 4px;text-align:left;vertical-align:top}.al .alt th{background:#e6d7f5;font-weight:800}.al .alt td:first-child{width:28px;text-align:center}.al .alt td:last-child:not([colspan]){white-space:nowrap;font-size:11.5px}.al .alrow{cursor:pointer}.al .alrow.on td{background:#f3e6fd;font-weight:700}.al .alrow.x td{text-decoration:line-through;opacity:.6}.al .alsub td{background:#faf5ff;padding:8px;width:auto;text-align:left}.al .alsub .alb{font-size:12px}.al .alsub .alp{font-size:16px}.al .aln2{justify-content:space-between;align-items:center}.al .sgi{width:100%;box-sizing:border-box}
+.al .sheet{max-height:92vh;overflow:auto}.al .alc{border-top:1px solid rgba(128,90,160,.25);padding:11px 0}.al small{display:block;opacity:.8}.al .alr{display:flex;gap:6px;margin-top:6px}.al .alp{flex:1;border:2px solid var(--gold);border-radius:12px;padding:8px 12px;font-weight:800;letter-spacing:3px;font-size:19px}.al .alb{border:2px solid #8242CF;border-radius:18px;background:#fff;color:#6f2fb5;font:inherit;font-weight:800;padding:7px 12px}.al .alb.on{background:#7c3bc4;color:#fff}.al .alb:disabled{opacity:.4}.al .aln{background:#fff3cd;color:#5c4200;border-radius:12px;padding:9px 12px;margin:8px 0;font-size:14px}.al .ale{color:#b3123f;font-weight:700;margin:8px 0}.al .sheet{padding-left:8px;padding-right:8px}.al .alt{width:100%;border-collapse:collapse;margin-top:8px;background:#fff;color:#241036;font-size:12px;line-height:1.35}.al .alt th,.al .alt td{border:1px solid #b9a7c9;padding:5px 4px;text-align:left;vertical-align:top}.al .alt th{background:#e6d7f5;font-weight:800}.al .alt td:first-child{width:28px;text-align:center}.al .alt td:last-child:not([colspan]){white-space:nowrap;font-size:11.5px}.al .alrow{cursor:pointer}.al .alrow.on td{background:#f3e6fd;font-weight:700}.al .alrow.x td{text-decoration:line-through;opacity:.6}.al .alsub td{background:#faf5ff;padding:8px;width:auto;text-align:left}.al .alsub .alb{font-size:12px}.al .alsub .alp{font-size:16px}.al .aln2{justify-content:space-between;align-items:center}.al .sgi{width:100%;box-sizing:border-box}
 </style>
 </head>
 <body>
@@ -810,7 +810,7 @@ function render(){if(sel>=nDays())sel=0;renderDay();renderAll();renderPlaces();r
 function init(){const t=todayIdx();sel=t>=0?t:0;render()}
 document.addEventListener('click',e=>{
   const g=s=>e.target.closest(s);let x;
-  if(x=g('nav button')){if(x.dataset.t=='3'){$('abtn').click();return}sub=null;show(+x.dataset.t);renderMore();return}
+  if(x=g('nav button')){sub=null;show(+x.dataset.t);renderMore();return}
   if(g('[data-help]')){helpSheet();return}
   if(x=g('[data-day]')){sel=+x.dataset.day;render();show(0);return}
   if(x=g('[data-ed]')){editItem(+x.dataset.ed);return}
@@ -955,7 +955,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}
  }}
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-27-70';
+const VER='2026-11-27-71';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
