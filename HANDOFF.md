@@ -193,3 +193,6 @@
 - પૂરો બૅકઅપ (Main, Report શીટમાં): zip (data.json + backup.xlsx). Restore બટન બનાવ્યું નથી. બૅકઅપ ફાઇલ repo માં કદી commit કરવી નહીં.
 - નવું ટેબલ ઉમેરો તો acBackup ની યાદીમાં પણ ઉમેરવું.
 - ફક્ત mock ટેસ્ટ; સાચા ફોન પર ચકાસવાનું બાકી.
+
+## હિસાબ હક (Chat A, DB migration `helpers_view_accounts_by_default`)
+- દરેક નવા હેલ્પરને હિસાબ "View" મૂળથી મળે (admins.acc default view). Add/Off Main બદલે. ઍપ કોડ બદલ્યો નથી.
