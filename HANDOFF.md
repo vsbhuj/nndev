@@ -170,3 +170,6 @@
 - VER 85: ઉપયોગકર્તાની થીમ ફાઇલોમાંથી th/f-card.webp (કાર્ડ ફ્રેમ), th/f-ring.webp (કમળ ગોળ) ઉમેર્યાં; યાત્રિક કાર્ડ, કૉલ બટન અને પ્રવેશ પેજમાં વાપર્યાં. તેમણે મોકલેલાં પેજ નમૂના (વધુ, દિવસ, હોમ) મુજબ પેજ બદલવાનું હજી પૂછવું/બાકી.
 
 - VER 86: ઍડમિન લોગિન શીટ, 🛠 મેનૂ અને યાત્રિક ફિલ્ટરમાં ટૂંકાં અંગ્રેજી લેબલ; M/F/➕N/PIN/All એક લાઇનમાં.
+
+- VER 87: ઍડમિન હક main/helper (migration admin_roles: admins.role/name/login/active/protected, private.is_main, public.my_role, bulk access ફક્ત main, pilgrims delete ફક્ત main). Edge Function manage-admin (verify_jwt=true): ફક્ત active main ઍડમિન add/active/password/remove કરી શકે; protected (backup) ખાતું અને પોતાનું ખાતું બદલાય નહીં. 🛠 મેનૂમાં Admins અને Password. નવા ઍડમિન લોગિન: ટૂંકું નામ -> @admin.nndev.invalid.
+- બાકી: manage-admin ની અસલી ફોનથી તપાસ; હિસાબનું નવું પેજ (પ્લાન નક્કી કરવાનો).
