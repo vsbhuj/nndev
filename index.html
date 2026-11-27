@@ -965,7 +965,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}
  }}
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-27-80';
+const VER='2026-11-27-81';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
@@ -1048,7 +1048,7 @@ const alPin=v=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(PLK)
 function alOpen(){if(!ADM)return;const ov=document.createElement('div');ov.className='ov al';ov.innerHTML='<div class="sheet"><h3>🔑 યાત્રાળુ લોગિન</h3><div class="alx"></div><div class="btns"><button class="b2" data-c>બંધ</button></div></div>';document.body.appendChild(ov);
   const box=ov.querySelector('.alx'),pins={};let list=[],sec='ભાઈ',busy=0,opn=null,pl=0;
   const alive=y=>!!(y.exp&&new Date(y.exp)>new Date());
-  async function issue(y){const c=await alApi('rpc/issue_login_code',{method:'POST',body:{p_pilgrim:y.id}});pins[y.id]=c;y.exp=new Date(Date.now()+6048e5).toISOString();const st=alPin();st[y.id]={p:c,x:Date.now()+6048e5};alPin(st)}
+  async function issue(y){const c=await alApi('rpc/issue_login_code',{method:'POST',body:{p_pilgrim:y.id}});pins[y.id]=c;y.exp=new Date(Date.now()+36e5).toISOString();const st=alPin();st[y.id]={p:c,x:Date.now()+36e5};alPin(st)}
   const fail=e=>{if(e.status===401){alMem=null;alSes(null);login('ફરી લોગિન કરો.')}else toast(navigator.onLine?'કામ ન થયું, ફરી પ્રયત્ન કરો':'ઇન્ટરનેટ ચેક કરો')};
   function login(msg){box.innerHTML='<form><label class="sgl" for="alu">ઍડમિન નામ</label><input id="alu" class="sgi" autocomplete="username" autocapitalize="none" spellcheck="false"><label class="sgl" for="alw">પાસવર્ડ</label><input id="alw" class="sgi" type="password" autocomplete="current-password"><div class="ale">'+(msg||'')+'</div><button class="b1 sgb">લોગિન કરો</button></form>';
     box.querySelector('form').onsubmit=async ev=>{ev.preventDefault();let u=box.querySelector('#alu').value.trim().toLowerCase();const w=box.querySelector('#alw').value,er=box.querySelector('.ale'),b=box.querySelector('button');if(!u||!w){er.textContent='નામ અને પાસવર્ડ લખો.';return}if(!u.includes('@'))u+='@gmail.com';b.disabled=true;er.textContent='';
@@ -1067,7 +1067,7 @@ function alOpen(){if(!ADM)return;const ov=document.createElement('div');ov.class
       const ph=String(y.phone||'').replace(/\D/g,''),c=y.status=='રદ'?'રદ':p?'<b>'+p+'</b><div class="alpb">'+(ph?'<a class="alb wa" target="_blank" rel="noopener" href="https://wa.me/'+ph+'?text='+encodeURIComponent(msg(y,p))+'">🟢 WA</a>':'')+'<button class="alb" data-cp="'+y.id+'" aria-label="કૉપી">📋</button></div>':y.ph>=2?'✅ લોગિન':(alive(y)?'આપેલો ':y.ph?'✅ ':'')+g;
       return '<tr class="'+(y.status=='રદ'?'x':'')+'"><td>'+gu(i+1)+'</td><td>'+esc(y.name)+'</td><td class="sn">'+esc(y.login_name||'—')+'</td><td class="pc">'+c+'</td></tr>'}).join('')+'</tbody></table>'}
   async function all(b){if(busy)return;const T=list.filter(y=>y.section==sec&&y.status!='રદ'&&!y.ph&&!alive(y));if(!T.length){toast('કોઈ PIN બાકી નથી');return}
-    if(!confirm(gu(T.length)+' નવા PIN બનાવશો? દરેક PIN 7 દિવસ ચાલશે. યાત્રાળુનું લોગિન પેજ હજી ચાલુ નથી.'))return;busy=1;b.disabled=true;try{for(const y of T)await issue(y);toast('PIN તૈયાર ✅')}catch(x){fail(x);busy=0;if(x.status===401)return;b.disabled=false}busy=0;draw()}
+    if(!confirm(gu(T.length)+' નવા PIN બનાવશો? દરેક PIN 1 કલાક ચાલશે. યાત્રાળુનું લોગિન પેજ હજી ચાલુ નથી.'))return;busy=1;b.disabled=true;try{for(const y of T)await issue(y);toast('PIN તૈયાર ✅')}catch(x){fail(x);busy=0;if(x.status===401)return;b.disabled=false}busy=0;draw()}
   function add(){modal({title:'નવું નામ',fields:[{k:'n',l:'નામ',v:''},{k:'s',l:'વિભાગ',t:'select',o:['ભાઈ','બહેન'],v:sec},{k:'v',l:'ગામ',v:''},{k:'p',l:'મોબાઇલ (દેશ કોડ સાથે)',t:'tel',v:''},{k:'u',l:'ટૂંકું નામ અંગ્રેજીમાં (દા.ત. ramesh)',v:''}],
     save:async v=>{const base=v.u.toLowerCase().replace(/[^a-z]/g,'').slice(0,16);if(!v.n.trim()||base.length<2){toast('નામ અને અંગ્રેજી ટૂંકું નામ જરૂરી છે');return}
       const no=Math.max(0,...list.filter(y=>y.section==v.s).map(alNo).filter(n=>n<999))+1;
