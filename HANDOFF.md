@@ -199,3 +199,7 @@
 
 ## VER 93 (Chat A)
 - યાત્રાળુ જોડેલી નોંધમાં સ્ક્રીન/PDF/Excel પર પહેલાં યાત્રાળુનું નામ, પછી લખેલી વિગત (`acTitle`). DBમાં title બદલાતું નથી.
+
+## VER 94 (Chat A, DB migration `accounts_entry_time`)
+- expenses.entry_time: વ્યવહારનો સમય (ફોનમાંથી, ફોર્મમાં બદલી શકાય). created_at = સર્વર પર પહોંચ્યાનો સમય; ઑફલાઇન નોંધમાં બંને જુદા હોય. ક્રમ: entry_date, entry_time. જૂની row માં null → created_at બતાવાય (acT).
+- Excel માં A કૉલમ તારીખ+સમય એક જ સેલ (ફોર્મ્યુલાના કૉલમ ન ખસે).
