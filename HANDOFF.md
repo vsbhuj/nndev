@@ -173,3 +173,4 @@
 
 - VER 87: ઍડમિન હક main/helper (migration admin_roles: admins.role/name/login/active/protected, private.is_main, public.my_role, bulk access ફક્ત main, pilgrims delete ફક્ત main). Edge Function manage-admin (verify_jwt=true): ફક્ત active main ઍડમિન add/active/password/remove કરી શકે; protected (backup) ખાતું અને પોતાનું ખાતું બદલાય નહીં. 🛠 મેનૂમાં Admins અને Password. નવા ઍડમિન લોગિન: ટૂંકું નામ -> @admin.nndev.invalid.
 - બાકી: manage-admin ની અસલી ફોનથી તપાસ; હિસાબનું નવું પેજ (પ્લાન નક્કી કરવાનો).
+- VER 88: ઍડમિનની સંખ્યા પર મર્યાદા નથી; Make Main / Make Helper (manage-admin v2, action role).
