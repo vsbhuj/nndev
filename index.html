@@ -402,6 +402,11 @@ body.lt #home .ht h1{font-size:min(34px,8.5vw)}
 body.lt #home .ht{padding-bottom:30px}
 body.lt #home .hs{padding-bottom:10px}
 body.lt #home #hv{position:sticky;bottom:0;z-index:2;margin:0;width:100%;box-sizing:border-box;flex:none;align-self:stretch;padding:6px 0 calc(env(safe-area-inset-bottom) + 8px);background:#e2ccfa}
+.ysr{display:flex;gap:8px;margin:2px 0 12px}.ysr input,.ysr button{font:inherit;font-size:14px;border:1.5px solid var(--gold);border-radius:99px;background:#fff9fd;color:#3a0f55;padding:11px 14px;box-shadow:0 3px 8px rgba(87,50,118,.12)}.ysr input{flex:1;min-width:0}.ysr button{font-weight:800;white-space:nowrap}
+.yc{display:flex;align-items:center;gap:10px;margin-bottom:9px;padding:10px;border:1.5px solid #e2b968;border-radius:22px;background:linear-gradient(#fffafd,#f6e6f7);color:#3a0f55;box-shadow:0 0 8px rgba(242,193,78,.28),0 4px 10px rgba(87,50,118,.13)}.yc[hidden]{display:none}.yc.x{opacity:.5}
+.yav{width:50px;height:50px;flex:none;border-radius:50%;border:2px solid #e2b968;background:linear-gradient(#e3c2fb,#b783ea);color:#fff;display:flex;align-items:center;justify-content:center;font-size:21px;font-weight:800}
+.ym{flex:1;min-width:0}.ym b{display:block;font-size:14.5px;line-height:1.3}.ym small{display:block;font-size:12px;color:#5c4673;margin-top:2px}
+.ycb{flex:none;font:inherit;font-size:12.5px;font-weight:800;text-decoration:none;color:#5b1a8a;background:#fff;border:1.5px solid #e9cf9a;border-radius:99px;padding:8px 11px;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -526,7 +531,7 @@ const save=()=>{S._t=Date.now();let ok=1;try{localStorage.setItem(ST,JSON.string
 try{navigator.storage&&navigator.storage.persist&&navigator.storage.persist()}catch(e){}
 IDB.get().then(v=>{try{const d=v&&JSON.parse(v);if(d&&(d._t||0)>(S._t||0)){S=d;if(dropDemo())save();try{localStorage.setItem(ST,JSON.stringify(S))}catch(e){}if(typeof render==='function')render()}else if(!v&&S._t)IDB.put(JSON.stringify(S))}catch(e){}});
 if(dropDemo())save();
-let sel=0,tab=0,sub=null,yf='all',ys='';
+let sel=0,tab=0,sub=null,yf='all',ys='',yq='',yfo=0;
 let ADM=false;
 /* ---------- તારીખ ---------- */
 const istNow=()=>new Date(Date.now()+19800000);
@@ -749,15 +754,17 @@ function addPlace(){
 }
 /* ---------- યાત્રિકો ---------- */
 function renderYat(){
-  const all=S.yat,act=all.filter(y=>y.s!='રદ').length,can=all.length-act,cnt=m=>all.filter(y=>y.mf==m&&y.s!='રદ').length;
-  let l=all.map((y,i)=>({...y,i}));
-  l=yf=='all'?l:yf=='રદ'?l.filter(y=>y.s=='રદ'):yf=='સંત'?l.filter(y=>y.g==yf):l.filter(y=>y.mf==yf);
+  let l=S.yat.map((y,i)=>({...y,i}));
+  l=yf=='all'?l:yf=='સંત'?l.filter(y=>y.g==yf):l.filter(y=>y.mf==yf);
   if(ys=='n')l.sort((a,b)=>a.n.localeCompare(b.n,'gu'));if(ys=='a')l.sort((a,b)=>(+a.a||999)-(+b.a||999));
-  const body=[['ભાઈ','ભાઈઓ'],['બહેન','બહેનો'],['','વિભાગ બાકી']].map(([m,t])=>{const g=l.filter(y=>(y.mf||'')==m);return g.length?`<div class="rh"><span>${t} (${gu(g.length)})</span></div><table class="yt"><thead><tr><th>ક્રમ</th><th>નામ</th><th>મોબાઇલ</th></tr></thead><tbody>`+g.map((y,k)=>`<tr class="${y.s=='રદ'?'x':''}" data-ye="${y.i}"><td>${gu(k+1)}</td><td>${esc(y.n)}</td><td>${y.p?esc(y.p):'—'}</td></tr>`).join('')+'</tbody></table>':''}).join('');
-  $('t3').innerHTML=`<div class="bar"><span>👥</span>યાત્રિકો<button class="add" id="yadd">➕ ઉમેરો</button></div>
-  <div class="chips">${[['all','બધા'],['ભાઈ','ભાઈઓ'],['બહેન','બહેનો'],['સંત','સંતો']].map(([k,t])=>`<button class="chp ${yf==k?'on':''}" data-yf="${k}">${t}</button>`).join('')}</div>
-  <div class="chips"><span class="lbl">ક્રમ:</span><button class="chp g ${ys=='n'?'on':''}" data-ys="n">ક ખ ગ</button><button class="chp g ${ys=='a'?'on':''}" data-ys="a">ઉંમર ↑</button></div>
-  ${body||(all.some(y=>y.sid)?'<div class="emp">આ વિભાગમાં કોઈ નામ નથી.</div>':'')}`;
+  const cards=l.map(y=>`<div class="yc ${y.s=='રદ'?'x':''}" data-yk="${esc((y.n+' '+(y.v||'')+' '+(y.p||'')).toLowerCase())}"><div class="yav" data-ye="${y.i}">${esc(Array.from(new Intl.Segmenter('gu').segment(y.n.trim()),g=>g.segment)[0]||'')}</div><div class="ym" data-ye="${y.i}"><b>${esc(y.n)}</b>${y.v?'<small>📍 '+esc(y.v)+'</small>':''}${y.p?'<small>'+esc(y.p)+'</small>':''}</div>${y.p?'<a class="ycb" href="tel:'+esc(String(y.p).replace(/[^+0-9]/g,''))+'">📞 સંપર્ક</a>':'<button class="ycb" data-ye="'+y.i+'">ⓘ વિગત</button>'}</div>`).join('');
+  $('t3').innerHTML=`<div class="ysr"><input id="yq" type="search" placeholder="🔍 યાત્રિકનું નામ શોધો…" aria-label="શોધો" value="${esc(yq)}"><button id="yfb" type="button">⏷ ફિલ્ટર</button></div>
+  <div id="yfp" ${yfo?'':'hidden'}><div class="chips">${[['all','બધા'],['ભાઈ','ભાઈઓ'],['બહેન','બહેનો'],['સંત','સંતો']].map(([k,t])=>`<button class="chp ${yf==k?'on':''}" data-yf="${k}">${t}</button>`).join('')}</div>
+  <div class="chips"><span class="lbl">ક્રમ:</span><button class="chp g ${ys=='n'?'on':''}" data-ys="n">ક ખ ગ</button><button class="chp g ${ys=='a'?'on':''}" data-ys="a">ઉંમર ↑</button><button class="chp" id="yadd">➕ ઉમેરો</button></div></div>
+  ${cards}<div class="emp" id="ynone" hidden>કોઈ નામ મળ્યું નહીં.</div>`;
+  const find=()=>{const q=yq.trim().toLowerCase();let n=0;$('t3').querySelectorAll('.yc').forEach(c=>{const ok=!q||c.dataset.yk.includes(q);c.hidden=!ok;if(ok)n++});$('ynone').hidden=!(q&&!n)};
+  $('yq').oninput=e=>{yq=e.target.value;find()};find();
+  $('yfb').onclick=e=>{e.stopPropagation();yfo=yfo?0:1;$('yfp').hidden=!yfo};
 }
 function importYat(t){
   if(!ADM)return;let d;try{d=JSON.parse(t)}catch(e){}
@@ -956,7 +963,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}
  }}
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-27-75';
+const VER='2026-11-27-76';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
