@@ -402,7 +402,6 @@ body.lt #home .ht h1{font-size:min(34px,8.5vw)}
 body.lt #home .ht{padding-bottom:30px}
 body.lt #home .hs{padding-bottom:10px}
 body.lt #home #hv{position:sticky;bottom:0;z-index:2;margin:0;width:100%;box-sizing:border-box;flex:none;align-self:stretch;padding:6px 0 calc(env(safe-area-inset-bottom) + 8px);background:#e2ccfa}
-.ylg{position:static;max-width:none;max-height:none;width:auto;margin:10px 0;border-radius:18px;animation:none;transform:none}
 </style>
 </head>
 <body>
@@ -758,10 +757,7 @@ function renderYat(){
   $('t3').innerHTML=`<div class="bar"><span>👥</span>યાત્રિકો<button class="add" id="yadd">➕ ઉમેરો</button></div>
   <div class="chips">${[['all','બધા'],['ભાઈ','ભાઈઓ'],['બહેન','બહેનો'],['સંત','સંતો']].map(([k,t])=>`<button class="chp ${yf==k?'on':''}" data-yf="${k}">${t}</button>`).join('')}</div>
   <div class="chips"><span class="lbl">ક્રમ:</span><button class="chp g ${ys=='n'?'on':''}" data-ys="n">ક ખ ગ</button><button class="chp g ${ys=='a'?'on':''}" data-ys="a">ઉંમર ↑</button></div>
-  ${all.some(y=>y.sid)?'':'<form class="sheet ylg" id="ylf"><label class="sgl" for="ylu">ઍડમિન નામ</label><input id="ylu" class="sgi" value="vsbhuj" autocomplete="username" autocapitalize="none" spellcheck="false"><label class="sgl" for="ylw">પાસવર્ડ</label><input id="ylw" class="sgi" type="password" autocomplete="current-password"><div class="ale"></div><button class="b1 sgb">નામ બતાવો</button></form>'}
   ${body||(all.some(y=>y.sid)?'<div class="emp">આ વિભાગમાં કોઈ નામ નથી.</div>':'')}`;
-  const lf=$('ylf');if(lf){lf.onsubmit=async ev=>{ev.preventDefault();let u=$('ylu').value.trim().toLowerCase();const w=$('ylw').value,er=lf.querySelector('.ale'),b=lf.querySelector('button');if(!u||!w){er.textContent='નામ અને પાસવર્ડ લખો.';return}if(!u.includes('@'))u+='@gmail.com';b.disabled=true;er.textContent='લાવી રહ્યા છીએ…';
-      try{await alAuth('password',{email:u,password:w});await yatFetch()}catch(e){b.disabled=false;er.textContent=e.status===429?'ઘણા પ્રયત્ન થયા. થોડી વાર પછી કરો.':e.status===403?'આ ખાતાને ઍડમિનનો હક નથી.':e.status>=400&&e.status<500?'નામ અથવા પાસવર્ડ ખોટો છે.':'નામ ન આવ્યાં. ઇન્ટરનેટ ચેક કરો.'}}}
 }
 function importYat(t){
   if(!ADM)return;let d;try{d=JSON.parse(t)}catch(e){}
@@ -960,7 +956,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}
  }}
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-27-74';
+const VER='2026-11-27-75';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
