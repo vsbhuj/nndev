@@ -178,3 +178,11 @@
 
 - VER 90: ઑનલાઇન હિસાબ પેજ (Daily/Total/Category/નોટ/Trash, C/F, edit, delete, multi-select), Report PDF (canvas) અને Excel (.xlsx) + Share. Migration accounts_ledger: expenses નવાં ખાનાં, history સર્વર લખે, hard delete નથી; admins.acc off|view|add (Admins પેજમાંથી); Yatra OFF માં main ફક્ત વાંચે. RLS rollback ટેસ્ટ પાસ.
 - બાકી: કોની પાસે રોકડ, હોટલ Pending, બિલ ફોટો, offline નોંધ.
+
+## VER 91 — ઑફલાઇન હિસાબ (Chat A)
+- નવી નોંધ પહેલાં ફોનમાં (`localStorage nndev-accq`, uid પ્રમાણે; Logoutથી ભૂંસાતી નથી) પછી `acSync()`. ક્લાયન્ટમાં બનેલો UUID જ DB id; 23505 આવે તો ડુપ્લિકેટ નહીં, જરૂર હોય તો PATCH.
+- છેલ્લે લાવેલો હિસાબ `nndev-accc` (Logout/હક બંધ થાય ત્યારે ભૂંસાય). અપલોડ થયેલી નોંધ ઑફલાઇન બદલાતી નથી.
+- આપોઆપ: સાચવ્યા પછી, હિસાબ લાવ્યા પછી, `online`, ઍપ ફરી દેખાય, દર 30 સેકન્ડ. ઑટો-રિફ્રેશ ખુલ્લું ફોર્મ/પસંદગી હોય ત્યારે થતું નથી.
+- 403 જેવી ના મળે તો નોંધ ⚠️ સાથે ફોનમાં રહે. PDF/Excelમાં બાકી નોંધ ⏳ થી.
+- `sw.js` nndev-v7: `th/` પણ precache. th/ માં નવી ફાઇલ ઉમેરો તો `T` યાદીમાં લખવી.
+- DB ફેરફાર નથી. ફક્ત mock ટેસ્ટ; સાચા ફોન પર ચકાસવાનું બાકી.
