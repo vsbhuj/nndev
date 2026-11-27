@@ -397,6 +397,7 @@ body.lt #home .hst{display:flex;flex-wrap:nowrap;gap:6px;margin-top:12px;clear:b
 body.lt #home .hst span{padding:4px 9px;border-radius:99px;background:linear-gradient(160deg,#f3e6fe,#dcc0f8);border:1.5px solid #e8b53a;font-size:12px;font-weight:700;color:#3a0f55;box-shadow:0 0 6px rgba(245,190,60,.4),2px 5px 10px rgba(100,40,160,.2)}
 body.lt #home .hst span.g{background:linear-gradient(#f7e2b4,#e9c46a);color:#4a2a00}
 .al .sheet{max-height:92vh;overflow:auto}.al .alc{border-top:1px solid rgba(128,90,160,.25);padding:11px 0}.al small{display:block;opacity:.8}.al .alr{display:flex;gap:6px;margin-top:6px}.al .alp{flex:1;border:2px solid var(--gold);border-radius:12px;padding:8px 12px;font-weight:800;letter-spacing:3px;font-size:19px}.al .alb{border:2px solid #8242CF;border-radius:18px;background:#fff;color:#6f2fb5;font:inherit;font-weight:800;padding:7px 12px}.al .alb.on{background:#7c3bc4;color:#fff}.al .alb:disabled{opacity:.4}.al .aln{background:#fff3cd;color:#5c4200;border-radius:12px;padding:9px 12px;margin:8px 0;font-size:14px}.al .ale{color:#b3123f;font-weight:700;margin:8px 0}.al .sheet{padding-left:8px;padding-right:8px}.al .alt{width:100%;border-collapse:collapse;margin-top:8px;background:#fff;color:#241036;font-size:12px;line-height:1.35}.al .alt th,.al .alt td{border:1px solid #b9a7c9;padding:5px 4px;text-align:left;vertical-align:top}.al .alt th{background:#e6d7f5;font-weight:800}.al .alt td:first-child{width:28px;text-align:center}.al .alt td:last-child:not([colspan]){white-space:nowrap;font-size:11.5px}.al .alrow{cursor:pointer}.al .alrow.on td{background:#f3e6fd;font-weight:700}.al .alrow.x td{text-decoration:line-through;opacity:.6}.al .alsub td{background:#faf5ff;padding:8px;width:auto;text-align:left}.al .alsub .alb{font-size:12px}.al .alsub .alp{font-size:16px}.al .aln2{justify-content:space-between;align-items:center}.yt{width:100%;border-collapse:collapse;margin:4px 0 10px;background:#fff;color:#241036;font-size:12px;line-height:1.35}.yt th,.yt td{border:1px solid #b9a7c9;padding:6px 4px;text-align:left;vertical-align:top}.yt th{background:#e6d7f5}.yt td:first-child{width:28px;text-align:center}.yt td:last-child{white-space:nowrap;font-size:11.5px}.yt tr.x td{text-decoration:line-through;opacity:.6}.al .sgi{width:100%;box-sizing:border-box}
+.ylg{position:static;max-width:none;max-height:none;width:auto;margin:10px 0;border-radius:18px;animation:none;transform:none}
 </style>
 </head>
 <body>
@@ -750,12 +751,12 @@ function renderYat(){
   if(ys=='n')l.sort((a,b)=>a.n.localeCompare(b.n,'gu'));if(ys=='a')l.sort((a,b)=>(+a.a||999)-(+b.a||999));
   const body=[['ભાઈ','ભાઈઓ'],['બહેન','બહેનો'],['','વિભાગ બાકી']].map(([m,t])=>{const g=l.filter(y=>(y.mf||'')==m);return g.length?`<div class="rh"><span>${t} (${gu(g.length)})</span></div><table class="yt"><thead><tr><th>ક્રમ</th><th>નામ</th><th>મોબાઇલ</th></tr></thead><tbody>`+g.map((y,k)=>`<tr class="${y.s=='રદ'?'x':''}" data-ye="${y.i}"><td>${gu(k+1)}</td><td>${esc(y.n)}</td><td>${y.p?esc(y.p):'—'}</td></tr>`).join('')+'</tbody></table>':''}).join('');
   $('t3').innerHTML=`<div class="bar"><span>👥</span>યાત્રિકો<button class="add" id="yadd">➕ ઉમેરો</button></div>
-  <div class="chips"><span class="chp">કુલ ${gu(all.length)}</span><span class="chp">ભાઈઓ ${gu(cnt('ભાઈ'))}</span><span class="chp">બહેનો ${gu(cnt('બહેન'))}</span><span class="chp">રદ ${gu(can)}</span></div>
-  <div class="chips">${[['all','બધા'],['ભાઈ','ભાઈઓ'],['બહેન','બહેનો'],['સંત','સંતો'],['રદ','રદ']].map(([k,t])=>`<button class="chp ${yf==k?'on':''}" data-yf="${k}">${t}</button>`).join('')}</div>
-  <div class="chips"><span class="lbl">ક્રમ:</span><button class="chp g ${ys=='n'?'on':''}" data-ys="n">ક ખ ગ</button><button class="chp g ${ys=='a'?'on':''}" data-ys="a">ઉંમર ↑</button><button class="chp" id="ysync">⬇️ નામ લાવો</button><label class="chp">📥 ફાઇલથી ઉમેરો<input type="file" id="yimp" accept=".json,application/json" hidden></label></div>
-  ${body||'<div class="emp">હજી કોઈ યાત્રિક નથી.<br>➕ ઉમેરો અથવા 📥 ફાઇલથી ઉમેરો.</div>'}`;
-  $('ysync').onclick=e=>{e.stopPropagation();alOpen(1)};
-  const f=$('yimp');if(f)f.onchange=()=>{if(f.files[0])f.files[0].text().then(importYat,()=>toast('ફાઇલ વાંચી ન શકાઈ'))};
+  <div class="chips">${[['all','બધા'],['ભાઈ','ભાઈઓ'],['બહેન','બહેનો'],['સંત','સંતો']].map(([k,t])=>`<button class="chp ${yf==k?'on':''}" data-yf="${k}">${t}</button>`).join('')}</div>
+  <div class="chips"><span class="lbl">ક્રમ:</span><button class="chp g ${ys=='n'?'on':''}" data-ys="n">ક ખ ગ</button><button class="chp g ${ys=='a'?'on':''}" data-ys="a">ઉંમર ↑</button></div>
+  ${all.some(y=>y.sid)?'':'<form class="sheet ylg" id="ylf"><label class="sgl" for="ylu">ઍડમિન નામ</label><input id="ylu" class="sgi" value="vsbhuj" autocomplete="username" autocapitalize="none" spellcheck="false"><label class="sgl" for="ylw">પાસવર્ડ</label><input id="ylw" class="sgi" type="password" autocomplete="current-password"><div class="ale"></div><button class="b1 sgb">નામ બતાવો</button></form>'}
+  ${body||(all.some(y=>y.sid)?'<div class="emp">આ વિભાગમાં કોઈ નામ નથી.</div>':'')}`;
+  const lf=$('ylf');if(lf){lf.onsubmit=async ev=>{ev.preventDefault();let u=$('ylu').value.trim().toLowerCase();const w=$('ylw').value,er=lf.querySelector('.ale'),b=lf.querySelector('button');if(!u||!w){er.textContent='નામ અને પાસવર્ડ લખો.';return}if(!u.includes('@'))u+='@gmail.com';b.disabled=true;er.textContent='લાવી રહ્યા છીએ…';
+      try{await alAuth('password',{email:u,password:w});await yatFetch()}catch(e){b.disabled=false;er.textContent=e.status===429?'ઘણા પ્રયત્ન થયા. થોડી વાર પછી કરો.':e.status===403?'આ ખાતાને ઍડમિનનો હક નથી.':e.status>=400&&e.status<500?'નામ અથવા પાસવર્ડ ખોટો છે.':'નામ ન આવ્યાં. ઇન્ટરનેટ ચેક કરો.'}}}
 }
 function importYat(t){
   if(!ADM)return;let d;try{d=JSON.parse(t)}catch(e){}
@@ -954,7 +955,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}
  }}
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-27-72';
+const VER='2026-11-27-73';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
@@ -980,7 +981,7 @@ function sugSheet(pl){const opts=places().map(p=>'<option value="'+esc(p.n)+'">'
   if(t.closest('[data-sgs]')){const x={place:o.querySelector('#sgp').value.trim(),body:o.querySelector('#sgb').value.trim(),sender:o.querySelector('#sgs').value.trim()};if(x.body.length<5){toast('થોડું વધુ લખો');return}
    t.disabled=true;const r=navigator.onLine?await sugPost(x):0;if(r===1){o.remove();toast('મોકલાયું 🙏 ઍડમિન તપાસીને ઉમેરશે')}else if(r===-1){t.disabled=false;toast('મોકલી ન શકાયું, લખાણ તપાસો')}else{const q=sugQ();q.push(x);sugQ(q);o.remove();toast('નેટવર્ક નથી. નેટવર્ક આવે ત્યારે આપમેળે જશે')}}}}
 $('hpdf').addEventListener('click',pdfPick);document.body.classList.add('vw');
-(function(){let c=0,last=0;$('hv').addEventListener('click',()=>{const n=Date.now();c=(n-last<900)?c+1:1;last=n;if(c>=7){c=0;ADM=true;document.body.classList.remove('vw');toast('✏️ એડમિન મોડ ચાલુ');openYatra()}})})();
+(function(){let c=0,last=0;$('hv').addEventListener('click',()=>{const n=Date.now();c=(n-last<900)?c+1:1;last=n;if(c>=7){c=0;ADM=true;document.body.classList.remove('vw');toast('✏️ એડમિન મોડ ચાલુ');openYatra();yatAuto()}})})();
 function libSheet(title,body){const ov=document.createElement('div');ov.className='ov';ov.innerHTML='<div class="sheet"><h3>'+title+'</h3>'+body+'<div class="btns"><button class="b2" data-c>બંધ</button></div></div>';document.body.appendChild(ov);
  ov.onclick=e=>{const t=e.target.closest('[data-p]');if(e.target==ov||e.target.dataset.c!==undefined){ov.remove();return}if(t){placeSheet(t.dataset.p)}}}
 const mapUrl=n=>{const g=GEO[n]||[n,0,0];const q=QRY[n]||((g[1]||g[2])?g[1]+','+g[2]:n);return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q)};
@@ -1029,7 +1030,10 @@ const alNo=y=>+((y.login_name||'').match(/\d+$/)||[999])[0];
 function yatSync(L){S.yat=S.yat.filter(o=>!o.demo);L.slice().sort((a,b)=>(a.section=='બહેન')-(b.section=='બહેન')||alNo(a)-alNo(b)).forEach(y=>{
     const d={sid:y.id,n:y.name,mf:y.section,v:y.village||'',p:y.phone||'',s:y.status||'ચાલુ'},o=S.yat.find(o=>o.sid===d.sid)||S.yat.find(o=>!o.sid&&o.n===d.n&&o.mf===d.mf);
     if(o)Object.assign(o,d);else S.yat.push({a:'',g:'હરિભક્ત',...d})});yf='all';save();renderYat()}
-function alOpen(sync){if(!ADM)return;const ov=document.createElement('div');ov.className='ov al';ov.innerHTML='<div class="sheet"><h3>🔑 યાત્રાળુ લોગિન</h3><div class="alx"></div><div class="btns"><button class="b2" data-c>બંધ</button></div></div>';document.body.appendChild(ov);
+async function yatFetch(){const[me,p]=await Promise.all([alApi('admins?select=user_id'),alApi('pilgrims?select=id,name,section,village,phone,login_name,status')]);
+  if(!me.length){alMem=null;alSes(null);const e=new Error('role');e.status=403;throw e}yatSync(p);toast(gu(p.length)+' નામ આવી ગયાં ✅')}
+function yatAuto(){if(ADM&&!S.yat.some(y=>y.sid)&&alSes())yatFetch().catch(()=>{})}
+function alOpen(){if(!ADM)return;const ov=document.createElement('div');ov.className='ov al';ov.innerHTML='<div class="sheet"><h3>🔑 યાત્રાળુ લોગિન</h3><div class="alx"></div><div class="btns"><button class="b2" data-c>બંધ</button></div></div>';document.body.appendChild(ov);
   const box=ov.querySelector('.alx'),pins={};let list=[],sec='ભાઈ',busy=0,opn=null;
   const fail=e=>{if(e.status===401){alMem=null;alSes(null);login('ફરી લોગિન કરો.')}else toast(navigator.onLine?'કામ ન થયું, ફરી પ્રયત્ન કરો':'ઇન્ટરનેટ ચેક કરો')};
   function login(msg){box.innerHTML='<form><label class="sgl" for="alu">ઍડમિન નામ</label><input id="alu" class="sgi" autocomplete="username" autocapitalize="none" spellcheck="false"><label class="sgl" for="alw">પાસવર્ડ</label><input id="alw" class="sgi" type="password" autocomplete="current-password"><div class="ale">'+(msg||'')+'</div><button class="b1 sgb">લોગિન કરો</button></form>';
@@ -1037,7 +1041,7 @@ function alOpen(sync){if(!ADM)return;const ov=document.createElement('div');ov.c
       try{await alAuth('password',{email:u,password:w});await load()}catch(e){b.disabled=false;er.textContent=e.status===429?'ઘણા પ્રયત્ન થયા. થોડી વાર પછી કરો.':e.status>=400&&e.status<500?'નામ અથવા પાસવર્ડ ખોટો છે.':'લોગિન ન થયું. ઇન્ટરનેટ ચેક કરો.'}}}
   async function load(){box.innerHTML='<p>લાવી રહ્યા છીએ…</p>';try{const[me,p,a,d]=await Promise.all([alApi('admins?select=user_id'),alApi('pilgrims?select=id,name,section,village,phone,login_name,status'),alApi('pilgrim_auth?select=pilgrim_id,code_expires_at'),alApi('devices?select=pilgrim_id')]);
       if(!me.length){alMem=null;alSes(null);login('આ ખાતાને ઍડમિનનો હક નથી.');return}
-      list=p.map(y=>({...y,exp:(a.find(x=>x.pilgrim_id==y.id)||{}).code_expires_at,ph:d.filter(x=>x.pilgrim_id==y.id).length})).sort((x,y)=>alNo(x)-alNo(y));yatSync(list);if(sync){sync=0;ov.remove();toast(gu(list.length)+' નામ આવી ગયાં ✅');return}draw()}
+      list=p.map(y=>({...y,exp:(a.find(x=>x.pilgrim_id==y.id)||{}).code_expires_at,ph:d.filter(x=>x.pilgrim_id==y.id).length})).sort((x,y)=>alNo(x)-alNo(y));yatSync(list);draw()}
     catch(e){if(e.status===401)return fail(e);box.innerHTML='<div class="ale">યાદી ન આવી. ઇન્ટરનેટ ચેક કરો.</div><button class="alb" data-re>🔄 ફરી પ્રયત્ન</button>'}}
   function draw(){const cnt=m=>list.filter(y=>y.section==m).length,L=list.filter(y=>y.section==sec),y0=ov.querySelector('.sheet').scrollTop;
     box.innerHTML='<div class="aln">યાત્રાળુનું લોગિન પેજ હજી ચાલુ નથી. PIN હમણાં યાત્રાળુને ન મોકલશો.</div><div class="alr">'+[['ભાઈ','ભાઈઓ'],['બહેન','બહેનો']].map(([k,t])=>'<button class="alb '+(sec==k?'on':'')+'" data-sec="'+k+'">'+t+' ('+gu(cnt(k))+')</button>').join('')+'<button class="alb" data-add1>➕ નામ</button></div>'+
