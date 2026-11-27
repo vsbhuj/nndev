@@ -196,3 +196,6 @@
 
 ## હિસાબ હક (Chat A, DB migration `helpers_view_accounts_by_default`)
 - દરેક નવા હેલ્પરને હિસાબ "View" મૂળથી મળે (admins.acc default view). Add/Off Main બદલે. ઍપ કોડ બદલ્યો નથી.
+
+## VER 93 (Chat A)
+- યાત્રાળુ જોડેલી નોંધમાં સ્ક્રીન/PDF/Excel પર પહેલાં યાત્રાળુનું નામ, પછી લખેલી વિગત (`acTitle`). DBમાં title બદલાતું નથી.
