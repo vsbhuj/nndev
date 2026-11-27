@@ -203,3 +203,9 @@
 ## VER 94 (Chat A, DB migration `accounts_entry_time`)
 - expenses.entry_time: વ્યવહારનો સમય (ફોનમાંથી, ફોર્મમાં બદલી શકાય). created_at = સર્વર પર પહોંચ્યાનો સમય; ઑફલાઇન નોંધમાં બંને જુદા હોય. ક્રમ: entry_date, entry_time. જૂની row માં null → created_at બતાવાય (acT).
 - Excel માં A કૉલમ તારીખ+સમય એક જ સેલ (ફોર્મ્યુલાના કૉલમ ન ખસે).
+
+## VER 95 — હિસાબ સાદો (Chat A) — ઉપરની VER 92 ની UI નોંધ હવે લાગુ નથી
+- આયોજકના કહેવાથી "Day to Day Expenses" ઍપ જેવું: 📝 / Daily / Monthly / Yearly. ફોર્મ: Income|Expense, વિગત, રકમ, Description, તારીખ-સમય.
+- UI માંથી કાઢ્યું: કેટેગરી, રોકડ/UPI, કોણે, પૈસા સોંપ્યા, ડિપોઝિટ ગણતરી, કોની પાસે, ફી પાનું. ફરી માગ્યા વગર ઉમેરવું નહીં.
+- DB ના mode/person/to_person/pilgrim_id/category કૉલમ અને fees ટેબલ રાખ્યાં છે (વપરાતાં નથી). pilgrim_id વાળી જૂની નોંધમાં નામ acTitle થી દેખાય; Edit કરો ત્યારે નામ title માં ભળે.
+- જૂનો કોડ git માં: VER 94 = commit 5b247b2.
