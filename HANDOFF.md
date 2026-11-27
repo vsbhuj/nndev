@@ -175,3 +175,6 @@
 - બાકી: manage-admin ની અસલી ફોનથી તપાસ; હિસાબનું નવું પેજ (પ્લાન નક્કી કરવાનો).
 - VER 88: ઍડમિનની સંખ્યા પર મર્યાદા નથી; Make Main / Make Helper (manage-admin v2, action role).
 - VER 89: Yatra ON/OFF (migration yatra_on_off: public.yatras north/south). OFF: helper/યાત્રાળુનો DB હક બંધ, PIN/લોગિન બંધ, Main ફક્ત વાંચી શકે. બટન: 🛠 -> Yatra ON / OFF (ફક્ત Main). દક્ષિણ યાત્રાનો અલગ ડેટા (pilgrims વગેરેમાં yatra_id) હજી બન્યો નથી.
+
+- VER 90: ઑનલાઇન હિસાબ પેજ (Daily/Total/Category/નોટ/Trash, C/F, edit, delete, multi-select), Report PDF (canvas) અને Excel (.xlsx) + Share. Migration accounts_ledger: expenses નવાં ખાનાં, history સર્વર લખે, hard delete નથી; admins.acc off|view|add (Admins પેજમાંથી); Yatra OFF માં main ફક્ત વાંચે. RLS rollback ટેસ્ટ પાસ.
+- બાકી: કોની પાસે રોકડ, હોટલ Pending, બિલ ફોટો, offline નોંધ.
