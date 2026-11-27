@@ -970,7 +970,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}
  }}
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-27-96';
+const VER='2026-11-27-97';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
@@ -1241,6 +1241,9 @@ function acDraw(){const x=acHost();if(!x||!AC)return;
   let fab='';if(!AC.sel&&AC.tab!=='trash'){if(AC.tab==='day'||AC.tab==='note'){if(acCanAdd())fab='<button class="acfab" data-acadd aria-label="'+(AC.tab==='note'?'નવી નોટ':'નવી નોંધ')+'">'+acI(AC.tab==='note'?'pen':'plus')+'</button>'}else fab='<button class="acfab pdf" data-acrep aria-label="PDF / Excel">PDF</button>'}
   x.innerHTML=head+tabs+'<div class="acbody">'+h+'</div>'+fab;x.querySelector('.acbody').scrollTop=keep;
   const di=document.getElementById('acdate');if(di)di.onchange=()=>{if(di.value){AC.date=di.value;AC.exp=null;acDraw()}}}
+/* ☁️: દબાવ્યા પછી હંમેશાં જવાબ દેખાય */
+async function acCloud(){if(!alSes())return;if(navigator.onLine===false){toast('ઇન્ટરનેટ નથી');acLoad();return}const waiting=acQ().length,me=AC;if(waiting)acSync(true);await acLoad();if(AC!==me||me.state==='busy')return;
+  if(me.state==='login')toast('ફરી લોગિન કરો');else if(me.state!=='ok'||me.off)toast('ઇન્ટરનેટ નથી મળતું, પછી ફરી પ્રયત્ન કરો');else if(!waiting&&me.lvl!=='off')toast('હિસાબ તાજો થયો ✅')}
 function acMenu(){const ov=document.createElement('div');ov.className='ov al acmenu';ov.innerHTML='<div class="acpop"><button data-mi="rep">📄 PDF / Excel</button>'+(AC.lvl==='main'?'<button data-mi="bk">💾 પૂરો બૅકઅપ</button><button data-mi="trash">♻️ કાઢેલી નોંધો</button>':'')+'</div>';document.body.appendChild(ov);
   ov.onclick=e=>{e.stopPropagation();const b=e.target.closest('[data-mi]');ov.remove();if(!b)return;const k=b.dataset.mi;if(k==='rep')acReport();else if(k==='trash'){AC.tab='trash';AC.exp=null;acDraw()}else acBackupAsk()}}
 function acBackupAsk(){const ov=admSheet('💾 પૂરો બૅકઅપ'),box=ov.querySelector('.alx'),at=acRead('nndev-acbk',0);box.innerHTML='<p class="achint">'+(at?'આ ફોનમાં છેલ્લો બૅકઅપ: '+new Date(at).toLocaleDateString('en-IN'):'આ ફોનથી હજી બૅકઅપ લીધો નથી.')+'<br>ફાઇલમાં યાત્રાળુનાં નામ-નંબર છે, કોઈને મોકલશો નહીં.</p><div class="ale"></div><button class="b1 acrbtn" data-bk>💾 Download</button>';
@@ -1267,7 +1270,7 @@ function acClick(ev){ev.stopPropagation();const t=ev.target,g=s=>t.closest(s);le
   else if(b=g('[data-achit]')){const e=acById(b.dataset.achit);if(!e)return;AC.q=null;AC.date=e.entry_date;AC.mon=e.entry_date.slice(0,7);AC.yr=+e.entry_date.slice(0,4);AC.tab=e.kind==='note'?'note':'day';AC.exp=e.id}
   else if(g('[data-acmenu]')){acMenu();return}
   else if(b=g('[data-aced]')){acForm(acById(b.dataset.aced));return}
-  else if(g('[data-acsync]')){if(alSes()){acSync(true);acLoad()}return}
+  else if(g('[data-acsync]')){acCloud();return}
   else if(b=g('[data-acdel]')){acDelete([b.dataset.acdel]);return}
   else if(g('[data-acdelsel]')){acDelete([...AC.sel]);return}
   else if(g('[data-acx]'))AC.sel=null;
