@@ -396,6 +396,7 @@ body.lt #hv{position:static;padding:0 0 calc(env(safe-area-inset-bottom) + 10px)
 body.lt #home .hst{display:flex;flex-wrap:nowrap;gap:6px;margin-top:12px;clear:both}
 body.lt #home .hst span{padding:4px 9px;border-radius:99px;background:linear-gradient(160deg,#f3e6fe,#dcc0f8);border:1.5px solid #e8b53a;font-size:12px;font-weight:700;color:#3a0f55;box-shadow:0 0 6px rgba(245,190,60,.4),2px 5px 10px rgba(100,40,160,.2)}
 body.lt #home .hst span.g{background:linear-gradient(#f7e2b4,#e9c46a);color:#4a2a00}
+.al .sheet{max-height:92vh;overflow:auto}.al .alc{border-top:1px solid rgba(128,90,160,.25);padding:11px 0}.al small{display:block;opacity:.8}.al .alr{display:flex;gap:6px;margin-top:6px}.al .alp{flex:1;border:2px solid var(--gold);border-radius:12px;padding:8px 12px;font-weight:800;letter-spacing:3px;font-size:19px}.al .alb{border:2px solid #8242CF;border-radius:18px;background:#fff;color:#6f2fb5;font:inherit;font-weight:800;padding:7px 12px}.al .alb.on{background:#7c3bc4;color:#fff}.al .alb:disabled{opacity:.4}.al .aln{background:#fff3cd;color:#5c4200;border-radius:12px;padding:9px 12px;margin:8px 0;font-size:14px}.al .ale{color:#b3123f;font-weight:700;margin:8px 0}.al .sgi{width:100%;box-sizing:border-box}
 </style>
 </head>
 <body>
@@ -954,7 +955,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}
  }}
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-27-67';
+const VER='2026-11-27-68';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
@@ -966,7 +967,7 @@ chkVer();setInterval(chkVer,300000);document.addEventListener('visibilitychange'
 function showHome(){try{const st=new Date((S.start||'2027-09-21')+'T00:00:00'),dl=Math.max(0,Math.ceil((st-new Date())/864e5));$('hst').innerHTML='<span>🗓 '+gu(st.getDate())+' '+MON[st.getMonth()]+' '+gu(st.getFullYear())+'</span>'+(dl?'<span class="g">⏳ '+gu(dl)+' દિવસ બાકી</span>':'')}catch(e){}try{const f=v=>{const p=v.split('-').map(Number);return gu(p[2])+' '+MON[p[1]-1]},st=S.start||'2027-09-21',en=S.end||'2027-10-14';$('hdt').innerHTML=f(st)+' થી '+f(en)+' '+gu(en.slice(0,4))}catch(e){}$('hv').textContent='વર્ઝન '+VER;$('home').classList.add('on')}
 function openYatra(){$('home').classList.remove('on');sub=null;renderAll();renderMore();show(ADM?0:1);if(!ADM){const c=document.querySelector('.vday.today');if(c)c.scrollIntoView({block:'center'})}}
 $('hyt').addEventListener('click',openYatra);
-$('abtn').addEventListener('click',()=>{if(!ADM)return;libSheet('🛠 ઍડમિન',[['acc','💰 હિસાબ'],['set','📅 તારીખ અને નામ'],['yat','👥 યાત્રિકો'],['view','👁 યાત્રાળુ તરીકે જુઓ']].map(([k,t])=>'<button class="sl" data-ad="'+k+'">'+t+'</button>').join(''));const o=[...document.querySelectorAll('.ov')].pop();o.onclick=e=>{const k=e.target.dataset.ad;if(e.target!=o&&!k&&e.target.dataset.c===undefined)return;o.remove();if(k=='acc'){sub='acc';show(4);renderMore()}else if(k=='set')settings();else if(k=='yat'){sub=null;show(3)}else if(k=='view'){ADM=false;document.body.classList.add('vw');sub=null;render();showHome()}}});
+$('abtn').addEventListener('click',()=>{if(!ADM)return;libSheet('🛠 ઍડમિન',[['lg','🔑 યાત્રાળુ લોગિન'],['acc','💰 હિસાબ'],['set','📅 તારીખ અને નામ'],['yat','👥 યાત્રિકો'],['view','👁 યાત્રાળુ તરીકે જુઓ']].map(([k,t])=>'<button class="sl" data-ad="'+k+'">'+t+'</button>').join(''));const o=[...document.querySelectorAll('.ov')].pop();o.onclick=e=>{const k=e.target.dataset.ad;if(e.target!=o&&!k&&e.target.dataset.c===undefined)return;o.remove();if(k=='lg')alOpen();else if(k=='acc'){sub='acc';show(4);renderMore()}else if(k=='set')settings();else if(k=='yat'){sub=null;show(3)}else if(k=='view'){ADM=false;document.body.classList.add('vw');sub=null;render();showHome()}}});
 function helpSheet(){libSheet('🆘 મદદ','<a class="sl vcall" href="tel:112">📞 ઇમર્જન્સી 112 (ભારત)</a><button class="sl" data-sugo>📝 ચરિત્ર / માહિતી મોકલો</button><div class="vsub">આયોજકનો ફોન અને WhatsApp નંબર જલ્દી ઉમેરાશે.</div>');const o=[...document.querySelectorAll('.ov')].pop();o.onclick=e=>{if(e.target.closest('[data-sugo]')){o.remove();sugSheet('');return}if(e.target==o||e.target.dataset.c!==undefined)o.remove()}}
 /* યાત્રાળુ ચરિત્ર/માહિતી મોકલે → Supabase suggestions (ફક્ત insert; વાંચે ફક્ત ઍડમિન) */
 const SB_URL='https://wpcaujyjsaumudfmdplu.supabase.co',SB_KEY='sb_publishable_dxJNzkJqS2e6gk533lLW6A_GTQ0CUAh',SUGQ='nndev-sugq';
@@ -1015,6 +1016,45 @@ function noteEdit(i){S.notes=S.notes||[];const n=i<0?{t:'',d:'',b:'',imp:''}:S.n
   del:i<0?null:()=>{S.notes.splice(i,1);save();noteOpen()}})}
 function bellUp(){const c=Math.max(0,(S.notes||[]).length-(S.nseen||0)),b=$('bn');if(b){b.textContent=gu(c);b.classList.toggle('on',c>0)}}
 $('bell').addEventListener('click',noteOpen);bellUp();
+/* ---------- ઍડમિન: યાત્રાળુ લોગિન (Supabase). ડેટા ફક્ત મેમરીમાં; ફોનમાં ફક્ત લોગિન ટોકન ---------- */
+const ALK='nndev-adm';
+const alSes=v=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(ALK)||'null');if(v)localStorage.setItem(ALK,JSON.stringify(v));else localStorage.removeItem(ALK)}catch(e){return null}};
+let alMem=null;
+async function alAuth(type,body){const r=await fetch(SB_URL+'/auth/v1/token?grant_type='+type,{method:'POST',headers:{apikey:SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});const j=await r.json().catch(()=>({}));
+  if(!r.ok){const e=new Error('auth');e.status=r.status;throw e}alMem={a:j.access_token,r:j.refresh_token,x:Date.now()+(j.expires_in||3600)*1000};alSes(alMem);return alMem}
+async function alApi(path,opt={}){let t=alMem||(alMem=alSes());if(!t){const e=new Error('login');e.status=401;throw e}
+  if(Date.now()>t.x-60000)try{t=await alAuth('refresh_token',{refresh_token:t.r})}catch(e){if(e.status>=400&&e.status<500){alMem=null;alSes(null);e.status=401}throw e}
+  const r=await fetch(SB_URL+'/rest/v1/'+path,{method:opt.method||'GET',cache:'no-store',headers:{apikey:SB_KEY,Authorization:'Bearer '+t.a,'Content-Type':'application/json',Prefer:'return=representation'},body:opt.body?JSON.stringify(opt.body):undefined});
+  const j=await r.json().catch(()=>null);if(!r.ok){const e=new Error((j&&j.message)||'api');e.status=r.status;e.code=j&&j.code;throw e}return j}
+const alNo=y=>+((y.login_name||'').match(/\d+$/)||[999])[0];
+function alOpen(){if(!ADM)return;const ov=document.createElement('div');ov.className='ov al';ov.innerHTML='<div class="sheet"><h3>🔑 યાત્રાળુ લોગિન</h3><div class="alx"></div><div class="btns"><button class="b2" data-c>બંધ</button></div></div>';document.body.appendChild(ov);
+  const box=ov.querySelector('.alx'),pins={};let list=[],sec='ભાઈ',busy=0;
+  const fail=e=>{if(e.status===401){alMem=null;alSes(null);login('ફરી લોગિન કરો.')}else toast(navigator.onLine?'કામ ન થયું, ફરી પ્રયત્ન કરો':'ઇન્ટરનેટ ચેક કરો')};
+  function login(msg){box.innerHTML='<form><label class="sgl" for="alu">ઍડમિન નામ</label><input id="alu" class="sgi" autocomplete="username" autocapitalize="none" spellcheck="false"><label class="sgl" for="alw">પાસવર્ડ</label><input id="alw" class="sgi" type="password" autocomplete="current-password"><div class="ale">'+(msg||'')+'</div><button class="b1 sgb">લોગિન કરો</button></form>';
+    box.querySelector('form').onsubmit=async ev=>{ev.preventDefault();let u=box.querySelector('#alu').value.trim().toLowerCase();const w=box.querySelector('#alw').value,er=box.querySelector('.ale'),b=box.querySelector('button');if(!u||!w){er.textContent='નામ અને પાસવર્ડ લખો.';return}if(!u.includes('@'))u+='@gmail.com';b.disabled=true;er.textContent='';
+      try{await alAuth('password',{email:u,password:w});await load()}catch(e){b.disabled=false;er.textContent=e.status===429?'ઘણા પ્રયત્ન થયા. થોડી વાર પછી કરો.':e.status>=400&&e.status<500?'નામ અથવા પાસવર્ડ ખોટો છે.':'લોગિન ન થયું. ઇન્ટરનેટ ચેક કરો.'}}}
+  async function load(){box.innerHTML='<p>લાવી રહ્યા છીએ…</p>';try{const[me,p,a,d]=await Promise.all([alApi('admins?select=user_id'),alApi('pilgrims?select=id,name,section,village,login_name,status'),alApi('pilgrim_auth?select=pilgrim_id,code_expires_at'),alApi('devices?select=pilgrim_id')]);
+      if(!me.length){alMem=null;alSes(null);login('આ ખાતાને ઍડમિનનો હક નથી.');return}
+      list=p.map(y=>({...y,exp:(a.find(x=>x.pilgrim_id==y.id)||{}).code_expires_at,ph:d.filter(x=>x.pilgrim_id==y.id).length})).sort((x,y)=>alNo(x)-alNo(y));draw()}
+    catch(e){if(e.status===401)return fail(e);box.innerHTML='<div class="ale">યાદી ન આવી. ઇન્ટરનેટ ચેક કરો.</div><button class="alb" data-re>🔄 ફરી પ્રયત્ન</button>'}}
+  function draw(){const cnt=m=>list.filter(y=>y.section==m).length,L=list.filter(y=>y.section==sec),y0=ov.querySelector('.sheet').scrollTop;
+    box.innerHTML='<div class="aln">યાત્રાળુનું લોગિન પેજ હજી ચાલુ નથી. PIN હમણાં યાત્રાળુને ન મોકલશો.</div><div class="alr">'+[['ભાઈ','ભાઈઓ'],['બહેન','બહેનો']].map(([k,t])=>'<button class="alb '+(sec==k?'on':'')+'" data-sec="'+k+'">'+t+' ('+gu(cnt(k))+')</button>').join('')+'<button class="alb" data-add1>➕ નામ</button></div>'+
+    L.map((y,i)=>{const p=pins[y.id],live=y.exp&&new Date(y.exp)>new Date(),st=y.status=='રદ'?'રદ':p?'નવો PIN તૈયાર, હમણાં કૉપી કરો':live?'PIN આપેલો, વપરાવો બાકી':y.ph?'✅ લોગિન થયેલું':'PIN બાકી';
+      return '<div class="alc"><b>'+gu(i+1)+'. '+esc(y.name)+'</b><small>'+(y.village?esc(y.village)+' • ':'')+'લોગિન નામ: <b>'+esc(y.login_name||'—')+'</b></small><small>'+st+(y.ph?' • 📱 '+gu(y.ph):'')+'</small><div class="alr"><div class="alp">'+(p?p.slice(0,3)+' '+p.slice(3):live?'••• •••':'– – –')+'</div><button class="alb" data-gen="'+y.id+'" aria-label="નવો PIN" '+(y.status=='રદ'||y.ph>=2?'disabled':'')+'>🔄</button><button class="alb on" data-cp="'+y.id+'" '+(p?'':'disabled')+'>📋 કૉપી</button></div>'+(y.ph?'<div class="alr"><button class="alb" data-rs="'+y.id+'">📱 ફોન રીસેટ</button></div>':'')+'</div>'}).join('')+'<div class="alr"><button class="alb" data-re>↻ યાદી તાજી કરો</button><button class="alb" data-out>લોગઆઉટ</button></div>';
+    ov.querySelector('.sheet').scrollTop=y0}
+  function add(){modal({title:'નવું નામ',fields:[{k:'n',l:'નામ',v:''},{k:'s',l:'વિભાગ',t:'select',o:['ભાઈ','બહેન'],v:sec},{k:'v',l:'ગામ',v:''},{k:'p',l:'મોબાઇલ (દેશ કોડ સાથે)',t:'tel',v:''},{k:'u',l:'ટૂંકું નામ અંગ્રેજીમાં (દા.ત. ramesh)',v:''}],
+    save:async v=>{const base=v.u.toLowerCase().replace(/[^a-z]/g,'').slice(0,16);if(!v.n.trim()||base.length<2){toast('નામ અને અંગ્રેજી ટૂંકું નામ જરૂરી છે');return}
+      const no=Math.max(0,...list.filter(y=>y.section==v.s).map(alNo).filter(n=>n<999))+1;
+      try{await alApi('pilgrims',{method:'POST',body:{name:v.n.trim(),section:v.s,village:v.v.trim(),phone:v.p.replace(/[^+0-9]/g,''),login_name:base+String(no).padStart(2,'0')}});sec=v.s;toast('ઉમેરાયું ✅');await load()}catch(e){if(e.code=='23505')toast('આ લોગિન નામ પહેલેથી છે, બીજું લખો');else fail(e)}}})}
+  const copy=async t=>{try{await navigator.clipboard.writeText(t)}catch(e){const a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();const k=document.execCommand('copy');a.remove();if(!k){toast('કૉપી ન થયું');return}}toast('કૉપી થયું ✅')};
+  ov.onclick=async e=>{if(e.target==ov||e.target.dataset.c!==undefined){ov.remove();return}const b=e.target.closest('button');if(!b||b.disabled)return;const d=b.dataset;
+    if(d.sec){sec=d.sec;draw()}else if(d.add1!==undefined)add();else if(d.re!==undefined)load();
+    else if(d.out!==undefined){const t=alMem||alSes();alMem=null;alSes(null);if(t)fetch(SB_URL+'/auth/v1/logout?scope=local',{method:'POST',headers:{apikey:SB_KEY,Authorization:'Bearer '+t.a}}).catch(()=>{});list=[];login()}
+    else if(d.cp){const y=list.find(x=>x.id==d.cp),p=pins[d.cp];if(y&&p)copy('જય સ્વામિનારાયણ 🙏\nનરનારાયણ દેવ યાત્રા 2027\nઍપ: https://vsbhuj.github.io/nndev/\nનામ: '+y.login_name+'\nPIN: '+p+'\nઆ PIN એક જ વાર ચાલશે. કોઈને આપશો નહીં.')}
+    else if(d.gen){if(busy)return;const y=list.find(x=>x.id==d.gen);if(y.exp&&new Date(y.exp)>new Date()&&!confirm('નવો PIN બનાવશો? જૂનો PIN રદ થશે.'))return;busy=1;b.disabled=true;
+      try{pins[y.id]=await alApi('rpc/issue_login_code',{method:'POST',body:{p_pilgrim:y.id}});y.exp=new Date(Date.now()+6048e5).toISOString();draw()}catch(x){b.disabled=false;fail(x)}busy=0}
+    else if(d.rs){if(!confirm('આ યાત્રાળુના બધા ફોનનું લોગિન કાઢશો?'))return;try{await alApi('devices?pilgrim_id=eq.'+encodeURIComponent(d.rs),{method:'DELETE'});await load()}catch(x){fail(x)}}};
+  if(alSes())load();else login()}
 </script>
 </body>
 </html>
