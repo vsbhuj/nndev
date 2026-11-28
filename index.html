@@ -431,6 +431,10 @@ body.lt .pgs .pgin,body.lt .pgs .pgta{background:#fff;color:#2a0f40}body.lt .pgs
 .xwtabs{display:flex;gap:8px;margin:12px 0 8px}.xwtabs button{flex:1;min-height:38px;border-radius:10px;border:1.5px solid var(--gold);background:transparent;color:inherit;font:inherit;font-size:13px}.xwtabs button.a{background:var(--gold);color:#2a0f40;font-weight:800}
 .xwi{border:1.5px solid rgba(200,150,60,.6);border-radius:14px;padding:10px 12px;margin-bottom:8px}.xwi.approved{border-color:#3d9a55}.xwi .m{font-size:12px;opacity:.8;line-height:1.5}.xwi p{margin:6px 0;white-space:pre-line;line-height:1.65;font-size:14.5px;overflow-wrap:anywhere}
 .xwa{display:flex;gap:8px;margin-top:8px}.xwa button{flex:1;min-height:38px;border-radius:10px;border:1.5px solid var(--gold);background:transparent;color:inherit;font:inherit;font-size:13px}.xwa button.ok{background:#2f8a48;border-color:#2f8a48;color:#fff;font-weight:800}.xwa button:last-child{flex:0 0 46px}
+
+.xwr{margin:4px 0 12px;padding:12px 14px 2px;border:2.5px solid #d9480f;border-left-width:8px;border-radius:16px;background:#fff1e6;color:#4a1500;box-shadow:0 4px 14px rgba(180,60,10,.28)}
+.xwr .xwh{font-weight:800;font-size:15.5px;color:#b3320a;margin-bottom:6px}.xwr p{margin:0;padding:9px 0;border-top:1px solid rgba(180,60,10,.28);white-space:pre-line;line-height:1.65;font-size:15.5px;overflow-wrap:anywhere}
+.xwm .tx,.xwms p{white-space:pre-line;overflow-wrap:anywhere}.xwms{margin-top:10px}
 </style>
 </head>
 <body>
@@ -689,7 +693,7 @@ function secPage(k){const [pn,hh]=[k.slice(0,k.indexOf('|')),k.slice(k.indexOf('
  const draw=()=>{const sp=(S.sph&&S.sph[k])||[],ll=S.sg&&S.sg[k],sw=S.sw&&S.sw[k],t=secText(k);
   ov.innerHTML='<div class="pgs'+(ed?' ed':' rd')+'"><div class="rbar"><i></i></div><div class="sh2h"><span class="t">📖 '+esc(hh)+'<small>'+esc(pn)+'</small></span>'+(ed?'<button class="x ok" data-sv aria-label="સાચવો">✅</button><button class="x" data-cn aria-label="રદ">↩️</button>':'<button class="x" data-sed aria-label="ફેરફાર">✏️</button>'+xwBtn(k)+'<button class="x" data-x aria-label="બંધ">✕</button>')+'</div>'
   +(ed?(isAdd()?'<label class="pgl">નામ</label><input class="pgin" data-nm value="'+esc(hh)+'">':'')+'<label class="pgl">મહિમા</label><textarea class="pgt pgta" data-tx>'+esc(t)+'</textarea>'+(isAdd()?'':'<p class="pgh">બધું ખાલી કરીને સાચવો તો મૂળ લખાણ પાછું આવી જશે.</p>')+'<button class="lnk sm dsb" data-dl>🗑 આ પેટા-સ્થળ કાઢી નાખો</button>'
-  :(sp[0]?'<img class="himg" src="'+sp[0]+'" alt="" data-gop>':'')+'<div class="pgt fm">'+(t?fmtTx(t):'<i style="opacity:.6">મહિમા ઉમેરવાનો બાકી. ✏️ દબાવી લખો.</i>')+'</div>'+xwFrame(k)+((ll||sw)?'<button class="lnk sm" data-loc>📍 લોકેશન / સ્થાન ફેરફાર</button>':''))+(ed?'':'<div class="fbar">'+(ll?'<a class="fb" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+ll+'"><span>📍</span>નકશો</a>':'')+(sw?'<button class="fb sw" data-loc><span>📝</span>'+esc(sw)+'</button>':'')+((!ll&&!sw)?'<button class="fb" data-loc><span>📍</span>લોકેશન / સ્થાન ઉમેરો</button>':'')+'</div>')+'</div>';
+  :xwPart(k,'rule')+(sp[0]?'<img class="himg" src="'+sp[0]+'" alt="" data-gop>':'')+'<div class="pgt fm">'+(t?fmtTx(t):'<i style="opacity:.6">મહિમા ઉમેરવાનો બાકી. ✏️ દબાવી લખો.</i>')+'</div>'+xwPart(k,'mahima')+xwPart(k,'exp')+((ll||sw)?'<button class="lnk sm" data-loc>📍 લોકેશન / સ્થાન ફેરફાર</button>':''))+(ed?'':'<div class="fbar">'+(ll?'<a class="fb" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query='+ll+'"><span>📍</span>નકશો</a>':'')+(sw?'<button class="fb sw" data-loc><span>📝</span>'+esc(sw)+'</button>':'')+((!ll&&!sw)?'<button class="fb" data-loc><span>📍</span>લોકેશન / સ્થાન ઉમેરો</button>':'')+'</div>')+'</div>';
   {const sc=ov.querySelector('.pgs');const pb=ov.querySelector('.rbar i');if(sc&&pb){const f=()=>{const m=sc.scrollHeight-sc.clientHeight;pb.style.width=(m>10?Math.min(100,sc.scrollTop/m*100):0)+'%'};sc.onscroll=f;f()}}
   if(ed){const ta=ov.querySelector('[data-tx]');fit(ta);ta.oninput=()=>fit(ta);ta.onkeydown=ev=>{if(ev.key==='Enter'){const p=ta.selectionStart,ls=ta.value.lastIndexOf('\n',p-1)+1,cur=ta.value.slice(ls,p);if(/^\s*•/.test(cur)){ev.preventDefault();if(/^\s*•\s*$/.test(cur)){ta.setRangeText('',ls,p,'end')}else ta.setRangeText('\n• ',p,ta.selectionEnd,'end');fit(ta)}}};setTimeout(()=>{ta.focus();const L=ta.value.length;ta.setSelectionRange(L,L);ta.scrollIntoView({block:'end'})},60)}};
  draw();
@@ -741,12 +745,12 @@ function glHtml(t,pn){
 function placeSheet(n,ri){
   const p=places().find(x=>x.n==n),g=GEO[n]||[n,0,0],q=encodeURIComponent(QRY[n]||g[0]||n),cust=S.cp.some(c=>c.n==n);
   const ov=document.createElement('div');ov.className='ov pv';
-  const draw=()=>{
+  const draw=()=>{setTimeout(xwNumber,0);
     const opn=[...ov.querySelectorAll('.sc.op')].map(e=>e.dataset.k),stp=ov.querySelector('.sh2')?ov.querySelector('.sh2').scrollTop:0;
     const gl=glFull(n),ph=S.ph[n]||[];
     ov.innerHTML=`<div class="sh2"><div class="sh2h"><span class="t">🛕 ${esc(n)}</span>${ADM?'<button class="x" data-gl aria-label="મહિમા ફેરફાર">✏️</button>':''}${xwBtn(n)}<button class="x" data-x aria-label="બંધ">✕</button></div>
-    ${PHOTO[n]?`<img class="himg" src="${PHOTO[n]}" alt="">`:''}<div class="gl">${gl?glHtml(gl,n):'મહિમા ઉમેરવાનો બાકી.'}<button class="addsec" data-addsec>➕ પેટા-સ્થળ ઉમેરો</button><small>${p&&p.days.length?'દિવસ '+p.days.map(x=>gu(x+1)+' ('+dShort(x)+')').join(', '):''}</small></div>
-    ${xwFrame(n)}
+    ${xwPart(n,'rule')}${PHOTO[n]?`<img class="himg" src="${PHOTO[n]}" alt="">`:''}<div class="gl">${gl?glHtml(gl,n):'મહિમા ઉમેરવાનો બાકી.'}${xwPart(n,'mahima')}<button class="addsec" data-addsec>➕ પેટા-સ્થળ ઉમેરો</button><small>${p&&p.days.length?'દિવસ '+p.days.map(x=>gu(x+1)+' ('+dShort(x)+')').join(', '):''}</small></div>
+    ${xwPart(n,'exp')}
     ${/^§§ /m.test(gl)?'':`<div class="bt2"><a class="bm" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=${q}">📍 Google Maps</a></div>`}
     ${ph.length?`<div class="phs">${ph.map((u,i)=>`<div><img src="${u}" alt=""><button data-rp="${i}">✕</button></div>`).join('')}</div>`:''}
     <button class="fb up" data-pup style="width:100%;margin:6px 0"><span>➕📷</span>ફોટો અપલોડ</button>
@@ -1001,7 +1005,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}
  }}
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-28-100';
+const VER='2026-11-28-101';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.update().catch(()=>{})))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
@@ -1608,12 +1612,20 @@ const xwNew=k=>xwMain()?(xwData().rows||[]).filter(r=>r.status==='new'&&(!k||xwA
 const xwBtnIn=k=>{if(ADM&&xwMain()){const c=xwNew(k);return '<button class="x xwp" type="button" data-xw="'+esc(k)+'" aria-label="યાત્રાળુઓનું લખેલું">🖊️'+(c?'<small>'+gu(c)+'</small>':'')+'</button>'}
   return xwPil()?'<button class="x xwp" type="button" data-xw="'+esc(k)+'" aria-label="મારો અનુભવ / માહિતી લખો">🖊️</button>':''};
 const xwBtn=k=>'<span class="xwb" data-xwb="'+esc(k)+'">'+xwBtnIn(k)+'</span>';
-function xwFrameIn(k){if(!ntWho())return '';const L=(xwData().approved||[]).filter(a=>a.place===k);return L.length?'<div class="xwf"><div class="xwh">🌸 ભક્તોએ મોકલેલું 🌸</div>'+L.map(a=>'<p>'+esc(a.text)+'</p>').join('')+'</div>':''}
-const xwFrame=k=>'<div data-xwf="'+esc(k)+'">'+xwFrameIn(k)+'</div>';
-function xwPaint(){document.querySelectorAll('[data-xwf]').forEach(e=>e.innerHTML=xwFrameIn(e.dataset.xwf));document.querySelectorAll('[data-xwb]').forEach(e=>e.innerHTML=xwBtnIn(e.dataset.xwb));document.querySelectorAll('.ov.xws').forEach(o=>o._draw&&o._draw());document.querySelectorAll('.ov.nts').forEach(xwBell);bellUp()}
+const XWD={rule:'⚠️ નિયમ અને સાવચેતી',mahima:'📖 મહિમા અને માહિતી',exp:'🌸 ભક્તોના અનુભવ'};
+const xwOf=(k,d)=>ntWho()?(xwData().approved||[]).filter(a=>a.place===k&&(a.kind||'exp')===d):[];
+function xwPartIn(k,d){const L=xwOf(k,d);if(!L.length)return '';
+  if(d==='rule')return '<div class="xwr"><div class="xwh">'+XWD.rule+'</div>'+L.map(a=>'<p>'+(a.title?'<b>'+esc(a.title)+'</b><br>':'')+esc(a.text)+'</p>').join('')+'</div>';
+  if(d==='exp')return '<div class="xwf"><div class="xwh">'+XWD.exp+'</div>'+L.map(a=>'<p>'+esc(a.text)+'</p>').join('')+'</div>';
+  if(k.indexOf('|')>0)return L.map(a=>'<div class="pgt fm xwms"><h4 class="ph4">'+esc(a.title||'વધુ માહિતી')+'</h4><p>'+esc(a.text)+'</p></div>').join('');
+  return L.map(a=>'<div class="sc xwm" data-k="'+esc('xw:'+a.id)+'"><div class="shw"><button class="sch" data-sc><b></b><span>'+esc(a.title||'વધુ માહિતી')+'</span><i>▾</i></button></div><div class="scb" hidden><div class="tx">'+esc(a.text)+'</div></div></div>').join('')}
+const xwPart=(k,d)=>'<div class="xwp-'+d+'" data-xwf="'+esc(k)+'" data-xwd="'+d+'">'+xwPartIn(k,d)+'</div>';
+/* મહિમાના લિસ્ટમાં ઉમેરાયેલાં નામને આગળના નંબર */
+function xwNumber(){document.querySelectorAll('.ov .gl').forEach(g=>{let n=g.querySelectorAll(':scope>.sc').length;g.querySelectorAll(':scope>.xwp-mahima>.sc>.shw>.sch>b').forEach(b=>b.textContent=gu(++n))})}
+function xwPaint(){document.querySelectorAll('[data-xwf]').forEach(e=>{const h=xwPartIn(e.dataset.xwf,e.dataset.xwd);if(e._h!==h){const open=[...e.querySelectorAll('.sc.op')].map(x=>x.dataset.k);e.innerHTML=h;e._h=h;e.querySelectorAll('.sc').forEach(x=>{if(open.includes(x.dataset.k)){x.classList.add('op');x.querySelector(':scope>.scb').hidden=false}})}});xwNumber();document.querySelectorAll('[data-xwb]').forEach(e=>e.innerHTML=xwBtnIn(e.dataset.xwb));document.querySelectorAll('.ov.xws').forEach(o=>o._draw&&o._draw());document.querySelectorAll('.ov.nts').forEach(xwBell);bellUp()}
 const pilRpc=async(fn,body)=>{const r=await fetch(SB_URL+'/rest/v1/rpc/'+fn,{method:'POST',cache:'no-store',headers:{apikey:SB_KEY,'Content-Type':'application/json'},body:JSON.stringify(body)});if(!r.ok)throw new Error('api '+r.status);return r.json()};
 async function xwLoad(){const who=ntWho();if(!who){lsS(XWK,null);return 0}
-  try{let c;if(who[0]==='a'){if(xwMain()){const rows=await alApi('experiences?select=id,client_id,place,body,shown_body,status,author_name,pilgrim_id,created_at&order=created_at.desc&limit=1000');c={rows,mine:[],approved:rows.filter(r=>r.status==='approved').reverse().map(r=>({id:r.id,place:r.place,text:r.shown_body||r.body}))}}
+  try{let c;if(who[0]==='a'){if(xwMain()){const rows=await alApi('experiences?select=id,client_id,place,body,shown_body,status,kind,title,author_name,pilgrim_id,created_at&order=created_at.desc&limit=1000');c={rows,mine:[],approved:rows.filter(r=>r.status==='approved').reverse().map(r=>({id:r.id,place:r.place,kind:r.kind,title:r.title,text:r.shown_body||r.body}))}}
       else{const j=await alApi('rpc/place_writings',{method:'POST',body:{}});if(j.state!=='ok')return 2;c={rows:[],mine:[],approved:j.approved}}}
     else{const j=await pilRpc('place_writings',{p_token:(ytMem||ytSes()).token});if(j.state!=='ok'){lsS(XWK,null);xwPaint();return 2}c={rows:[],mine:j.mine,approved:j.approved}}
     if(ntWho()!==who)return 0;c.who=who;lsS(XWK,JSON.stringify(c));xwPaint();return 1}catch(e){return -1}}
@@ -1632,7 +1644,7 @@ function xwSheet(k){if(xwMain()&&ADM)return xwAdmin(k);if(!xwPil())return;
   ov._draw=()=>{const d=xwData(),got=new Set((d.mine||[]).map(m=>m.client_id));
     const L=xwQ().filter(i=>i.login===xwLogin()&&!got.has(i.client_id)).map(i=>({place:i.place,body:i.body,created_at:i.at,status:'q'})).reverse().concat(d.mine||[]).filter(m=>all||xwAt(m.place,k));
     ov.querySelectorAll('[data-all]').forEach(b=>b.classList.toggle('a',(b.dataset.all==='1')===all));
-    ov.querySelector('.xwl').innerHTML=L.length?L.map(m=>'<div class="xwi"><div class="m">'+(all?'📍 '+esc(xwName(m.place))+'<br>':'')+esc(xwDate(m.created_at))+' • '+(m.status==='q'?'⏳ મોકલવાનું બાકી':m.status==='approved'?'🌸 બધાને દેખાય છે':'✅ મોકલાઈ ગયું')+'</div><p>'+esc(m.body)+'</p></div>').join(''):'<div class="emp">હજી કંઈ લખ્યું નથી.</div>'};
+    ov.querySelector('.xwl').innerHTML=L.length?L.map(m=>'<div class="xwi"><div class="m">'+(all?'📍 '+esc(xwName(m.place))+'<br>':'')+esc(xwDate(m.created_at))+' • '+(m.status==='q'?'⏳ મોકલવાનું બાકી':m.status==='approved'?'🌸 મંજૂર, બધાને દેખાય છે':'✅ મોકલાઈ ગયું')+'</div><p>'+esc(m.body)+'</p></div>').join(''):'<div class="emp">હજી કંઈ લખ્યું નથી.</div>'};
   document.body.appendChild(ov);ov._draw();xwSync();
   ov.onclick=async e=>{e.stopPropagation();const t=e.target.closest('button')||e.target;if(t===ov||t.dataset.c!==undefined){ov.remove();return}
     if(t.dataset.all!==undefined){all=t.dataset.all==='1';ov._draw()}
@@ -1640,24 +1652,29 @@ function xwSheet(k){if(xwMain()&&ADM)return xwAdmin(k);if(!xwPil())return;
       const item={login:xwLogin(),client_id:xwUuid(),place:k,body:b,at:new Date().toISOString()};const q=xwQ();q.push(item);xwQset(q);if(!xwQ().some(i=>i.client_id===item.client_id)){toast('સાચવી શકાયું નહીં. ફોનમાં જગ્યા ચેક કરો.',4000);return}
       ta.value='';lsS(dk,null);ov._draw();t.disabled=true;await xwSync();t.disabled=false;
       toast(xwQ().some(i=>i.client_id===item.client_id)?'ફોનમાં સાચવ્યું ⏳ ઇન્ટરનેટ આવે ત્યારે ઍપ ખોલશો એટલે મોકલાશે':'મોકલાઈ ગયું 🙏',4000);ov._draw()}}}
-function xwKeys(){const o=[];places().forEach(p=>{o.push(p.n);glFull(p.n).split('\n').forEach(l=>{const m=l.match(/^§{2,} (.*)$/);if(m)o.push(p.n+'|'+m[1])})});return [...new Set(o)]}
+function xwKeys(){const o=[],t=document.createElement('template');places().forEach(p=>{o.push(p.n);t.innerHTML=glHtml(glFull(p.n),p.n);t.content.querySelectorAll('[data-mh]').forEach(e=>o.push(e.dataset.mh))});return [...new Set(o)]}
 function xwAdmin(k){const ov=document.createElement('div');ov.className='ov xws';let all=!k;
   ov.innerHTML='<div class="sheet"><h3>🖊️ યાત્રાળુઓનું લખેલું</h3>'+(k?'<div class="xwk">📍 '+esc(xwName(k))+'</div><div class="xwtabs"><button type="button" data-all="0">આ સ્થળ</button><button type="button" data-all="1">બધાં નવાં</button></div>':'')+'<div class="xwl"></div>'+(k?'<textarea class="sgi xwt" rows="3" maxlength="3000" placeholder="હું પણ આ સ્થળ વિશે લખું…"></textarea><button type="button" class="b1 sgb" data-mine>➕ ઉમેરો</button>':'')+'<div class="btns"><button class="b2" data-c>બંધ</button></div></div>';
   let err=0;
   ov._draw=()=>{const rows=xwData().rows||[],L=rows.filter(r=>all?r.status==='new':xwAt(r.place,k));
     ov.querySelectorAll('[data-all]').forEach(b=>{b.classList.toggle('a',(b.dataset.all==='1')===all);if(b.dataset.all==='1')b.textContent='બધાં નવાં ('+gu(xwNew())+')'});
-    ov.querySelector('.xwl').innerHTML=(err?'<div class="vsub">નવું ન આવ્યું. ઇન્ટરનેટ ચેક કરો.</div>':'')+(L.length?L.map(r=>'<div class="xwi '+r.status+'"><div class="m"><b>'+esc(r.author_name||'—')+'</b> • '+esc(xwDate(r.created_at))+'<br>📍 '+esc(xwName(r.place))+(r.status==='approved'?'<br>🌸 બધાને દેખાય છે':'')+'</div><p>'+esc(r.body)+'</p>'+(r.shown_body?'<div class="m">✏️ સુધારેલું (બધાને આ દેખાશે):</div><p>'+esc(r.shown_body)+'</p>':'')+'<div class="xwa"><button type="button" data-ed="'+r.id+'">✏️ સુધારો</button>'+(r.status==='new'?'<button type="button" class="ok" data-ok="'+r.id+'">✅ મંજૂર</button>':'<button type="button" data-hide="'+r.id+'">🙈 છુપાવો</button>')+'<button type="button" data-rm="'+r.id+'" aria-label="કાઢો">🗑</button></div></div>').join(''):'<div class="emp">'+(all?'કોઈ નવું લખાણ નથી.':'આ સ્થળ પર હજી કોઈ લખાણ નથી.')+'</div>')};
+    ov.querySelector('.xwl').innerHTML=(err?'<div class="vsub">નવું ન આવ્યું. ઇન્ટરનેટ ચેક કરો.</div>':'')+(L.length?L.map(r=>'<div class="xwi '+r.status+'"><div class="m"><b>'+esc(r.author_name||'—')+'</b> • '+esc(xwDate(r.created_at))+'<br>📍 '+esc(xwName(r.place))+(r.status==='approved'?'<br><b>'+XWD[r.kind||'exp']+'</b>'+(r.title?' : '+esc(r.title):'')+' • બધાને દેખાય છે':'')+'</div><p>'+esc(r.body)+'</p>'+(r.shown_body?'<div class="m">✏️ સુધારેલું (બધાને આ દેખાશે):</div><p>'+esc(r.shown_body)+'</p>':'')+'<div class="xwa">'+(r.status==='new'?'<button type="button" class="ok" data-ed="'+r.id+'">✅ વિભાગ પસંદ કરી મંજૂર</button>':'<button type="button" data-ed="'+r.id+'">✏️ સુધારો / વિભાગ</button><button type="button" data-hide="'+r.id+'">🙈 છુપાવો</button>')+'<button type="button" data-rm="'+r.id+'" aria-label="કાઢો">🗑</button></div></div>').join(''):'<div class="emp">'+(all?'કોઈ નવું લખાણ નથી.':'આ સ્થળ પર હજી કોઈ લખાણ નથી.')+'</div>')};
   document.body.appendChild(ov);ov._draw();xwLoad().then(r=>{err=r<0;ov._draw()});
   const act=async(path,method,body,msg)=>{try{const r=await alApi(path,{method,body});if(!r||!r.length)throw new Error('none');await xwLoad();toast(msg);return true}catch(e){toast(e.status===401?'ફરી લોગિન કરો':'કામ ન થયું. ઇન્ટરનેટ ચેક કરો.',3000);return false}};
   const one=id=>'experiences?id=eq.'+encodeURIComponent(id);
+  const edit=(r,draft)=>{const isNew=r.status!=='approved',keys=xwKeys();if(!keys.includes(r.place))keys.unshift(r.place);const NONE='— વિભાગ પસંદ કરો —';
+    const v0=draft||{d:isNew?NONE:XWD[r.kind||'exp'],t:r.title||'',b:r.shown_body||r.body,p:xwName(r.place)};
+    modal({title:isNew?'✅ મંજૂર કરો':'✏️ સુધારો / વિભાગ બદલો',info:'<p class="xwn">સાચવશો એટલે બધાને દેખાશે.</p>',fields:[{k:'d',l:'વિભાગ',t:'select',o:(isNew?[NONE]:[]).concat(Object.values(XWD)),v:v0.d},{k:'t',l:'નામ (મહિમાના લિસ્ટ માટે જરૂરી)',v:v0.t},{k:'b',l:'બધાને દેખાશે તે લખાણ',t:'area',v:v0.b},{k:'p',l:'કયા સ્થળ નીચે',t:'select',o:keys.map(xwName),v:v0.p}],
+      save:async v=>{const kind=Object.keys(XWD).find(x=>XWD[x]===v.d),title=v.t.trim(),b=v.b.trim(),p=keys.find(x=>xwName(x)===v.p)||r.place;
+        const bad=!kind?'વિભાગ પસંદ કરો':kind==='mahima'&&!title?'મહિમાના લિસ્ટમાં દેખાડવા નામ લખો':title.length>80?'નામ ટૂંકું રાખો':b.length<3||b.length>3000?'લખાણ 3 થી 3000 અક્ષરનું રાખો':'';
+        if(bad){toast(bad,3000);edit(r,v);return}
+        if(!await act(one(r.id),'PATCH',{kind,title,shown_body:b===r.body?null:b,place:p,status:'approved'},isNew?'મંજૂર ✅ હવે બધાને દેખાશે':'સાચવ્યું ✅'))edit(r,v)}})};
   ov.onclick=async e=>{e.stopPropagation();const t=e.target.closest('button')||e.target;if(t===ov||t.dataset.c!==undefined){ov.remove();return}if(!xwMain())return;const d=t.dataset;
     if(d.all!==undefined){all=d.all==='1';ov._draw()}
-    else if(d.ok){t.disabled=true;await act(one(d.ok),'PATCH',{status:'approved'},'મંજૂર ✅ હવે બધાને દેખાશે')}
     else if(d.hide){t.disabled=true;await act(one(d.hide),'PATCH',{status:'new'},'બધાથી છુપાવ્યું')}
     else if(d.rm){if(confirm('આ લખાણ કાયમ માટે કાઢી નાખવું છે? લખનારને પણ નહીં દેખાય.')){t.disabled=true;await act(one(d.rm),'DELETE',undefined,'કાઢી નાખ્યું')}}
-    else if(d.ed){const r=(xwData().rows||[]).find(x=>x.id===d.ed);if(!r)return;const keys=xwKeys();if(!keys.includes(r.place))keys.unshift(r.place);
-      modal({title:'✏️ લખાણ સુધારો',fields:[{k:'b',l:'બધાને દેખાશે તે લખાણ',t:'area',v:r.shown_body||r.body},{k:'p',l:'કયા સ્થળ નીચે',t:'select',o:keys.map(xwName),v:xwName(r.place)}],save:async v=>{const b=v.b.trim(),p=keys.find(x=>xwName(x)===v.p)||r.place;if(b.length<3||b.length>3000){toast('લખાણ 3 થી 3000 અક્ષરનું રાખો',3000);return}await act(one(r.id),'PATCH',{shown_body:b===r.body?null:b,place:p},'સાચવ્યું ✅')}})}
-    else if(d.mine!==undefined){const ta=ov.querySelector('.xwt'),b=ta.value.trim();if(b.length<3){toast('પહેલાં થોડું લખો');return}t.disabled=true;if(await act('experiences','POST',{place:k,body:b,author_name:'ઍડમિન'},'ઉમેર્યું. બધાને બતાવવા ✅ મંજૂર દબાવો'))ta.value='';t.disabled=false}}}
+    else if(d.ed){const r=(xwData().rows||[]).find(x=>x.id===d.ed);if(r)edit(r)}
+    else if(d.mine!==undefined){const ta=ov.querySelector('.xwt'),b=ta.value.trim();if(b.length<3){toast('પહેલાં થોડું લખો');return}t.disabled=true;try{const x=await alApi('experiences',{method:'POST',body:{place:k,body:b,author_name:'ઍડમિન'}});if(!x||!x[0])throw new Error('none');ta.value='';await xwLoad();edit(x[0])}catch(e){toast('કામ ન થયું. ઇન્ટરનેટ ચેક કરો.',3000)}t.disabled=false}}}
 function xwBell(ov){let b=ov.querySelector('[data-xwall]');const c=xwNew();if(!ADM||!c){if(b)b.remove();return}if(!b){b=document.createElement('button');b.type='button';b.className='npb go';b.setAttribute('data-xwall','');ov.querySelector('.npx').before(b)}b.textContent='🖊️ યાત્રાળુનાં નવાં લખાણ ('+gu(c)+')'}
 document.addEventListener('click',e=>{const b=e.target.closest&&e.target.closest('[data-xw],[data-xwall]');if(!b)return;e.stopPropagation();e.preventDefault();xwSheet(b.dataset.xw||'')},true);
 setTimeout(xwSync,1800);setInterval(()=>{if(!document.hidden)xwSync()},180000);window.addEventListener('online',xwSync);document.addEventListener('visibilitychange',()=>{if(!document.hidden)xwSync()});
