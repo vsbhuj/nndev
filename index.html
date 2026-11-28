@@ -395,9 +395,9 @@ body.lt #hv{position:static;padding:0 0 calc(env(safe-area-inset-bottom) + 10px)
 #home #htr i{width:62px;height:62px;box-sizing:border-box;border-radius:50%;background:#fff url(th/i-temple.webp) center/52px no-repeat;border:2.5px solid #e8b53a;box-shadow:0 6px 16px rgba(110,50,170,.35)}
 #home #htr span{font-size:17px;font-weight:800;line-height:1.3}
 #home #htr:active i{transform:translateY(2px)}
-body.lt #home #htr{position:absolute;left:7px;top:-34px;margin:0;color:#3d1166}
-body.lt #home #hyt{margin-top:30px}
-#home #hyt{flex-direction:column;justify-content:center;text-align:center;min-height:190px;gap:10px}
+body.lt #home #htr{position:absolute;left:7px;top:12px;margin:0;color:#3d1166}
+body.lt #home #hyt{margin-top:76px}
+#home #hyt{flex-direction:column;justify-content:center;text-align:center;min-height:180px;gap:10px}
 #home #hyt .ic{width:84px;height:84px;font-size:46px}
 #home #hyt b{font-size:min(27px,7vw)}#home #hyt small{display:block;font-size:16px;margin-top:6px}
 #home #hyt .tag{margin:0;font-size:16px;padding:7px 28px}
@@ -1014,7 +1014,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}
  }}
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-28-103';
+const VER='2026-11-28-104';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.update().catch(()=>{})))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
