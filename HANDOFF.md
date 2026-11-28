@@ -226,3 +226,11 @@
 - હજી આ ફેરફાર ફક્ત તે ફોનમાં રહે છે (server sync નથી).
 - Light theme માં પેટા-સ્થળ ફેરફાર સ્ક્રીન વંચાય તેવી કરી.
 - DB: `notes` constraints + `pushed_at`, `push_subs`, `push_config`, rpc `pilgrim_notices` (migration notices_and_push). ઍપ/edge function નું notification કામ ચાલુ છે.
+
+## VER 2026-11-28-99 (Chat A): બધા માટે સૂચના + ફોન નોટિફિકેશન
+- સૂચના હવે `notes` ટેબલમાં. ઍડમિન RLS થી; યાત્રાળુ rpc `pilgrim_notices(token)` થી (પ્રવેશ ON હોય તો જ).
+- Edge function `push` (verify_jwt=false, અંદર auth): VAPID key પહેલી વાર જાતે બને છે અને `push_config` માં રહે છે (service role only). Private key ક્યારેય repo માં નહીં.
+- sw.js (nndev-v8): `push`, `notificationclick`. `refreshApp` હવે service worker unregister કરતું નથી (નહીં તો notification subscription જાય).
+- બૅકઅપમાં `push_subs`/`push_config` જાણીને નથી.
+- સાચા ફોન પર delivery હજી ચકાસવાની બાકી.
+- આગળ: સ્થળ પર યાત્રાળુ અનુભવ લખે (પોતાનું જ વાંચે); બીજી પેન ફક્ત મેઇન ઍડમિનને.

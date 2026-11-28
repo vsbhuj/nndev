@@ -418,6 +418,10 @@ body.lt .pgs .pgin,body.lt .pgs .pgta{background:#fff;color:#2a0f40}body.lt .pgs
 .rst{display:block;width:100%;margin:12px 0 4px;min-height:44px;border-radius:12px;border:2px dashed var(--gold);background:transparent;color:inherit;font:inherit;font-weight:700;cursor:pointer}
 .rsr{display:flex;gap:10px;align-items:center;justify-content:space-between;padding:10px 2px;border-bottom:1px solid rgba(150,110,170,.3)}.rsr button{flex:none;min-height:38px;padding:0 14px;border-radius:10px;border:1.5px solid var(--gold);background:transparent;color:inherit;font:inherit;font-weight:700}
 .vw .dsb,.vw .rst{display:none!important}
+
+.npb{display:flex;gap:10px;align-items:center;justify-content:space-between;width:100%;margin:0 0 10px;padding:10px 12px;border:1.5px solid var(--gold);border-radius:14px;font-size:13.5px;line-height:1.55}
+.npb.go{justify-content:center;background:var(--gold);color:#2a0f40;font:inherit;font-size:15px;font-weight:800;min-height:48px;cursor:pointer}
+.npb button{flex:none;min-height:34px;padding:0 12px;border-radius:10px;border:1px solid var(--gold);background:transparent;color:inherit;font:inherit;font-size:12.5px}
 </style>
 </head>
 <body>
@@ -836,7 +840,7 @@ function modal({title,info,fields,save:sv,del}){
     else if(t.dataset.s!==undefined){const v={};ov.querySelectorAll('[data-k]').forEach(i=>v[i.dataset.k]=i.value);ov.remove();sv(v)}
     else if(t.dataset.d!==undefined){ov.remove();del()}};
 }
-function toast(m){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),1800)}
+function toast(m,ms){const t=document.createElement('div');t.className='toast';t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),ms||1800)}
 /* ---------- રેન્ડર / ઇવેન્ટ ---------- */
 function show(t){tab=t;document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.t==t));document.querySelectorAll('.tab').forEach((x,i)=>x.classList.toggle('on',i==t));$('main').scrollTop=0}
 function render(){if(sel>=nDays())sel=0;renderDay();renderAll();renderPlaces();renderYat();renderMore();setLoc();tick()}
@@ -988,8 +992,8 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}
  }}
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-28-98';
-async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.unregister()))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
+const VER='2026-11-28-99';
+async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.update().catch(()=>{})))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
  if(m&&m[1]!==VER){let k='';try{k=sessionStorage.getItem('nnv')}catch(e){}if(k!==m[1]){try{sessionStorage.setItem('nnv',m[1])}catch(e){}refreshApp();return true}$('upd').classList.add('on');return true}else if(manual)toast('✅ તમારી પાસે નવું વર્ઝન છે')}catch(e){if(manual)toast('ઇન્ટરનેટ ચેક કરો')}return false}
@@ -998,7 +1002,7 @@ chkVer();setInterval(chkVer,300000);document.addEventListener('visibilitychange'
 
 /* ---------- જાહેર હોમ પેજ: નીચે “વર્ઝન” પર બે વાર ટેપ કરતાં યાત્રા ખૂલે ---------- */
 function showHome(){try{const st=new Date((S.start||'2027-09-21')+'T00:00:00');$('hst').innerHTML='<span>🗓 '+gu(st.getDate())+' '+MON[st.getMonth()]+' '+gu(st.getFullYear())+'</span>'}catch(e){}try{const f=v=>{const p=v.split('-').map(Number);return gu(p[2])+' '+MON[p[1]-1]},st=S.start||'2027-09-21',en=S.end||'2027-10-14';$('hdt').innerHTML=f(st)+' થી '+f(en)+' '+gu(en.slice(0,4))}catch(e){}$('hv').textContent='વર્ઝન '+VER;$('home').classList.add('on')}
-function openYatra(){$('home').classList.remove('on');sub=null;renderAll();renderMore();show(ADM?0:1);if(!ADM){const c=document.querySelector('.vday.today');if(c)c.scrollIntoView({block:'center'})}}
+function openYatra(){$('home').classList.remove('on');sub=null;renderAll();renderMore();show(ADM?0:1);ntEnter();if(!ADM){const c=document.querySelector('.vday.today');if(c)c.scrollIntoView({block:'center'})}}
 $('hyt').addEventListener('click',()=>yatGate());
 $('abtn').addEventListener('click',()=>{if(!ADM)return;libSheet('🛠 ઍડમિન',[['lg','🔑 Login'],['acc','💰 Account']].concat(alSes()&&roleGet()==='main'?[['yo','🛕 Yatra ON / OFF']]:[],[['view','👁 Pilgrim View']]).concat(alSes()?(roleGet()==='main'?[['adm','👥 Admins']]:[]).concat([['pw','🔒 Password']]):[]).map(([k,t])=>'<button class="sl" data-ad="'+k+'">'+t+'</button>').join(''));const o=[...document.querySelectorAll('.ov')].pop();o.onclick=e=>{const k=e.target.dataset.ad;if(e.target!=o&&!k&&e.target.dataset.c===undefined)return;o.remove();if(k=='lg')alOpen();else if(k=='adm')admList();else if(k=='yo')yatraSheet();else if(k=='pw')pwSheet();else if(k=='acc'){sub='acc';show(4);renderMore()}else if(k=='set')settings();else if(k=='yat'){sub=null;show(3)}else if(k=='view'){ADM=false;document.body.classList.add('vw');bellUp();sub=null;render();showHome()}}});
 function helpSheet(){libSheet('🆘 મદદ','<a class="sl vcall" href="tel:112">📞 ઇમર્જન્સી 112 (ભારત)</a><button class="sl" data-sugo>📝 ચરિત્ર / માહિતી મોકલો</button><div class="vsub">આયોજકનો ફોન અને WhatsApp નંબર જલ્દી ઉમેરાશે.</div>');const o=[...document.querySelectorAll('.ov')].pop();o.onclick=e=>{if(e.target.closest('[data-sugo]')){o.remove();sugSheet('');return}if(e.target==o||e.target.dataset.c!==undefined)o.remove()}}
@@ -1052,18 +1056,6 @@ function hmDraw(box,r){if(!box.isConnected)return;box.innerHTML='<div class="sgl
 function hmBind(ov){if(!ADM)return;const sh=ov.querySelector('.sheet'),box=document.createElement('div');box.className='hmx';sh.insertBefore(box,sh.querySelector('h3').nextSibling);hmDraw(box,alSes()?2:0);hmLoad().then(r=>hmDraw(box,r));
   box.onclick=async e=>{const b=e.target.closest('[data-hmok]');if(!b)return;e.stopPropagation();b.disabled=true;try{const r=await alApi('help_messages?id=eq.'+encodeURIComponent(b.dataset.hmok),{method:'PATCH',body:{done:true}});if(!r||!r.length)throw new Error('none');HM=HM.filter(m=>m.id!=b.dataset.hmok);bellUp();hmDraw(box,1)}catch(x){b.disabled=false;toast('કામ ન થયું, ફરી પ્રયત્ન કરો')}}}
 setInterval(()=>{if(ADM&&!document.hidden)hmLoad()},60000);document.addEventListener('visibilitychange',()=>{if(ADM&&!document.hidden)hmLoad()});
-function noteOpen(){S.nseen=(S.notes||[]).length;save();bellUp();const ov=document.createElement('div');ov.className='ov';
- const L=S.notes||[];
- ov.innerHTML='<div class="sheet"><h3>🔔 સૂચનાઓ</h3>'+(ADM?'<button class="b1" data-na style="width:100%;margin-bottom:10px;border:0;border-radius:14px;padding:11px;font-weight:800">➕ નવી સૂચના</button>':'')+(L.length?L.map((n,i)=>'<div class="ntc '+(n.imp?'imp':'')+'"><div class="h"><span>'+(n.imp?'⚠️ ':'📢 ')+esc(n.t)+'</span>'+(ADM?'<button class="ib" data-ne="'+i+'">✏️</button>':'')+'</div>'+(n.d?'<div class="d">'+esc(n.d)+'</div>':'')+(n.b?'<p>'+esc(n.b)+'</p>':'')+'</div>').join(''):'<div class="emp">હજી કોઈ સૂચના નથી.</div>')+'<div class="btns"><button class="b2" data-c>બંધ</button></div></div>';
- document.body.appendChild(ov);hmBind(ov);
- ov.onclick=e=>{const t=e.target;if(t==ov||t.dataset.c!==undefined){ov.remove();return}
-  if(t.dataset.na!==undefined){ov.remove();noteEdit(-1)}else if(t.dataset.ne){ov.remove();noteEdit(+t.dataset.ne)}}}
-function noteEdit(i){S.notes=S.notes||[];const n=i<0?{t:'',d:'',b:'',imp:''}:S.notes[i];
- modal({title:i<0?'નવી સૂચના':'સૂચના ફેરફાર',fields:[{k:'t',l:'શીર્ષક',v:n.t},{k:'d',l:'તારીખ / સમય',v:n.d},{k:'b',l:'વિગત',t:'area',v:n.b},{k:'imp',l:'પ્રકાર',t:'select',o:['સામાન્ય','મહત્ત્વની'],v:n.imp?'મહત્ત્વની':'સામાન્ય'}],
-  save:v=>{if(!v.t.trim())return;v.imp=v.imp=='મહત્ત્વની'?1:0;if(n.demo)v.demo=1;if(i<0)S.notes.unshift(v);else S.notes[i]=v;save();noteOpen()},
-  del:i<0?null:()=>{S.notes.splice(i,1);save();noteOpen()}})}
-function bellUp(){const c=Math.max(0,(S.notes||[]).length-(S.nseen||0))+(ADM?HM.length:0),b=$('bn');if(b){b.textContent=gu(c);b.classList.toggle('on',c>0)}}
-$('bell').addEventListener('click',noteOpen);bellUp();
 /* ---------- યાત્રામાં પ્રવેશ: ઍડમિન કે યાત્રાળુ ---------- */
 const YTK='nndev-yt';
 const ytSes=v=>{try{if(v===undefined)return JSON.parse(localStorage.getItem(YTK)||'null');localStorage.setItem(YTK,JSON.stringify(v))}catch(e){return null}};
@@ -1105,7 +1097,7 @@ const alEmail=u=>u.includes('@')?u:u+(u==='vsbhuj'?'@gmail.com':'@admin.nndev.in
 const roleGet=()=>{try{return localStorage.getItem('nndev-role')||''}catch(e){return ''}};
 const roleSet=v=>{try{v?localStorage.setItem('nndev-role',v):localStorage.removeItem('nndev-role')}catch(e){}};
 function alUid(){try{const t=alMem||alSes();return JSON.parse(atob(t.a.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'))).sub||''}catch(e){return ''}}
-function alDrop(){AC=null;acCacheDrop();alMem=null;alSes(null);alPin(null);roleSet('')}
+function alDrop(){pushDrop();lsS(NTK,null);AC=null;acCacheDrop();alMem=null;alSes(null);alPin(null);roleSet('')}
 function alRevoke(){alDrop();S.yat=S.yat.filter(y=>!y.sid);save();HM=[]}
 async function alRole(){const r=await alApi('rpc/my_role',{method:'POST',body:{}});if(r==='main'||r==='helper'){roleSet(r);return r}return null}
 function admSheet(title){const ov=document.createElement('div');ov.className='ov al';ov.innerHTML='<div class="sheet"><h3>'+title+'</h3><div class="alx"></div><div class="btns"><button class="b2" data-c>Close</button></div></div>';document.body.appendChild(ov);return ov}
@@ -1518,6 +1510,81 @@ function alOpen(){if(!ADM)return;const ov=document.createElement('div');ov.class
       try{await issue(y);draw()}catch(x){b.disabled=false;fail(x)}busy=0}
     else if(d.rs){if(!confirm('આ યાત્રાળુના બધા ફોનનું લોગિન કાઢશો?'))return;try{await alApi('devices?pilgrim_id=eq.'+encodeURIComponent(d.rs),{method:'DELETE'});await load()}catch(x){fail(x)}}};
   if(alSes())load();else login()}
+/* ---------- સૂચનાઓ (બધા માટે) + ફોન નોટિફિકેશન ---------- */
+const NTK='nndev-ntc',NSK='nndev-nseen',PWK='nndev-push',PAK='nndev-pask';
+const lsG=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsS=(k,v)=>{try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}};
+const lsJ=(k,d)=>{try{return JSON.parse(lsG(k))||d}catch(e){return d}};
+function ntWho(){if(alSes())return 'a:'+alUid();const y=ytMem||ytSes();return y&&y.token&&!y.off?'p:'+y.token.slice(0,12):''}
+function ntList(){const c=lsJ(NTK,null),w=ntWho();return w&&c&&c.who===w?c.list:[]}
+async function ntLoad(){const who=ntWho();if(!who){lsS(NTK,null);ntDraw();return 0}
+  try{let L;if(who[0]=='a')L=await alApi('notes?select=id,title,when_text,body,important,created_at&order=created_at.desc&limit=100');
+    else{const r=await fetch(SB_URL+'/rest/v1/rpc/pilgrim_notices',{method:'POST',cache:'no-store',headers:{apikey:SB_KEY,'Content-Type':'application/json'},body:JSON.stringify({p_token:(ytMem||ytSes()).token})});if(!r.ok)return -1;const j=await r.json();
+      if(j.state!=='ok'){lsS(NTK,null);ntDraw();ytWatch();return 2}L=j.notes}
+    if(ntWho()!==who||!Array.isArray(L))return 0;lsS(NTK,JSON.stringify({who,list:L}));ntDraw();return 1}catch(e){return -1}}
+function bellUp(){const s=new Set(lsJ(NSK,[])),c=ntList().filter(n=>!s.has(n.id)).length+(ADM?HM.length:0),b=$('bn');if(b){b.textContent=gu(c);b.classList.toggle('on',c>0)}}
+function ntSeen(){const L=ntList();if(L.length)lsS(NSK,JSON.stringify([...new Set(L.map(n=>n.id).concat(lsJ(NSK,[])))].slice(0,300)))}
+const ntOld=()=>ADM?(S.notes||[]).filter(n=>!n.demo&&n.t):[];
+function ntDraw(r){const box=document.querySelector('.ov.nts .nls');if(box){const L=ntList(),old=ntOld();
+    if(r!==undefined)box.dataset.r=r;const st=+box.dataset.r||0;
+    box.innerHTML=!ntWho()?'<div class="emp">સૂચના જોવા યાત્રામાં લોગિન કરો.</div>':(st<0?'<div class="vsub">નવી સૂચના ન આવી. ઇન્ટરનેટ ચેક કરો.</div>':'')+L.map(n=>'<div class="ntc '+(n.important?'imp':'')+'"><div class="h"><span>'+(n.important?'⚠️ ':'📢 ')+esc(n.title)+'</span>'+(ADM?'<button class="ib" data-ne="'+esc(n.id)+'" aria-label="ફેરફાર">✏️</button>':'')+'</div>'+(n.when_text?'<div class="d">📅 '+esc(n.when_text)+'</div>':'')+(n.body?'<p>'+esc(n.body)+'</p>':'')+'<div class="d">'+esc(new Date(n.created_at).toLocaleString('gu-IN',{dateStyle:'medium',timeStyle:'short'}))+'</div></div>').join('')+(!L.length?'<div class="emp">'+(st?'હજી કોઈ સૂચના નથી.':'સૂચના લાવી રહ્યા છીએ…')+'</div>':'')+(old.length?'<div class="sgl">ફક્ત આ ફોનમાં રહેલી જૂની સૂચના</div>'+old.map((n,i)=>'<div class="ntc"><div class="h"><span>'+esc(n.t)+'</span><button class="ib" data-no="'+i+'">📤 મોકલો</button></div>'+(n.b?'<p>'+esc(n.b)+'</p>':'')+'</div>').join(''):'');
+    ntSeen()}bellUp()}
+function noteOpen(){document.querySelectorAll('.ov.nts').forEach(o=>o.remove());const ov=document.createElement('div');ov.className='ov nts';
+  ov.innerHTML='<div class="sheet"><h3>🔔 સૂચનાઓ</h3><div class="npx"></div>'+(ADM?'<button class="b1" data-na style="width:100%;margin-bottom:10px;border:0;border-radius:14px;padding:11px;font-weight:800">➕ નવી સૂચના</button>':'')+'<div class="nls"></div><div class="btns"><button class="b2" data-c>બંધ</button></div></div>';
+  document.body.appendChild(ov);hmBind(ov);ntDraw(0);pushDraw();ntLoad().then(r=>ntDraw(r<0?-1:1));
+  ov.onclick=e=>{const t=e.target.closest('button')||e.target;if(t==ov||t.dataset.c!==undefined){ov.remove();return}
+    if(t.dataset.na!==undefined){ov.remove();noteEdit(null)}else if(t.dataset.ne){const n=ntList().find(x=>x.id===t.dataset.ne);if(n){ov.remove();noteEdit(n)}}
+    else if(t.dataset.no!==undefined){const o=ntOld()[+t.dataset.no];if(o){ov.remove();noteEdit(null,{t:o.t,d:o.d||'',b:o.b||'',imp:o.imp?'મહત્ત્વની':'સામાન્ય'},o)}}
+    else if(t.dataset.pon!==undefined){t.disabled=true;pushOn()}else if(t.dataset.poff!==undefined){t.disabled=true;pushOff()}}}
+function noteEdit(n,draft,old){if(!ADM)return;const v0=draft||(n?{t:n.title,d:n.when_text,b:n.body,imp:n.important?'મહત્ત્વની':'સામાન્ય'}:{t:'',d:'',b:'',imp:'સામાન્ય'});
+  modal({title:n?'સૂચના ફેરફાર':'નવી સૂચના',info:'<p style="font-size:12.5px;opacity:.8;margin:0 0 4px">આ સૂચના પ્રવેશવાળા બધા યાત્રાળુ અને ઍડમિનને દેખાશે.</p>',fields:[{k:'t',l:'શીર્ષક',v:v0.t},{k:'d',l:'તારીખ / સમય',v:v0.d},{k:'b',l:'વિગત',t:'area',v:v0.b},{k:'imp',l:'પ્રકાર',t:'select',o:['સામાન્ય','મહત્ત્વની'],v:v0.imp}],
+    save:async v=>{const x={title:v.t.trim(),when_text:v.d.trim(),body:v.b.trim(),important:v.imp==='મહત્ત્વની'};
+      const bad=!x.title?'શીર્ષક લખો':x.title.length>120?'શીર્ષક ટૂંકું કરો':x.when_text.length>80?'તારીખ / સમય ટૂંકું કરો':x.body.length>2000?'વિગત 2000 અક્ષરથી ઓછી રાખો':navigator.onLine===false?'ઇન્ટરનેટ નથી. સૂચના મોકલવા ઇન્ટરનેટ જોઈએ.':'';
+      if(bad){toast(bad,3000);noteEdit(n,v,old);return}
+      let row;try{const r=await alApi(n?'notes?id=eq.'+encodeURIComponent(n.id):'notes',{method:n?'PATCH':'POST',body:x});row=r&&r[0];if(!row)throw new Error('none')}
+      catch(e){if(e.status===401){toast('ફરી લોગિન કરો',3000)}else toast('સાચવાયું નહીં. સૂચનાની યાદી જોઈને ફરી પ્રયત્ન કરો.',4000);noteEdit(n,v,old);return}
+      if(old){S.notes=S.notes.filter(o=>o!==old);save()}
+      await ntLoad();ntSeen();bellUp();
+      if(!n||confirm('સૂચના સાચવાઈ ✅\nઆ ફેરફારનું નોટિફિકેશન ફરી બધાના ફોનમાં મોકલવું છે?')){toast('નોટિફિકેશન મોકલી રહ્યા છીએ…');await ntSend(row.id)}else toast('સૂચના સાચવાઈ ✅');
+      noteOpen()},
+    del:n?async()=>{if(!confirm('આ સૂચના બધાના ફોનમાંથી કાઢી નાખવી છે?')){noteOpen();return}
+      try{const r=await alApi('notes?id=eq.'+encodeURIComponent(n.id),{method:'DELETE'});if(!r||!r.length)throw new Error('none');await ntLoad();toast('સૂચના કાઢી નાખી')}catch(e){toast('કાઢી ન શકાઈ. ઇન્ટરનેટ ચેક કરો.',3000)}noteOpen()}:null})}
+const pushCall=(body,jwt)=>fetch(SB_URL+'/functions/v1/push',{method:'POST',cache:'no-store',headers:Object.assign({apikey:SB_KEY,'Content-Type':'application/json'},jwt?{Authorization:'Bearer '+jwt}:{}),body:JSON.stringify(body)});
+async function ntSend(id){try{await alRole();const r=await pushCall({action:'send',id},(alMem||alSes()).a),j=await r.json();
+    if(j.status==='ok')toast(j.sent?'સૂચના સાચવાઈ ✅ નોટિફિકેશન ગયું: '+gu(j.pilgrims)+' યાત્રાળુ, ઍડમિનના '+gu(j.admins)+' ફોન'+(j.failed?' ('+gu(j.failed)+' માં ન ગયું)':''):j.failed?'સૂચના સાચવાઈ, પણ નોટિફિકેશન ન ગયું':'સૂચના સાચવાઈ ✅ હજી કોઈ ફોનમાં નોટિફિકેશન ચાલુ નથી',5000);
+    else toast(j.status==='wait'?'સૂચના સાચવાઈ. નોટિફિકેશન હમણાં જ ગયું છે, 30 સેકન્ડ પછી ફરી મોકલાય.':'સૂચના સાચવાઈ, પણ નોટિફિકેશન ન ગયું',5000)}
+  catch(e){toast('સૂચના સાચવાઈ, પણ નોટિફિકેશન ગયું કે નહીં તે ખબર ન પડી',5000)}}
+/* ફોન નોટિફિકેશન */
+const pushCan=()=>'serviceWorker' in navigator&&'PushManager' in window&&'Notification' in window;
+const iosTab=()=>(/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1))&&!(matchMedia('(display-mode: standalone)').matches||navigator.standalone);
+async function pushSubGet(){const r=await navigator.serviceWorker.getRegistration();return r?r.pushManager.getSubscription():null}
+async function pushState(){try{if(iosTab())return 'ios';if(!pushCan())return 'no';if(Notification.permission==='denied')return 'denied';return lsG(PWK)==='1'&&Notification.permission==='granted'&&await pushSubGet()?'on':'off'}catch(e){return 'no'}}
+const PTX={ios:'iPhone માં: Safari માં આ લિંક ખોલો → Share બટન → "Add to Home Screen". પછી એ નવા આઇકનથી ઍપ ખોલી અહીં નોટિફિકેશન ચાલુ કરો.',no:'આ બ્રાઉઝરમાં નોટિફિકેશન નહીં આવે. ફોનમાં Chrome માં લિંક ખોલો.',denied:'નોટિફિકેશન બંધ (Block) છે. ફોન Settings → Apps → Chrome (અથવા આ ઍપ) → Notifications ચાલુ કરો, પછી ઍપ ફરી ખોલો.'};
+const pushHtml=s=>s==='on'?'<div class="npb on"><span>✅ આ ફોનમાં નોટિફિકેશન ચાલુ છે</span><button type="button" data-poff>બંધ કરો</button></div>':s==='off'?'<button type="button" class="npb go" data-pon>🔔 ફોનમાં નોટિફિકેશન ચાલુ કરો</button>':'<div class="npb">🔕 '+PTX[s]+'</div>';
+async function pushDraw(){const s=await pushState();document.querySelectorAll('.ov .npx').forEach(b=>b.innerHTML=ntWho()?pushHtml(s):'')}
+let pushDone='';
+async function pushRegister(){const who=ntWho();if(!who)throw new Error('login');
+  const k=await (await fetch(SB_URL+'/functions/v1/push',{cache:'no-store',headers:{apikey:SB_KEY}})).json();if(!k.key)throw new Error('key');
+  const key=Uint8Array.from(atob(k.key.replace(/-/g,'+').replace(/_/g,'/')),c=>c.charCodeAt(0));
+  const reg=await Promise.race([navigator.serviceWorker.ready,new Promise((_,no)=>setTimeout(()=>no(new Error('sw')),10000))]);
+  let sub=await reg.pushManager.getSubscription();
+  const cur=sub&&sub.options&&sub.options.applicationServerKey;if(cur&&new Uint8Array(cur).join()!==key.join()){await sub.unsubscribe();sub=null}
+  if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:key});
+  let jwt='';const body={action:'subscribe',sub:sub.toJSON()};
+  if(who[0]=='a'){await alRole();jwt=(alMem||alSes()).a}else body.token=(ytMem||ytSes()).token;
+  const r=await pushCall(body,jwt);if(!r.ok)throw new Error('server '+r.status);pushDone=who}
+async function pushOn(){try{const p=await Notification.requestPermission();if(p==='granted'){await pushRegister();lsS(PWK,'1');toast('નોટિફિકેશન ચાલુ થયું ✅',3000)}}catch(e){toast('નોટિફિકેશન ચાલુ ન થયું. ઇન્ટરનેટ ચેક કરીને ફરી પ્રયત્ન કરો.',4000)}pushDraw()}
+async function pushDrop(){pushDone='';try{if(!pushCan())return;const s=await pushSubGet();if(s)await pushCall({action:'unsubscribe',endpoint:s.endpoint})}catch(e){}}
+async function pushOff(){lsS(PWK,null);try{const s=await pushSubGet();await pushDrop();if(s)await s.unsubscribe();toast('નોટિફિકેશન બંધ કર્યું')}catch(e){}pushDraw()}
+async function pushSync(){try{const who=ntWho();if(!who||pushDone===who||lsG(PWK)!=='1'||!pushCan()||Notification.permission!=='granted')return;pushDone=who;await pushRegister()}catch(e){pushDone=''}}
+async function ntAsk(){if(!ntWho()||lsG(PAK))return;const s=await pushState();if((s!=='off'&&s!=='ios')||lsG(PAK)||document.querySelector('.ov'))return;lsS(PAK,'1');
+  const ov=document.createElement('div');ov.className='ov npa';ov.innerHTML='<div class="sheet"><h3>🔔 નવી સૂચના તરત જાણો</h3><p style="margin:0 0 10px;line-height:1.6">યાત્રાની નવી સૂચના આવે ત્યારે ઍપ બંધ હોય તોય ફોનમાં નોટિફિકેશન આવશે.</p><div class="npx">'+pushHtml(s)+'</div><div class="btns"><button class="b2" data-c>હમણાં નહીં</button></div></div>';
+  document.body.appendChild(ov);ov.onclick=async e=>{const t=e.target.closest('button')||e.target;if(t==ov||t.dataset.c!==undefined)ov.remove();else if(t.dataset.pon!==undefined){t.disabled=true;await pushOn();ov.remove()}}}
+function ntEnter(){ntLoad();pushSync();setTimeout(ntAsk,900)}
+function ntGo(){if(ntWho()){document.querySelectorAll('.ov').forEach(o=>o.remove());if($('home').classList.contains('on'))yatGate()}noteOpen()}
+$('bell').addEventListener('click',noteOpen);bellUp();
+setTimeout(()=>{ntLoad();pushSync()},1500);setInterval(()=>{if(!document.hidden)ntLoad()},120000);window.addEventListener('online',()=>{ntLoad();pushSync()});document.addEventListener('visibilitychange',()=>{if(!document.hidden)ntLoad()});
+if('serviceWorker' in navigator)navigator.serviceWorker.addEventListener('message',e=>{const t=e.data&&e.data.t;if(t==='notice')ntLoad();else if(t==='open-notices')ntGo()});
+if(/[?&]notices=1/.test(location.search)){try{history.replaceState(history.state,'',location.pathname)}catch(e){}setTimeout(ntGo,1200)}
 </script>
 </body>
 </html>
