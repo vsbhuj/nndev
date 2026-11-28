@@ -268,7 +268,13 @@ body.lt .pl .nm{color:#35164F}body.lt .pl .no{color:#8242CF}body.lt .pl .mp{back
 body.lt .lst button,body.lt .sl{background:linear-gradient(#FFFAFE,#F3E5F5);border:1.5px solid #e2b968;color:#35164F}
 body.lt .menub{background:rgba(255,255,255,.2)}
 body.lt .toast{background:linear-gradient(#7850A0,#35164F);color:#fff;border:1.5px solid #D6A658}
-body.lt #spl{background:linear-gradient(175deg,#efe3ff,#f8e4f3 55%,#fff0e6)}body.lt #spl small{color:#655676}
+body.lt #spl{background:linear-gradient(#e0c0f6,#efc8f1 45%,#fdd3e4 65%,#fdeada)}
+body.lt #spl:before,body.lt #spl:after{content:'';position:absolute;inset:0;pointer-events:none;background:url(th/splash.webp) center top/100% auto no-repeat}
+body.lt #spl:before{-webkit-mask-image:linear-gradient(#000 38%,transparent 60%);mask-image:linear-gradient(#000 38%,transparent 60%)}
+body.lt #spl:after{background-position:center bottom;-webkit-mask-image:linear-gradient(transparent 42%,#000 62%);mask-image:linear-gradient(transparent 42%,#000 62%)}
+body.lt #spl>img,body.lt #spl>small{position:relative;z-index:1}
+body.lt #spl>img{width:min(76vw,330px,44vh);filter:drop-shadow(0 10px 22px rgba(110,50,170,.35))}
+body.lt #spl>small{color:#4a1766;font-size:14px;background:rgba(255,250,255,.75);padding:6px 16px;border-radius:99px}
 body.lt #home .ht{background:none;border:0;color:#4a1766;padding-bottom:4px}
 body.lt #home .ht img{content:url(th/logo.webp);height:150px;margin-bottom:2px;filter:drop-shadow(0 6px 14px rgba(130,66,207,.35))}
 body.lt #home .ht h1{font-size:23px;color:#4a1766}
@@ -1022,7 +1028,7 @@ function openMenu(){const ov=document.createElement('div');ov.className='ov';
   else if(t.dataset.a=='set'){ov.remove();settings()}
  }}
 /* ---------- નવું વર્ઝન / રિફ્રેશ ---------- */
-const VER='2026-11-28-105';
+const VER='2026-11-28-106';
 async function refreshApp(){try{toast('અપડેટ થઈ રહ્યું છે…');if(navigator.serviceWorker){const r=await navigator.serviceWorker.getRegistrations();await Promise.all(r.map(x=>x.update().catch(()=>{})))}if(window.caches){const k=await caches.keys();await Promise.all(k.map(x=>caches.delete(x)))}}catch(e){}
  const u=new URL(location.href);u.searchParams.set('v',Date.now());location.replace(u.toString())}
 async function chkVer(manual){try{const r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});const t=await r.text();const m=t.match(/const VER='([^']+)'/);
